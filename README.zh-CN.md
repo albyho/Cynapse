@@ -22,11 +22,12 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 | `packaging/` | MSIX 打包模板与图标生成 |
 | `scripts/` | 构建、打包与校验脚本 |
 
-## 课程
+## 示例课程
 
-课程包发布在 [Cynapse-courses](https://github.com/albyho/Cynapse-courses)，一门课
-一个 Release。下载 zip，解压得到 `<course-name>/` 目录，在客户端里打开该目录即可；
-之后它会在真实软件中一步步引导你操作，并随时检查结果。
+可直接打开的示例课程包发布在
+[Cynapse-courses](https://github.com/albyho/Cynapse-courses)，一门课一个 Release。
+下载 zip，解压得到 `<course-name>/` 目录，在客户端里打开该目录即可；之后它会在真实
+软件中一步步引导你操作，并随时检查结果。
 
 | 课程 | 版本 | 课程包 | 改编自 |
 | --- | --- | --- | --- |
@@ -34,6 +35,10 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 | agent-desktop 源码分析（中文） | `0.39.0` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/agent-desktop-source-analysis-zh-cn-0.39.0/agent-desktop-source-analysis-zh-cn-0.39.0.zip) | [agent-desktop](https://github.com/vercel-labs/agent-desktop) |
 | 信号处理路线图（中文） | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-zh-cn-0.2.4/signal-processing-roadmap-zh-cn-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
 | 信号处理路线图（英文） | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-0.2.4/signal-processing-roadmap-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
+
+> 这些是示例，不是完整的课程目录。`rust-by-example-zh-cn` 目前只包含简介和第
+> 1–4 章，并非完整的《通过例子学 Rust》；`signal-processing-roadmap-zh-cn` 目前只
+> 包含简介和第 1 周，尚未覆盖完整路线图。
 
 ## 构建与测试
 

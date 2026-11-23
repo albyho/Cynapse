@@ -25,9 +25,9 @@ without changing the course contract.
 | `packaging/` | MSIX packaging template and icon generation |
 | `scripts/` | Build, packaging, and verification scripts |
 
-## Courses
+## Sample courses
 
-Course packages are published in
+Ready-to-open example Course Packages are published in
 [Cynapse-courses](https://github.com/albyho/Cynapse-courses), one release per
 course. Download a zip, extract it to get a `<course-name>/` directory, and open
 that directory in the Client; it then walks you through the real application,
@@ -39,6 +39,12 @@ step by step, while checking your work as you go.
 | agent-desktop Source Analysis (Chinese) | `0.39.0` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/agent-desktop-source-analysis-zh-cn-0.39.0/agent-desktop-source-analysis-zh-cn-0.39.0.zip) | [agent-desktop](https://github.com/vercel-labs/agent-desktop) |
 | Signal Processing Roadmap (Chinese) | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-zh-cn-0.2.4/signal-processing-roadmap-zh-cn-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
 | Signal Processing Roadmap (English) | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-0.2.4/signal-processing-roadmap-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
+
+> These are samples, not a finished catalogue. `rust-by-example-zh-cn` is an
+> in-progress adaptation that currently covers the introduction and chapters 1–4
+> only, not the complete Rust by Example book.
+> `signal-processing-roadmap-zh-cn` is an in-progress adaptation that currently
+> covers the introduction and Week 1 only, not the complete roadmap.
 
 ## Build and test
 
