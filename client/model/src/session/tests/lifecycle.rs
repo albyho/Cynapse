@@ -34,6 +34,20 @@ fn opening_a_course_publishes_and_clears_a_transition() {
     assert!(finished, "opening must clear the transition when done");
 }
 
+/// The service stores the resolved package path, so an expected path has to be
+/// resolved the same way. On Windows `fs::canonicalize` also expands 8.3 short
+/// names (`RUNNER~1`), which temp directories on CI runners carry, and it adds a
+/// `\\?\` prefix that the service strips.
+fn resolved(path: &std::path::Path) -> String {
+    let text = fs::canonicalize(path)
+        .unwrap()
+        .to_string_lossy()
+        .to_string();
+    text.strip_prefix("\\\\?\\")
+        .map(str::to_string)
+        .unwrap_or(text)
+}
+
 #[test]
 fn reopening_a_course_reports_a_restart_failure() {
     let runtime = tokio::runtime::Builder::new_multi_thread()
@@ -61,7 +75,7 @@ fn reopening_a_course_reports_a_restart_failure() {
         assert!(!error.is_empty());
         assert_eq!(
             service.course_state().unwrap().active_course_path,
-            Some(second.to_string_lossy().to_string())
+            Some(resolved(&second))
         );
     });
 }
