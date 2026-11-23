@@ -67,9 +67,13 @@ JupyterLab 适配器在 `adapters/jupyterlab` 下构建；构建扩展前先安�
 
 ## 下载
 
-打包产物发布在[发布页](https://github.com/albyho/Cynapse/releases)，每次构建包含
-客户端与匹配版本的 JupyterLab 适配器 wheel。VS Code 适配器通过 Visual Studio
-Marketplace 分发。当前构建面向 Windows x64。
+| 组件 | 下载 |
+| --- | --- |
+| Cynapse Client + JupyterLab Adapter（Windows x64） | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
+| Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
+
+每次构建都把客户端与匹配版本的 JupyterLab 适配器 wheel 打在一起，不需要单独安装
+适配器。各版本变化见[版本记录](CHANGELOG.md)。当前构建面向 Windows x64。
 
 ## 问题反馈
 

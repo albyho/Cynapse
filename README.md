@@ -74,11 +74,14 @@ The JupyterLab Adapter builds through `adapters/jupyterlab`; install
 
 ## Download
 
-Packaged builds are published on the
-[releases page](https://github.com/albyho/Cynapse/releases). Each build bundles
-the Client with the matching JupyterLab Adapter wheel; the VS Code Adapter is
-distributed through the Visual Studio Marketplace. Current builds target Windows
-x64.
+| Component | Download |
+| --- | --- |
+| Cynapse Client + JupyterLab Adapter (Windows x64) | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
+| Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
+
+Every build bundles the Client with the matching JupyterLab Adapter wheel, so the
+Adapter needs no separate install. See the [release log](CHANGELOG.md) for what
+changed in each version. Current builds target Windows x64.
 
 ## Issues
 
