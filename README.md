@@ -14,7 +14,7 @@ without changing the course contract.
 
 [Introduction video](https://www.youtube.com/watch?v=fk4KJ7OfV-U)
 
-## What is in this repository
+## Layout
 
 | Path | Contents |
 | --- | --- |
@@ -28,9 +28,10 @@ without changing the course contract.
 ## Courses
 
 Course packages are published in
-[Cynapse-courses](https://github.com/albyho/Cynapse-courses), one release per
-course. Load a course in the Client and it walks you through the real
-application, step by step, while checking your work as you go.
+[Cynapse-courses](https://github.com/albyho/Cynapse-courses), with one
+[release](https://github.com/albyho/Cynapse-courses/releases) per course. Load a
+course in the Client and it walks you through the real application, step by
+step, while checking your work as you go.
 
 ## Build and test
 
@@ -65,5 +66,4 @@ x64.
 
 ## Issues
 
-Bug reports and questions are welcome in the issue tracker. Course content is
-maintained in [Cynapse-courses](https://github.com/albyho/Cynapse-courses).
+Bug reports and questions are welcome in the issue tracker.

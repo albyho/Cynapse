@@ -4,9 +4,7 @@ Cynapse Client, the VS Code Adapter, and the JupyterLab Adapter share one
 version. New releases package the Client and JupyterLab Adapter in one versioned
 Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
-Downloads live on this repository's Releases page. Versions up to 0.9.0 were
-published from the previous release repository, and those links still resolve
-there.
+Downloads live on the Releases page.
 
 ## 0.9.0 — 2026-11-23
 
@@ -261,11 +259,8 @@ Cynapse commit: `5fd04bc1`
 
 ## 0.2.1 — 2026-11-13
 
-First release published from the private Cynapse repository to this repository.
-
 - All workspace component versions are now aligned; both artifacts ship in the
   same GitHub Release.
-- Adapter metadata and documentation now point to this repository.
 - Adapter: end learning when a required adapter disconnects.
 - Adapter: distinguish truncated terminal output from a real mismatch.
 - Client: cache course projections, write persisted state atomically, and

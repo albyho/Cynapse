@@ -11,7 +11,7 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 
 [介绍视频](https://www.bilibili.com/video/BV1BSsD6MEaY/)
 
-## 本仓库包含
+## 目录结构
 
 | 路径 | 内容 |
 | --- | --- |
@@ -25,8 +25,8 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 ## 课程
 
 课程包发布在 [Cynapse-courses](https://github.com/albyho/Cynapse-courses)，一门课
-一个 Release。在客户端里载入课程，它就会在真实软件中一步步引导你操作，并随时检查
-结果。
+一个 [Release](https://github.com/albyho/Cynapse-courses/releases)。在客户端里
+载入课程，它就会在真实软件中一步步引导你操作，并随时检查结果。
 
 ## 构建与测试
 
@@ -59,5 +59,4 @@ Marketplace 分发。当前构建面向 Windows x64。
 
 ## 问题反馈
 
-缺陷与问题请在 issue 中提出。课程内容在
-[Cynapse-courses](https://github.com/albyho/Cynapse-courses) 维护。
+缺陷与问题请在 issue 中提出。
