@@ -73,7 +73,7 @@ Cynapse: 显示 VS Code Adapter 状态
 
 ## 关于 Cynapse
 
-Cynapse 是本地优先、面向真实软件的交互式教学与工作流平台。它让你直接在软件里学习，同时保留可观察、可暂停、可恢复的学习过程。
+Cynapse（Code + Synapse）是一个本地优先、面向真实软件的交互式教学与工作流平台。课程包驱动交互界面、可恢复的分步状态机和一个或多个应用适配器，让学习者直接在软件里跟着做，而不是看录屏，也不是在模拟器里练。整个过程可观察、可暂停、可恢复。
 
 发布与问题反馈：
 [github.com/albyho/Cynapse](https://github.com/albyho/Cynapse)
