@@ -18,10 +18,11 @@ without changing the course contract.
 
 | Component | Download |
 | --- | --- |
-| Cynapse Client + JupyterLab Adapter (Windows x64) | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
+| Cynapse Client + JupyterLab Adapter (Windows x64) | [Microsoft Store](https://apps.microsoft.com/detail/9p145r16w33t) · [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
 | Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
 
-Every build bundles the Client with the matching JupyterLab Adapter wheel, so the
+The Store listing installs the Client and keeps it updated. Both channels carry
+the same build, with the matching JupyterLab Adapter wheel bundled, so the
 Adapter needs no separate install. See the [release log](CHANGELOG.md) for what
 changed in each version. Current builds target Windows x64.
 

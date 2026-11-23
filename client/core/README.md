@@ -69,7 +69,7 @@ pnpm verify:content
 pnpm run:scenario --course courses/rust-by-example-zh-cn --unit introduction --mode continuous
 ```
 
-开发迭代按改动范围选择：只改 Client 时运行 `pnpm verify:client`，只改 Studio 时运行
-`pnpm verify:studio`，只改 `cynapse-course` 时运行 `pnpm verify:course`；共享课程库
-改动会同时影响两个应用，运行 `pnpm verify:course:dependents`。完整的 `pnpm verify`
-留到 merge/release 前或 CI 不可用时。
+开发迭代按改动范围选择：只改 Client 时运行 `pnpm verify:client`，只改
+`cynapse-course` 时运行 `pnpm verify:course`；共享课程库改动会同时影响两个应用，
+运行 `pnpm verify:course:dependents`。完整的 `pnpm verify:push` 留到 merge/release
+前或 CI 不可用时。
