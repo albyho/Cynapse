@@ -6,7 +6,7 @@ Cynapse (Code + Synapse) is a local-first platform for interactive tutorials and
 workflows in real software. A Course Package drives an interactive UI and a
 recoverable step state machine, and pairs them with one or more App Adapters, so
 learners work through the application itself instead of watching a recording or
-working through a simulator.
+using a simulator.
 
 Windows is the first supported platform. The Client core, the wire protocol, and
 the App Adapters stay platform-neutral, so further platforms can be added
