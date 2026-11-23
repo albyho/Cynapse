@@ -29,6 +29,8 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 下载 zip，解压得到 `<course-name>/` 目录，在客户端里打开该目录即可；之后它会在真实
 软件中一步步引导你操作，并随时检查结果。
 
+从 `0.9.0` 起，客户端也支持直接从 URL 下载课程 zip，整个步骤都能在应用内完成。
+
 | 课程 | 版本 | 课程包 | 改编自 |
 | --- | --- | --- | --- |
 | Rust by Example（中文） | `0.20.21` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/rust-by-example-zh-cn-0.20.21/rust-by-example-zh-cn-0.20.21.zip) | [Rust by Example（中文）](https://github.com/rust-lang-cn/rust-by-example-cn) |

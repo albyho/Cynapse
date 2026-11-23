@@ -33,6 +33,9 @@ course. Download a zip, extract it to get a `<course-name>/` directory, and open
 that directory in the Client; it then walks you through the real application,
 step by step, while checking your work as you go.
 
+From `0.9.0` on, the Client can also download a course zip straight from a URL,
+so the whole step happens inside the app.
+
 | Course | Version | Package | Based on |
 | --- | --- | --- | --- |
 | Rust by Example (Chinese) | `0.20.21` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/rust-by-example-zh-cn-0.20.21/rust-by-example-zh-cn-0.20.21.zip) | [Rust by Example (Chinese)](https://github.com/rust-lang-cn/rust-by-example-cn) |
