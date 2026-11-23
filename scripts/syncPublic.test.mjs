@@ -15,6 +15,7 @@ test('publishes source that the product needs to build', () => {
     'scripts/checkMarkdown.mjs',
     'Cargo.toml',
     'package.json',
+    'LICENSE',
     'CHANGELOG.md',
   ]) {
     assert.equal(publishedPath(file), true, file)

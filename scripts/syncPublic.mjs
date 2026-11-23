@@ -30,6 +30,7 @@ const INCLUDED = [
   'pnpm-workspace.yaml',
   '.gitattributes',
   '.rumdl.toml',
+  'LICENSE',
   'CHANGELOG.md',
 ]
 

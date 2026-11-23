@@ -67,3 +67,7 @@ x64.
 ## Issues
 
 Bug reports and questions are welcome in the issue tracker.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

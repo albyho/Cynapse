@@ -60,3 +60,7 @@ Marketplace 分发。当前构建面向 Windows x64。
 ## 问题反馈
 
 缺陷与问题请在 issue 中提出。
+
+## 许可
+
+MIT，见 [LICENSE](LICENSE)。
