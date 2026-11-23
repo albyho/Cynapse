@@ -1,0 +1,22 @@
+{
+  "step_id": "open_and_select",
+  "title": "Open the Notebook and select a Cell",
+  "actions": [
+    {
+      "type": "JupyterLabOpenNotebook",
+      "path": "lesson.ipynb"
+    },
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "lesson.ipynb",
+      "cell_id": "intro",
+      "scroll": true
+    },
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "lesson.ipynb",
+      "cell_id": "setup",
+      "scroll": true
+    }
+  ]
+}

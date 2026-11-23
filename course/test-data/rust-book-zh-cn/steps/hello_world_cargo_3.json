@@ -1,0 +1,19 @@
+{
+  "step_id": "hello_world_cargo_3",
+  "title": "1.3 Hello, Cargo!：运行程序",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "hello_cargo",
+      "command": ".\\target\\debug\\hello_cargo.exe",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [
+        "Hello, world!"
+      ],
+      "timeout_ms": 300000
+    }
+  ]
+}

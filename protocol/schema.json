@@ -1,0 +1,1368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cynapse.local/protocol/v2/envelope.json",
+  "title": "Cynapse Protocol v2 envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["v", "id", "type", "payload"],
+  "properties": {
+    "v": {
+      "const": 3
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "type": {
+      "enum": ["hello", "hello_ack", "action", "check", "ack", "cancel", "workspace_reset"]
+    },
+    "unit_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "hello"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/hello"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "hello_ack"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/hello_ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "action"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/action"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "check"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/check"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "cancel"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/cancel"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "ack"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "workspace_reset"
+          }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/workspace_reset"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "hello": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token", "role"],
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "const": "adapter"
+        }
+      }
+    },
+    "hello_ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapter"],
+      "properties": {
+        "adapter": {
+          "enum": ["vscode", "jupyterlab", "local"]
+        }
+      }
+    },
+    "ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "enum": ["done", "error", "cancelled"]
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "output": {
+          "type": "string"
+        },
+        "output_truncated": {
+          "type": "boolean"
+        },
+        "completion_marker_found": {
+          "type": "boolean"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "execution_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ename", "evalue", "traceback"],
+          "properties": {
+            "ename": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evalue": {
+              "type": "string"
+            },
+            "traceback": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell_output_summary"
+          }
+        }
+      }
+    },
+    "cell_output_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["output_type", "mime_types", "size"],
+      "properties": {
+        "output_type": {
+          "enum": ["stream", "execute_result", "display_data", "error"]
+        },
+        "mime_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "unit_path", "session_key", "command"],
+      "properties": {
+        "type": {
+          "const": "COMMAND"
+        },
+        "unit_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cwd": {
+          "type": "string",
+          "default": "."
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accepted_exit_codes": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "default": [0]
+        },
+        "expected_output": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 300000
+        },
+        "save_dirty": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "action": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/present"
+        },
+        {
+          "$ref": "#/$defs/open_file"
+        },
+        {
+          "$ref": "#/$defs/open_preview"
+        },
+        {
+          "$ref": "#/$defs/open_file_with_preview"
+        },
+        {
+          "$ref": "#/$defs/close_file"
+        },
+        {
+          "$ref": "#/$defs/close_preview"
+        },
+        {
+          "$ref": "#/$defs/reveal_text"
+        },
+        {
+          "$ref": "#/$defs/clear_reveal"
+        },
+        {
+          "$ref": "#/$defs/insert_text"
+        },
+        {
+          "$ref": "#/$defs/delete_text"
+        },
+        {
+          "$ref": "#/$defs/replace_text"
+        },
+        {
+          "$ref": "#/$defs/create_directory"
+        },
+        {
+          "$ref": "#/$defs/create_file"
+        },
+        {
+          "$ref": "#/$defs/delete_file"
+        },
+        {
+          "$ref": "#/$defs/delete_directory"
+        },
+        {
+          "$ref": "#/$defs/terminal_ensure"
+        },
+        {
+          "$ref": "#/$defs/terminal_command"
+        },
+        {
+          "$ref": "#/$defs/jupyterlab_close_document"
+        },
+        {
+          "$ref": "#/$defs/interrupt_kernel"
+        },
+        {
+          "$ref": "#/$defs/open_notebook"
+        },
+        {
+          "$ref": "#/$defs/jupyterlab_open_preview"
+        },
+        {
+          "$ref": "#/$defs/restart_kernel"
+        },
+        {
+          "$ref": "#/$defs/delete_cell"
+        },
+        {
+          "$ref": "#/$defs/jupyterlab_cell_delete_text"
+        },
+        {
+          "$ref": "#/$defs/duplicate_cell"
+        },
+        {
+          "$ref": "#/$defs/insert_cell"
+        },
+        {
+          "$ref": "#/$defs/jupyterlab_cell_insert_text"
+        },
+        {
+          "$ref": "#/$defs/move_cell"
+        },
+        {
+          "$ref": "#/$defs/jupyterlab_cell_replace_text"
+        },
+        {
+          "$ref": "#/$defs/run_cell"
+        },
+        {
+          "$ref": "#/$defs/select_cell"
+        }
+      ]
+    },
+    "present": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "const": "Present"
+        }
+      }
+    },
+    "open_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "OpenFile"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "open_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "OpenPreview"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "view": {
+          "enum": ["side", "current"]
+        }
+      }
+    },
+    "open_file_with_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "OpenFileWithPreview"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "close_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "CloseFile"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "close_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "ClosePreview"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "reveal_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "start"],
+      "properties": {
+        "type": {
+          "const": "RevealText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "$ref": "#/$defs/reveal_position"
+        },
+        "end": {
+          "$ref": "#/$defs/reveal_position"
+        }
+      }
+    },
+    "reveal_position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["line"],
+      "properties": {
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "clear_reveal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "const": "ClearReveal"
+        }
+      }
+    },
+    "insert_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "target", "text"],
+      "properties": {
+        "type": {
+          "const": "InsertText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/anchor"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "speed_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "target_hold_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "at": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["text"],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "index": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "placement": {
+          "enum": ["before", "after"]
+        },
+        "eof": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["eof"],
+            "properties": {
+              "eof": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": ["line"]
+                },
+                {
+                  "required": ["at"]
+                },
+                {
+                  "required": ["placement"]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "required": ["eof"],
+              "properties": {
+                "eof": {
+                  "const": true
+                }
+              }
+            }
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": ["line"]
+              },
+              {
+                "required": ["at"],
+                "properties": {
+                  "at": {
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": ["at"],
+            "properties": {
+              "at": {
+                "type": "integer"
+              }
+            }
+          },
+          "then": {
+            "required": ["line"]
+          }
+        }
+      ]
+    },
+    "delete_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "target"],
+      "properties": {
+        "type": {
+          "const": "DeleteText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/edit_range"
+            },
+            {
+              "$ref": "#/$defs/delete_target_cursor"
+            }
+          ]
+        },
+        "direction": {
+          "enum": ["backspace", "delete"],
+          "default": "backspace"
+        },
+        "speed_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "target_hold_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["target"],
+            "properties": {
+              "target": {
+                "required": ["cursor"]
+              }
+            }
+          },
+          "then": {
+            "required": ["direction"]
+          }
+        }
+      ]
+    },
+    "delete_target_cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cursor", "expected_text"],
+      "properties": {
+        "cursor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["line", "column", "count"],
+          "properties": {
+            "line": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "column": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "expected_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "replace_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "target", "text"],
+      "properties": {
+        "type": {
+          "const": "ReplaceText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/edit_range"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edit_mode": {
+          "enum": ["overwrite_selection", "delete_then_type"]
+        },
+        "speed_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "target_hold_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["edit_mode"]
+          },
+          "then": {
+            "required": ["speed_ms"],
+            "properties": {
+              "speed_ms": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "edit_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "expected_text"],
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/anchor"
+        },
+        "end": {
+          "$ref": "#/$defs/anchor"
+        },
+        "expected_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "create_directory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "CreateDirectory"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "create_parents": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "create_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "CreateFile"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "create_parents": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "delete_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "DeleteFile"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "if_missing": {
+          "enum": ["error", "ignore"],
+          "default": "error"
+        }
+      }
+    },
+    "delete_directory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "DeleteDirectory"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recursive": {
+          "type": "boolean",
+          "default": false
+        },
+        "if_missing": {
+          "enum": ["error", "ignore"],
+          "default": "error"
+        }
+      }
+    },
+    "terminal_ensure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "session_key", "cwd"],
+      "properties": {
+        "type": {
+          "const": "TerminalEnsure"
+        },
+        "session_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "terminal_command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "session_key", "cwd", "command"],
+      "properties": {
+        "type": {
+          "const": "TerminalCommand"
+        },
+        "session_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accepted_exit_codes": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "default": [0]
+        },
+        "expected_output": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 300000
+        },
+        "completion_marker": {
+          "type": "string",
+          "minLength": 1
+        },
+        "new_terminal": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "open_notebook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabOpenNotebook"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "select_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellSelect"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scroll": {
+          "type": "boolean",
+          "default": true
+        },
+        "align": {
+          "enum": ["auto", "start", "center", "top-center", "end"],
+          "default": "auto"
+        }
+      }
+    },
+    "run_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellRun"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 300000
+        }
+      }
+    },
+    "restart_kernel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabRestartKernel"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "interrupt_kernel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabInterruptKernel"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "jupyterlab_open_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabOpenPreview"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "jupyterlab_close_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCloseDocument"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "jupyterlab_cell_delete_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id", "target"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellDeleteText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/edit_range"
+            },
+            {
+              "$ref": "#/$defs/delete_target_cursor"
+            }
+          ]
+        },
+        "direction": {
+          "enum": ["backspace", "delete"],
+          "default": "backspace"
+        },
+        "speed_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "target_hold_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "jupyterlab_cell_insert_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id", "target", "text"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellInsertText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/anchor"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "speed_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "target_hold_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "jupyterlab_cell_replace_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id", "target", "text"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellReplaceText"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/edit_range"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edit_mode": {
+          "enum": ["overwrite_selection", "delete_then_type"]
+        },
+        "speed_ms": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "target_hold_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "insert_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id", "cell_type", "source"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellInsert"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "after_cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_type": {
+          "enum": ["code", "markdown"]
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "not": {
+        "required": ["after_cell_id", "before_cell_id"]
+      }
+    },
+    "move_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id", "direction"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellMove"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "direction": {
+          "enum": ["up", "down"]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        }
+      }
+    },
+    "duplicate_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellDuplicate"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "new_cell_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "delete_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "cell_id"],
+      "properties": {
+        "type": {
+          "const": "JupyterLabCellDelete"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cell_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id"],
+      "properties": {
+        "target_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "reason": {
+          "enum": ["user_stop", "client_exit", "course_switch"]
+        }
+      }
+    },
+    "workspace_reset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["paths"],
+      "properties": {
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "exclude_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "session_keys": {
+          "description": "When non-empty, close only these managed terminal sessions and ignore paths.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "close_tabs": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "runtime_discovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["port", "token", "pid", "started_at"],
+      "properties": {
+        "workspace": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "started_at": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

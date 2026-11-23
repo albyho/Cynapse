@@ -1,0 +1,68 @@
+{
+  "id": "continuous_learning_demo",
+  "title": "Continuous Learning Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "node_one",
+      "title": "Group One: Warm Up",
+      "children": [
+        {
+          "id": "unit_one",
+          "title": "Unit One: Resume Here",
+          "steps": [
+            {
+              "step_file": "steps/unit_one_first.json"
+            },
+            {
+              "step_file": "steps/unit_one_second.json"
+            }
+          ]
+        },
+        {
+          "id": "unit_two",
+          "title": "Unit Two: Learned Then Reset",
+          "steps": [
+            {
+              "step_file": "steps/unit_two_first.json"
+            },
+            {
+              "step_file": "steps/unit_two_second.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node_two",
+      "title": "Group Two: Finish",
+      "children": [
+        {
+          "id": "unit_three",
+          "title": "Unit Three: New Unit",
+          "steps": [
+            {
+              "step_file": "steps/unit_three_first.json"
+            },
+            {
+              "step_file": "steps/unit_three_second.json"
+            }
+          ]
+        },
+        {
+          "id": "unit_four",
+          "title": "Unit Four: Course Finish",
+          "steps": [
+            {
+              "step_file": "steps/unit_four_only.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

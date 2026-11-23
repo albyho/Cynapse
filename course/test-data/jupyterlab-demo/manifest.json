@@ -1,0 +1,26 @@
+{
+  "id": "jupyterlab_demo",
+  "title": "JupyterLab Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "jupyterlab"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_jupyterlab",
+      "title": "JupyterLab",
+      "children": [
+        {
+          "id": "hello_notebook",
+          "title": "Hello notebook",
+          "steps": [
+            {
+              "step_file": "steps/create_hello.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

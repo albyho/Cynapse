@@ -1,0 +1,10 @@
+{
+  "step_id": "create_silent",
+  "title": "Silent",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "silent.txt"
+    }
+  ]
+}

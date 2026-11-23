@@ -1,0 +1,17 @@
+{
+  "step_id": "fix_and_compile_2",
+  "title": "改为可变变量并成功运行：编译代码",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "variables",
+      "command": "rustc main.rs",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [],
+      "timeout_ms": 300000
+    }
+  ]
+}

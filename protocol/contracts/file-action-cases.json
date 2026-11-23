@@ -1,0 +1,76 @@
+{
+  "cases": [
+    {
+      "name": "create file where the target is a directory",
+      "action": { "type": "CreateFile", "path": "lesson", "create_parents": true },
+      "fs": { "lesson": "directory" },
+      "expected": { "status": "error", "code": "target_type_conflict" }
+    },
+    {
+      "name": "create file under a missing parent without create_parents",
+      "action": { "type": "CreateFile", "path": "lesson/nested.txt", "create_parents": false },
+      "fs": {},
+      "expected": { "status": "error", "code": "parent_missing" }
+    },
+    {
+      "name": "create file under a file parent",
+      "action": { "type": "CreateFile", "path": "lesson/nested.txt", "create_parents": true },
+      "fs": { "lesson": "file" },
+      "expected": { "status": "error", "code": "parent_missing" }
+    },
+    {
+      "name": "create file that already exists",
+      "action": { "type": "CreateFile", "path": "lesson.txt" },
+      "fs": { "lesson.txt": "file" },
+      "expected": { "status": "ok" }
+    },
+    {
+      "name": "create directory where the target is a file",
+      "action": { "type": "CreateDirectory", "path": "lesson" },
+      "fs": { "lesson": "file" },
+      "expected": { "status": "error", "code": "target_type_conflict" }
+    },
+    {
+      "name": "create directory that already exists",
+      "action": { "type": "CreateDirectory", "path": "lesson" },
+      "fs": { "lesson": "directory" },
+      "expected": { "status": "ok" }
+    },
+    {
+      "name": "delete a missing file",
+      "action": { "type": "DeleteFile", "path": "lesson.txt" },
+      "fs": {},
+      "expected": { "status": "error", "code": "target_missing" }
+    },
+    {
+      "name": "delete a missing file with if_missing ignore",
+      "action": { "type": "DeleteFile", "path": "lesson.txt", "if_missing": "ignore" },
+      "fs": {},
+      "expected": { "status": "ok" }
+    },
+    {
+      "name": "delete a directory through DeleteFile",
+      "action": { "type": "DeleteFile", "path": "lesson" },
+      "fs": { "lesson": "directory" },
+      "expected": { "status": "error", "code": "target_type_conflict" }
+    },
+    {
+      "name": "delete a non-empty directory without recursive",
+      "action": { "type": "DeleteDirectory", "path": "lesson" },
+      "fs": { "lesson": "directory", "lesson/a.txt": "file" },
+      "expected": { "status": "error", "code": "directory_not_empty" }
+    },
+    {
+      "name": "delete a file through DeleteDirectory",
+      "action": { "type": "DeleteDirectory", "path": "lesson" },
+      "fs": { "lesson": "file" },
+      "expected": { "status": "error", "code": "target_type_conflict" }
+    },
+    {
+      "name": "delete a missing directory with if_missing ignore",
+      "action": { "type": "DeleteDirectory", "path": "lesson", "if_missing": "ignore" },
+      "fs": {},
+      "expected": { "status": "ok" }
+    }
+  ]
+}

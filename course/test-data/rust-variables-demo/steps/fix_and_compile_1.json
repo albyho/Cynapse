@@ -1,0 +1,31 @@
+{
+  "step_id": "fix_and_compile_1",
+  "title": "改为可变变量并成功运行：修改代码",
+  "actions": [
+    {
+      "type": "OpenFile",
+      "path": "variables/main.rs"
+    },
+    {
+      "type": "ReplaceText",
+      "path": "variables/main.rs",
+      "target": {
+        "start": {
+          "at": {
+            "text": "let x = 5;"
+          }
+        },
+        "end": {
+          "at": {
+            "text": "let x = 5;"
+          },
+          "placement": "after"
+        },
+        "expected_text": "let x = 5;"
+      },
+      "text": "let mut x = 5;",
+      "edit_mode": "overwrite_selection",
+      "speed_ms": 30
+    }
+  ]
+}

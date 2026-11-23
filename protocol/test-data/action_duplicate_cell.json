@@ -1,0 +1,12 @@
+{
+  "v": 3,
+  "id": "a1d4e5f6-b798-4c89-8d20-e21f22a23b24",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellDuplicate",
+    "path": "ch/intro/lesson.ipynb",
+    "cell_id": "cell-print",
+    "new_cell_id": "cell-print-copy"
+  }
+}

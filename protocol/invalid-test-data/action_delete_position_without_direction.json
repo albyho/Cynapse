@@ -1,0 +1,16 @@
+{
+  "v": 3,
+  "id": "71f778b0-d7a1-4f92-8dc2-077aef05a427",
+  "type": "action",
+  "payload": {
+    "type": "DeleteText",
+    "path": "src/main.rs",
+    "target": {
+      "cursor": {
+        "line": 1,
+        "column": 0,
+        "count": 1
+      }
+    }
+  }
+}

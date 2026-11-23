@@ -1,0 +1,17 @@
+{
+  "v": 3,
+  "id": "bd4a5f6e-7b8c-4d9e-0f1a-3b4c5d6e7f80",
+  "type": "action",
+  "payload": {
+    "type": "RevealText",
+    "path": "README.md",
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 2,
+      "column": 0
+    }
+  }
+}

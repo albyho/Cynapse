@@ -1,0 +1,17 @@
+{
+  "step_id": "hello_world_rustc_3",
+  "title": "1.2 Hello, world!：编译代码",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "hello_world",
+      "command": "rustc main.rs",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [],
+      "timeout_ms": 300000
+    }
+  ]
+}

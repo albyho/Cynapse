@@ -1,0 +1,7 @@
+{
+  "step_id": "welcome",
+  "title": "欢迎",
+  "actions": [
+    { "type": "Present" }
+  ]
+}

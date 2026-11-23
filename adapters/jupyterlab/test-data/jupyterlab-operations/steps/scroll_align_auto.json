@@ -1,0 +1,13 @@
+{
+  "step_id": "scroll_align_auto",
+  "title": "Scroll align: auto keeps the already-visible target still",
+  "actions": [
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "scroll_align.ipynb",
+      "cell_id": "align_target",
+      "scroll": true,
+      "align": "auto"
+    }
+  ]
+}

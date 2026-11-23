@@ -1,0 +1,18 @@
+{
+  "v": 3,
+  "id": "c2c7c24d-6d84-4b90-b6a7-12cbcb967574",
+  "type": "action",
+  "payload": {
+    "type": "TerminalCommand",
+    "session_key": "main",
+    "cwd": "variables",
+    "command": "rustc main.rs",
+    "accepted_exit_codes": [
+      1
+    ],
+    "expected_output": [
+      "cannot assign twice to immutable variable"
+    ],
+    "timeout_ms": 300000
+  }
+}

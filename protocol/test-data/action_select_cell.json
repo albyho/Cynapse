@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "8e0d7c61-2b6a-4f1f-9a0e-4c9b6d2a7f10",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellSelect",
+    "path": "ch/intro/lesson.ipynb",
+    "cell_id": "cell-print",
+    "scroll": true,
+    "align": "top-center"
+  }
+}

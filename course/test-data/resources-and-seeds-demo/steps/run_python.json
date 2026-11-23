@@ -1,0 +1,17 @@
+{
+  "step_id": "run_python",
+  "title": "Import a shared Python module",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "python",
+      "cwd": "."
+    },
+    {
+      "type": "TerminalCommand",
+      "session_key": "python",
+      "cwd": ".",
+      "command": "python main.py \"{{resource:ancestor}}/demo_module.py\""
+    }
+  ]
+}

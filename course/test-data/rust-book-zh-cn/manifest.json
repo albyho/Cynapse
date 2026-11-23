@@ -1,0 +1,64 @@
+{
+  "id": "rust_book_zh_cn",
+  "title": "Rust 程序设计语言",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "environment": [
+    {
+      "id": "rustc",
+      "command": "rustc --version",
+      "minimum_version": "1.85.0",
+      "install_hint": "安装或升级 Rust 1.85 或更高版本：https://rustup.rs/"
+    },
+    {
+      "id": "cargo",
+      "command": "cargo --version",
+      "minimum_version": "1.85.0",
+      "install_hint": "安装或升级 Rust 1.85 或更高版本：https://rustup.rs/"
+    }
+  ],
+  "children": [
+    {
+      "id": "ch01_getting_started",
+      "title": "第 1 章：入门指南",
+      "children": [
+        {
+          "id": "main",
+          "title": "第 1 章：入门指南",
+          "steps": [
+            {
+              "step_file": "steps/hello_world_rustc_1.json"
+            },
+            {
+              "step_file": "steps/hello_world_rustc_2.json"
+            },
+            {
+              "step_file": "steps/hello_world_rustc_3.json"
+            },
+            {
+              "step_file": "steps/hello_world_rustc_4.json"
+            },
+            {
+              "step_file": "steps/hello_world_cargo_1.json"
+            },
+            {
+              "step_file": "steps/hello_world_cargo_2.json"
+            },
+            {
+              "step_file": "steps/hello_world_cargo_3.json"
+            },
+            {
+              "step_file": "steps/hello_world_cargo_4.json"
+            },
+            {
+              "step_file": "steps/hello_world_cargo_5.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

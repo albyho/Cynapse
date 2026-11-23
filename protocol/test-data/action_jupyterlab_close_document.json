@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "c7f0a1b2-d354-4e45-8f16-a17b18c19d20",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCloseDocument",
+    "path": "ch/intro/lesson.ipynb"
+  }
+}

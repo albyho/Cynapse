@@ -1,0 +1,5 @@
+{
+  "extension.displayName": "Cynapse VS Code Adapter",
+  "extension.description": "VS Code Adapter for Cynapse precise mode",
+  "cynapse.showStatus.title": "Cynapse: Show VS Code Adapter Status"
+}

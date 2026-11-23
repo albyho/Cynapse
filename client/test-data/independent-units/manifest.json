@@ -1,0 +1,62 @@
+{
+  "id": "independent_units",
+  "title": "Independent Leaves",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch",
+      "title": "Group",
+      "children": [
+        {
+          "id": "unit_a",
+          "title": "Unit A",
+          "steps": [
+            {
+              "step_file": "steps/shared_1.json"
+            }
+          ]
+        },
+        {
+          "id": "unit_b",
+          "title": "Unit B",
+          "steps": [
+            {
+              "step_file": "steps/shared_1_node_unit_b.json"
+            }
+          ]
+        },
+        {
+          "id": "unit_c",
+          "title": "Unit C",
+          "steps": [
+            {
+              "step_file": "steps/shared_1_node_unit_c.json"
+            }
+          ]
+        },
+        {
+          "id": "unit_d",
+          "title": "Unit D",
+          "steps": [
+            {
+              "step_file": "steps/shared_1_node_unit_d.json"
+            }
+          ]
+        },
+        {
+          "id": "unit_e",
+          "title": "Unit E",
+          "steps": [
+            {
+              "step_file": "steps/shared_1_node_unit_e.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

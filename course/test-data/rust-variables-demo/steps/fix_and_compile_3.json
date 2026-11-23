@@ -1,0 +1,20 @@
+{
+  "step_id": "fix_and_compile_3",
+  "title": "改为可变变量并成功运行：运行程序",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "variables",
+      "command": ".\\main.exe",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [
+        "The value of x is: 5",
+        "The value of x is: 6"
+      ],
+      "timeout_ms": 300000
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "presentation_demo",
+  "title": "Presentation Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_presentation",
+      "title": "Pure Presentation",
+      "children": [
+        {
+          "id": "pure_presentation",
+          "title": "Narration only",
+          "steps": [
+            {
+              "step_file": "steps/present_explanation.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

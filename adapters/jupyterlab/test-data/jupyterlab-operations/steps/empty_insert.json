@@ -1,0 +1,35 @@
+{
+  "step_id": "empty_insert",
+  "title": "Insert the first Cell into an empty Notebook",
+  "actions": [
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "empty.ipynb",
+      "cell_id": "cynapse_first",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "empty.ipynb",
+      "cell_id": "cynapse_first",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "print('first cell')\n"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "empty.ipynb",
+      "timeout_ms": 30000,
+      "from_cell_id": "cynapse_first",
+      "to_cell_id": "cynapse_first"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "empty.ipynb",
+      "timeout_ms": 30000
+    }
+  ]
+}

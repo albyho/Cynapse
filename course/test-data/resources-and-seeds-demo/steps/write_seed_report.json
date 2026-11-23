@@ -1,0 +1,10 @@
+{
+  "step_id": "write_seed_report",
+  "title": "Use inherited seed layers",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "seed_report.txt"
+    }
+  ]
+}

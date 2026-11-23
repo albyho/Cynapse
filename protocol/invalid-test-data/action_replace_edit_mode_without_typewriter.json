@@ -1,0 +1,20 @@
+{
+  "v": 3,
+  "id": "bde07ca3-43b0-4683-a05d-cb8b6661d82e",
+  "type": "action",
+  "payload": {
+    "type": "ReplaceText",
+    "path": "src/main.rs",
+    "target": {
+      "start": {
+        "text": "let x = 5;"
+      },
+      "end": {
+        "text": "let x = 5;"
+      },
+      "expected_text": "let x = 5;"
+    },
+    "text": "let mut x = 5;",
+    "edit_mode": "delete_then_type"
+  }
+}

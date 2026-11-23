@@ -1,0 +1,12 @@
+{
+  "v": 3,
+  "id": "a151b195-5f49-44fb-a27c-40ddac92f727",
+  "type": "action",
+  "payload": {
+    "type": "TYPE_CODE",
+    "target_path": "src/main.rs",
+    "line": 1,
+    "speed_ms": 30,
+    "code": "fn main() {}\n"
+  }
+}

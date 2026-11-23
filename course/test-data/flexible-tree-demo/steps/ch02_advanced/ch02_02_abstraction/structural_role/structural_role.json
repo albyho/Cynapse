@@ -1,0 +1,10 @@
+{
+  "step_id": "structural_role",
+  "title": "Structural Role",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "structural_role.txt"
+    }
+  ]
+}

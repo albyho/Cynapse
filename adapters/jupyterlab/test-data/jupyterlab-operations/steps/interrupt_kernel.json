@@ -1,0 +1,10 @@
+{
+  "step_id": "interrupt_kernel",
+  "title": "Interrupt the Kernel",
+  "actions": [
+    {
+      "type": "JupyterLabInterruptKernel",
+      "path": "lesson.ipynb"
+    }
+  ]
+}

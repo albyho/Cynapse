@@ -1,0 +1,31 @@
+{
+  "step_id": "run_rich_output",
+  "title": "Execute a rich-output Cell",
+  "actions": [
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_rich",
+      "after_cell_id": "cynapse_numeric",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_rich",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "from IPython.display import HTML\nHTML('<b>rich output</b>')\n"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "timeout_ms": 30000,
+      "from_cell_id": "cynapse_rich",
+      "to_cell_id": "cynapse_rich"
+    }
+  ]
+}

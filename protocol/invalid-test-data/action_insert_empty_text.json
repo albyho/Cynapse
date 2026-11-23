@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "2f202d82-50b0-4dbd-8094-3f4a65ad58b7",
+  "type": "action",
+  "payload": {
+    "type": "InsertText",
+    "path": "src/main.rs",
+    "target": {
+      "line": 1
+    },
+    "text": ""
+  }
+}

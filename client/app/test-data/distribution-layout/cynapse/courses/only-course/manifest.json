@@ -1,0 +1,13 @@
+{
+  "id": "bundled_welcome",
+  "title": "随包欢迎课程",
+  "children": [
+    {
+      "id": "welcome",
+      "title": "欢迎",
+      "steps": [
+        { "step_file": "steps/welcome.json" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "id": "narration_demo",
+  "title": "Narration Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_narration",
+      "title": "Narrated Action",
+      "children": [
+        {
+          "id": "sec_narration",
+          "title": "Narration across steps",
+          "assets": [
+            {
+              "id": "intro",
+              "path": "assets/intro.ogg"
+            },
+            {
+              "id": "edit",
+              "path": "assets/edit.ogg"
+            },
+            {
+              "id": "debrief",
+              "path": "assets/debrief.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/create_intro.json"
+            },
+            {
+              "step_file": "steps/write_edit.json"
+            },
+            {
+              "step_file": "steps/run_check.json"
+            },
+            {
+              "step_file": "steps/create_silent.json"
+            },
+            {
+              "step_file": "steps/create_debrief.json"
+            }
+          ]
+        },
+        {
+          "id": "sec_delayed_edit",
+          "title": "Narrate, then edit",
+          "assets": [
+            {
+              "id": "delayed",
+              "path": "assets/delayed-intro.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/write_delayed.json"
+            }
+          ]
+        },
+        {
+          "id": "sec_long_narration",
+          "title": "Long narration before the next Step",
+          "assets": [
+            {
+              "id": "long-continuation",
+              "path": "assets/long-continuation.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/write_long_first.json"
+            },
+            {
+              "step_file": "steps/write_long_second.json"
+            }
+          ]
+        },
+        {
+          "id": "sec_single_step_narration",
+          "title": "Narration around one step",
+          "assets": [
+            {
+              "id": "single-intro",
+              "path": "assets/single-step-intro.ogg"
+            },
+            {
+              "id": "single-during",
+              "path": "assets/single-step-rest.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/write_single.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

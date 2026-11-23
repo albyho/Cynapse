@@ -1,0 +1,9 @@
+{
+  "v": 3,
+  "id": "ce79b988-9d7c-46fa-8791-f5da94c922b1",
+  "type": "action",
+  "payload": {
+    "type": "OpenFile",
+    "path": "src/main.rs"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "id": "node_abstraction",
+  "title": "《Node 抽象》",
+  "version": "1.0.1",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "steps": [
+        {
+          "step_file": "steps/intro/intro_overview.json"
+        }
+      ]
+    },
+    {
+      "id": "ch01_basics",
+      "title": "第一章 基础",
+      "children": [
+        {
+          "id": "what_is_node",
+          "title": "1.1 什么是 Node",
+          "steps": [
+            {
+              "step_file": "steps/ch01_basics/what_is_node/what_is_node.json"
+            }
+          ]
+        },
+        {
+          "id": "tree_and_recursion",
+          "title": "1.2 树与递归",
+          "steps": [
+            {
+              "step_file": "steps/ch01_basics/tree_and_recursion/tree_and_recursion.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch02_advanced",
+      "title": "第二章 进阶",
+      "children": [
+        {
+          "id": "discriminated_union",
+          "title": "2.1 可辨识联合",
+          "steps": [
+            {
+              "step_file": "steps/ch02_advanced/discriminated_union/discriminated_union.json"
+            }
+          ]
+        },
+        {
+          "id": "ch02_02_abstraction",
+          "title": "2.2 抽象层次",
+          "children": [
+            {
+              "id": "structural_role",
+              "title": "2.2.1 结构角色",
+              "steps": [
+                {
+                  "step_file": "steps/ch02_advanced/ch02_02_abstraction/structural_role/structural_role.json"
+                }
+              ]
+            },
+            {
+              "id": "business_semantics",
+              "title": "2.2.2 业务语义",
+              "steps": [
+                {
+                  "step_file": "steps/ch02_advanced/ch02_02_abstraction/business_semantics/business_semantics.json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "appendix",
+      "title": "附录",
+      "steps": [
+        {
+          "step_file": "steps/appendix/appendix_summary.json"
+        }
+      ]
+    }
+  ]
+}

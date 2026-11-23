@@ -1,0 +1,10 @@
+{
+  "step_id": "scroll_align_close",
+  "title": "Close the scroll alignment fixture",
+  "actions": [
+    {
+      "type": "JupyterLabCloseDocument",
+      "path": "scroll_align.ipynb"
+    }
+  ]
+}

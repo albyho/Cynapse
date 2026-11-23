@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "9842a638-e75c-43b4-86cb-720260b2e19c",
+  "type": "action",
+  "payload": {
+    "type": "TerminalEnsure",
+    "session_key": "main",
+    "cwd": "."
+  }
+}

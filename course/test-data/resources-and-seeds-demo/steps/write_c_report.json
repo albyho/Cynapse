@@ -1,0 +1,10 @@
+{
+  "step_id": "write_c_report",
+  "title": "Resolve C and shared resources：创建文件",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "c_report.txt"
+    }
+  ]
+}

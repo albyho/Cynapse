@@ -1,0 +1,10 @@
+{
+  "step_id": "manual",
+  "title": "Complete the exercise",
+  "requires_human": true,
+  "actions": [
+    {
+      "type": "Present"
+    }
+  ]
+}

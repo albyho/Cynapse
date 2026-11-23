@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "a7c9e1b3-5d70-4f29-9b48-6e0a2c4f8d17",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabInterruptKernel",
+    "path": "ch/intro/lesson.ipynb"
+  }
+}

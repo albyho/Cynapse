@@ -1,0 +1,12 @@
+[package]
+name = "cynapse-client-i18n"
+version.workspace = true
+edition = "2024"
+rust-version = "1.100.0"
+publish = false
+
+[dependencies]
+rust-i18n = "4"
+
+[dev-dependencies]
+serde-saphyr = "1"

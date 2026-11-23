@@ -1,0 +1,18 @@
+{
+  "v": 3,
+  "id": "b3120eda-20e3-4b7f-844f-e5b08d820619",
+  "type": "action",
+  "payload": {
+    "type": "DeleteText",
+    "path": "src/main.rs",
+    "target": {
+      "cursor": {
+        "line": 1,
+        "column": 0,
+        "direction": "backspace",
+        "count": 1
+      }
+    },
+    "direction": "backspace"
+  }
+}

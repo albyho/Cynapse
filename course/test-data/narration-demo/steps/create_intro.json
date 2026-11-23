@@ -1,0 +1,22 @@
+{
+  "step_id": "create_intro",
+  "title": "Prepare",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "intro.txt",
+      "narration": {
+        "before": {
+          "asset_id": "intro",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 5872,
+              "caption": "我们先听一段讲解，讲解结束后再创建练习文件。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

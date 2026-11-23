@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "1f5d0e3c-6c2a-4f8b-9d7e-3a4b5c6d7e8f",
+  "type": "ack",
+  "payload": {
+    "status": "error",
+    "code": "token_mismatch",
+    "message": "invalid adapter token"
+  }
+}

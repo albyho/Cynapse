@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cynapse 隐私政策</title>
+  <style>
+    body {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      line-height: 1.7;
+      color: #222;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 19px; margin-top: 32px; }
+    footer { margin-top: 48px; color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Cynapse 隐私政策</h1>
+  <p>生效日期：2026 年 11 月 22 日</p>
+
+  <p>
+    Cynapse 是一个本地优先的交互式软件教程平台。我们尊重你的隐私：本应用不采集、
+    不传输、不存储任何个人数据到远程服务器。
+  </p>
+
+  <h2>数据收集</h2>
+  <p>
+    Cynapse 不包含分析、广告、崩溃上报或遥测功能。所有课程内容、工作区文件和
+    应用状态都保存在你自己的设备上。应用运行时不需要登录账号，也不连接任何
+    外部服务。
+  </p>
+
+  <h2>本地进程与网络</h2>
+  <p>
+    当你启动某个课程步骤时，应用可能会根据课程需要启动你本机已安装的程序
+    （例如终端、VS Code 或 JupyterLab）。这些程序以你自己的用户账户运行，
+    受其各自的隐私政策约束。
+  </p>
+  <p>
+    应用会在 <code>127.0.0.1</code> 上开一个仅本机可访问的本地服务端口，供本机
+    适配器连接。该端口不监听外部网络，不向任何远程主机发送数据。
+  </p>
+
+  <h2>课程包安全</h2>
+  <p>
+    Cynapse 通过课程包加载课程内容。课程包可能以压缩包或目录形式分发，目前客户端
+    以目录形式读取。课程包可能包含终端命令、文件操作，并可启动你本机已安装的
+    程序，这些操作都以你自己的用户权限运行。
+  </p>
+  <p>
+    因此，请<strong>只从你信任的来源获取课程包</strong>，不要下载或打开来源不明、
+    不可信的课程包。Cynapse 不审核、不担保第三方课程包的内容，也无法撤销其
+    已执行的操作。打开课程包即表示你已了解并接受它可能执行的操作；加载不熟悉的
+    内容前，请先检查其中包含的步骤。
+  </p>
+
+  <h2>文件系统访问</h2>
+  <p>
+    应用读取你主动打开的课程包，并把工作区文件写在课程包所在目录。应用状态
+    保存在 <code>%LOCALAPPDATA%</code>。这些文件都在你的本地设备上，你可以随时
+    自行删除。
+  </p>
+
+  <h2>第三方服务</h2>
+  <p>
+    Cynapse 本身不集成任何第三方云服务。VS Code 适配器与 JupyterLab 适配器
+    通过各自的官方渠道分发，其使用受对应服务的条款约束。
+  </p>
+
+  <h2>联系我们</h2>
+  <p>如有隐私相关问题，请通过 <a href="https://github.com/albyho">GitHub</a> 联系。</p>
+
+  <footer>
+    <p>本政策可能随版本更新调整，变更会在此页面公布。</p>
+  </footer>
+</body>
+</html>

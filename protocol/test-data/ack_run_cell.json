@@ -1,0 +1,34 @@
+{
+  "v": 3,
+  "id": "d4a17e82-9c35-4b6e-8f02-5a7c1b9e3d64",
+  "type": "ack",
+  "payload": {
+    "status": "done",
+    "execution_count": 7,
+    "error": {
+      "ename": "ValueError",
+      "evalue": "bad input",
+      "traceback": [
+        "Traceback (most recent call last)",
+        "ValueError: bad input"
+      ]
+    },
+    "outputs": [
+      {
+        "output_type": "stream",
+        "mime_types": [],
+        "size": 12
+      },
+      {
+        "output_type": "display_data",
+        "mime_types": [
+          "image/png",
+          "text/plain"
+        ],
+        "size": 4812
+      }
+    ],
+    "output": "ValueError: bad input\n",
+    "output_truncated": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "step_id": "edit_1",
+  "title": "Edit Content",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "edit.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "edit.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "edit.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "edited\n",
+      "speed_ms": 10
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "step_id": "human_tail",
+  "title": "Human step with narration tail",
+  "requires_human": true,
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "human-tail.txt",
+      "narration": {
+        "during": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 500,
+              "caption": "Finish this explanation before human work begins."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

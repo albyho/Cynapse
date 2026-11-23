@@ -1,0 +1,23 @@
+{
+  "step_id": "integration_1",
+  "title": "Integration Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "integration.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "integration.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "integration.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "integration\n",
+      "speed_ms": 10
+    }
+  ]
+}

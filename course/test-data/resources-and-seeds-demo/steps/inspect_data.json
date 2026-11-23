@@ -1,0 +1,17 @@
+{
+  "step_id": "inspect_data",
+  "title": "Resolve C and shared resources：执行组合操作（2）",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "aux",
+      "cwd": "."
+    },
+    {
+      "type": "TerminalCommand",
+      "session_key": "aux",
+      "cwd": ".",
+      "command": "python -c \"print('{{resource:node}}/data.txt')\""
+    }
+  ]
+}

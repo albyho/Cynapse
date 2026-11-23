@@ -1,0 +1,17 @@
+{
+  "step_id": "scroll_align_start",
+  "title": "Scroll align: start (target top at the viewport top)",
+  "actions": [
+    {
+      "type": "JupyterLabOpenNotebook",
+      "path": "scroll_align.ipynb"
+    },
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "scroll_align.ipynb",
+      "cell_id": "align_target",
+      "scroll": true,
+      "align": "start"
+    }
+  ]
+}

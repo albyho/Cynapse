@@ -1,0 +1,19 @@
+{
+  "step_id": "hello_world_rustc_4",
+  "title": "1.2 Hello, world!：运行程序",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "hello_world",
+      "command": ".\\main.exe",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [
+        "Hello, world!"
+      ],
+      "timeout_ms": 300000
+    }
+  ]
+}

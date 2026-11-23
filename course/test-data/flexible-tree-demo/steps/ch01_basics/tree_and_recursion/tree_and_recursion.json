@@ -1,0 +1,10 @@
+{
+  "step_id": "tree_and_recursion",
+  "title": "Tree and Recursion",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "tree_and_recursion.txt"
+    }
+  ]
+}

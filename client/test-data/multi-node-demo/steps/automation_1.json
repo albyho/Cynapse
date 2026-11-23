@@ -1,0 +1,23 @@
+{
+  "step_id": "automation_1",
+  "title": "Automation Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "automation.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "automation.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "automation.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "automated\n",
+      "speed_ms": 10
+    }
+  ]
+}

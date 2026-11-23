@@ -1,0 +1,26 @@
+{
+  "step_id": "retry_second_action",
+  "title": "Retry the Step from its first Action",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "retry-first.txt"
+    },
+    {
+      "type": "CreateFile",
+      "path": "retry-second.txt",
+      "narration": {
+        "during": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 500,
+              "caption": "Retry replays this narration from the Step start."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

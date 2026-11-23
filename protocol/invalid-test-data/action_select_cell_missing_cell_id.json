@@ -1,0 +1,9 @@
+{
+  "v": 3,
+  "id": "c3d5e7f9-1b20-4a42-8c64-0e2a4f6b8d19",
+  "type": "action",
+  "payload": {
+    "type": "JupyterLabCellSelect",
+    "path": "ch/intro/lesson.ipynb"
+  }
+}

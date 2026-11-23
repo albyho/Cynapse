@@ -1,0 +1,35 @@
+{
+  "id": "multi_unit_demo",
+  "title": "Multi-Unit Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_units",
+      "title": "Unit Navigation",
+      "children": [
+        {
+          "id": "first_unit",
+          "title": "First Unit",
+          "steps": [
+            {
+              "step_file": "steps/shared_1.json"
+            }
+          ]
+        },
+        {
+          "id": "second_unit",
+          "title": "Second Unit",
+          "steps": [
+            {
+              "step_file": "steps/shared_1_ch_units_second_unit.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

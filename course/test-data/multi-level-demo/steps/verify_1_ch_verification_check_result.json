@@ -1,0 +1,11 @@
+{
+  "step_id": "verify_1_ch_verification_check_result",
+  "title": "Verify Result",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "verified.txt",
+      "create_parents": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "v": 3,
+  "id": "76ec82a6-f67e-42ba-b318-e68f07623908",
+  "type": "action",
+  "payload": {
+    "type": "ReplaceText",
+    "path": "src/main.rs",
+    "selector": {
+      "kind": "literal",
+      "text": "let x = 5;"
+    },
+    "replacement": "let mut x = 5;"
+  }
+}

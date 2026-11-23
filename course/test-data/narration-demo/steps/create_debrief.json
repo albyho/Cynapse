@@ -1,0 +1,22 @@
+{
+  "step_id": "create_debrief",
+  "title": "Debrief",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "debrief.txt",
+      "narration": {
+        "after": {
+          "asset_id": "debrief",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 6552,
+              "caption": "命令已经完成。最后这段讲解会在操作结束后继续。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

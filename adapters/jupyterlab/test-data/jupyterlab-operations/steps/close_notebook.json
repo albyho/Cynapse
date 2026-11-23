@@ -1,0 +1,10 @@
+{
+  "step_id": "close_notebook",
+  "title": "Close the Notebook",
+  "actions": [
+    {
+      "type": "JupyterLabCloseDocument",
+      "path": "lesson.ipynb"
+    }
+  ]
+}

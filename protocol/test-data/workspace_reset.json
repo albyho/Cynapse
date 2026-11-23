@@ -1,0 +1,11 @@
+{
+  "v": 3,
+  "id": "1e892266-b80d-4614-8be2-09a1dbcc40da",
+  "type": "workspace_reset",
+  "payload": {
+    "paths": [
+      "src",
+      "hello_cargo"
+    ]
+  }
+}

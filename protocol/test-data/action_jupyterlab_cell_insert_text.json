@@ -1,0 +1,16 @@
+{
+  "v": 3,
+  "id": "f4c7d8e9-a021-4b12-9c13-d14e15f16a17",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellInsertText",
+    "path": "ch/intro/lesson.ipynb",
+    "cell_id": "cell-print",
+    "target": {
+      "eof": true
+    },
+    "text": "print('hello')\n",
+    "speed_ms": 30
+  }
+}

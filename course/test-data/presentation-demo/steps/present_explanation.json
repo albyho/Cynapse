@@ -1,0 +1,21 @@
+{
+  "step_id": "present_explanation",
+  "title": "Pure explanation",
+  "actions": [
+    {
+      "type": "Present",
+      "source": "human_record",
+      "confidence": 1,
+      "narration": {
+        "before": {
+          "clips": [
+            {
+              "duration_ms": 2500,
+              "caption": "纯讲解也可以完全由内联字幕和 Action 旁白阶段承载。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "step_id": "run_numeric",
+  "title": "Execute a numeric Cell",
+  "actions": [
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_numeric",
+      "after_cell_id": "cynapse_demo_1",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_numeric",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "baseline ** 4\n"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "timeout_ms": 30000,
+      "from_cell_id": "cynapse_numeric",
+      "to_cell_id": "cynapse_numeric"
+    }
+  ]
+}

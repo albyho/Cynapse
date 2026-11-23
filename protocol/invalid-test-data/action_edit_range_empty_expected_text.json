@@ -1,0 +1,19 @@
+{
+  "v": 3,
+  "id": "a3d80c9c-3c89-4d1e-9a94-0307619c354f",
+  "type": "action",
+  "payload": {
+    "type": "ReplaceText",
+    "path": "src/main.rs",
+    "target": {
+      "start": {
+        "line": 1
+      },
+      "end": {
+        "line": 2
+      },
+      "expected_text": ""
+    },
+    "text": "replacement"
+  }
+}

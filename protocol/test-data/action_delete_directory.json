@@ -1,0 +1,11 @@
+{
+  "v": 3,
+  "id": "a3b45a86-9a45-4277-9d38-69ee4fd45b46",
+  "type": "action",
+  "payload": {
+    "type": "DeleteDirectory",
+    "path": "lesson",
+    "recursive": false,
+    "if_missing": "ignore"
+  }
+}

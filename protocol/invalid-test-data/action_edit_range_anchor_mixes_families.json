@@ -1,0 +1,20 @@
+{
+  "v": 3,
+  "id": "8ad50b72-6d96-4df0-b8b1-77f4f8d5ddf4",
+  "type": "action",
+  "payload": {
+    "type": "ReplaceText",
+    "path": "src/main.rs",
+    "target": {
+      "start": {
+        "line": 1,
+        "text": "fn main"
+      },
+      "end": {
+        "line": 2
+      },
+      "expected_text": "fn main() {}"
+    },
+    "text": "fn run() {}"
+  }
+}

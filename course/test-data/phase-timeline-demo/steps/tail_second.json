@@ -1,0 +1,10 @@
+{
+  "step_id": "tail_second",
+  "title": "Step after the narration tail",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "tail-second.txt"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "step_id": "move_duplicate",
+  "title": "Insert above, move, and duplicate a Cell",
+  "actions": [
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_before",
+      "before_cell_id": "intro",
+      "cell_type": "markdown",
+      "source": "## Inserted before the intro"
+    },
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move",
+      "after_cell_id": "setup",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "print('move')\n"
+    },
+    {
+      "type": "JupyterLabCellMove",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move",
+      "direction": "up"
+    },
+    {
+      "type": "JupyterLabCellMove",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move",
+      "direction": "down"
+    },
+    {
+      "type": "JupyterLabCellDuplicate",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move",
+      "new_cell_id": "cynapse_move_copy"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "from_cell_id": "cynapse_move",
+      "to_cell_id": "cynapse_move"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "from_cell_id": "cynapse_move_copy",
+      "to_cell_id": "cynapse_move_copy"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_before"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_move_copy"
+    }
+  ]
+}

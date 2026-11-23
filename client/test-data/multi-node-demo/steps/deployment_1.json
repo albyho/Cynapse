@@ -1,0 +1,23 @@
+{
+  "step_id": "deployment_1",
+  "title": "Deployment Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "deployment.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "deployment.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "deployment.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "deployed\n",
+      "speed_ms": 10
+    }
+  ]
+}

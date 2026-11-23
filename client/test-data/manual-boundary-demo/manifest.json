@@ -1,0 +1,29 @@
+{
+  "id": "manual_boundary_demo",
+  "title": "Manual Boundary Demo",
+  "version": "1.0.0",
+  "adapters": [],
+  "children": [
+    {
+      "id": "ch",
+      "title": "Manual Boundary",
+      "children": [
+        {
+          "id": "unit",
+          "title": "Continuous Learning",
+          "steps": [
+            {
+              "step_file": "steps/introduce.json"
+            },
+            {
+              "step_file": "steps/manual.json"
+            },
+            {
+              "step_file": "steps/continue.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "v": 3,
+  "id": "2725e8be-e2f3-4936-a08e-91a3fb252d0f",
+  "type": "cancel",
+  "payload": {
+    "target_id": "6b7e7f32-4aef-4f92-a4c3-8b3219bbd5e1",
+    "reason": "user_stop"
+  }
+}

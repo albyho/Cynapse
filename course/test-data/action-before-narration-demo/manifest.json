@@ -1,0 +1,50 @@
+{
+  "id": "action_before_narration_demo",
+  "title": "Action Before Narration Demo",
+  "version": "1.0.4",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "before",
+      "title": "Action Before Narration",
+      "children": [
+        {
+          "id": "demo",
+          "title": "Listen, then create",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/combined-narration.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/create_notice.json"
+            },
+            {
+              "step_file": "steps/create_result.json"
+            }
+          ]
+        },
+        {
+          "id": "offset_test",
+          "title": "Start second sentence at 5.000s",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/combined-narration.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/create_result.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

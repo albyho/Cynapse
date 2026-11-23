@@ -1,0 +1,23 @@
+{
+  "step_id": "foundation_1",
+  "title": "Foundation Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "foundation.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "foundation.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "foundation.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "foundation\n",
+      "speed_ms": 10
+    }
+  ]
+}

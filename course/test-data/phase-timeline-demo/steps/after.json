@@ -1,0 +1,26 @@
+{
+  "step_id": "after",
+  "title": "After narration",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "after-first.txt",
+      "narration": {
+        "after": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 500,
+              "caption": "After clip"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "CreateFile",
+      "path": "after-second.txt"
+    }
+  ]
+}

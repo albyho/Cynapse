@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  本地注册用模板。`pnpm build:msix` 会把它复制到 packaging/msix/stage/
+  并填入四段版本号。
+
+  三处身份从同目录的 identity.json 读取，值必须从 Partner Center → Product
+  identity 原样复制，手敲一个字符不符包就会被拒。环境变量 MSIX_IDENTITY /
+  MSIX_PUBLISHER / MSIX_PUBLISHER_DISPLAY_NAME 可覆盖（CI 用）。
+  两者都没有时脚本保留下面的本地占位身份，只适用于开发机松散注册。
+-->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <Identity
+    Name="__IDENTITY__"
+    Publisher="__PUBLISHER__"
+    Version="__VERSION__"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Cynapse</DisplayName>
+    <PublisherDisplayName>__PUBLISHER_DISPLAY_NAME__</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>交互式软件教程与工作流平台</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.22621.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="zh-CN" />
+    <Resource Language="en-US" />
+  </Resources>
+
+  <Applications>
+    <!-- EntryPoint=Windows.FullTrustApplication 即 full trust（mediumIL），
+         配合下方 runFullTrust 能力，应用不在 AppContainer 里跑：
+         loopback 连接、子进程、任意路径读写都按普通桌面程序处理。 -->
+    <Application Id="Cynapse" Executable="cynapse-client.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="Cynapse"
+        Description="交互式软件教程与工作流平台"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile
+          Square71x71Logo="Assets\Square71x71Logo.png"
+          Square310x310Logo="Assets\Square310x310Logo.png"
+          Wide310x150Logo="Assets\Wide310x150Logo.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>

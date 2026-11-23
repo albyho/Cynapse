@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "b5aa1d31-89ca-4569-bb22-f42d31ea6264",
+  "type": "action",
+  "payload": {
+    "type": "DeleteFile",
+    "path": "lesson/src/hello.txt",
+    "if_missing": "ignore"
+  }
+}

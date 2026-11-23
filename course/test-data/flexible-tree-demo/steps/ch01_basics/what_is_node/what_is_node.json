@@ -1,0 +1,10 @@
+{
+  "step_id": "what_is_node",
+  "title": "What is a Node",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "what_is_node.txt"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+packages:
+  - adapters/adapter-kit
+  - adapters/vscode
+  - adapters/jupyterlab
+
+allowBuilds:
+  esbuild: true
+  '@fortawesome/fontawesome-free': true
+  '@vscode/vsce-sign': false
+  keytar: false
+
+minimumReleaseAgeExclude:
+  - prettier@3.10.0

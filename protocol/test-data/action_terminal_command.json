@@ -1,0 +1,17 @@
+{
+  "v": 3,
+  "id": "e9276ab1-a512-460b-a12b-1a210e75ae27",
+  "type": "action",
+  "payload": {
+    "type": "TerminalCommand",
+    "session_key": "main",
+    "cwd": "hello_world",
+    "command": "rustc main.rs",
+    "accepted_exit_codes": [
+      0
+    ],
+    "expected_output": [],
+    "timeout_ms": 300000,
+    "new_terminal": true
+  }
+}

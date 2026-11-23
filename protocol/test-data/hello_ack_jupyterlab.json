@@ -1,0 +1,8 @@
+{
+  "v": 3,
+  "id": "9f1e4c2b-7b68-4b30-a04f-4d7e3c2b1a22",
+  "type": "hello_ack",
+  "payload": {
+    "adapter": "jupyterlab"
+  }
+}

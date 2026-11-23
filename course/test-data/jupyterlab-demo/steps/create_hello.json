@@ -1,0 +1,10 @@
+{
+  "step_id": "create_hello",
+  "title": "Create hello.txt",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "hello.txt"
+    }
+  ]
+}

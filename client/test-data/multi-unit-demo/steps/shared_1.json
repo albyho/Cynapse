@@ -1,0 +1,23 @@
+{
+  "step_id": "shared_1",
+  "title": "Reusable Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "multi_unit_demo.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "multi_unit_demo.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "multi_unit_demo.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "shared\n",
+      "speed_ms": 10
+    }
+  ]
+}

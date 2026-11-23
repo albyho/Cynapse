@@ -1,0 +1,35 @@
+{
+  "step_id": "restart_kernel",
+  "title": "Restart the Kernel and run again",
+  "actions": [
+    {
+      "type": "JupyterLabRestartKernel",
+      "path": "lesson.ipynb"
+    },
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_after_restart",
+      "after_cell_id": "setup",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_after_restart",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "print('after restart', math.sqrt(9))\n"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "timeout_ms": 30000,
+      "from_cell_id": "setup",
+      "to_cell_id": "cynapse_after_restart"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "step_id": "caption_only",
+  "title": "Caption-only narration",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "caption-only.txt",
+      "narration": {
+        "before": {
+          "clips": [
+            {
+              "duration_ms": 500,
+              "caption": "This narration has no audio."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

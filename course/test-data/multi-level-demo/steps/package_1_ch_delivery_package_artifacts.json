@@ -1,0 +1,11 @@
+{
+  "step_id": "package_1_ch_delivery_package_artifacts",
+  "title": "Package Output",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "package.txt",
+      "create_parents": true
+    }
+  ]
+}

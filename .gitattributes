@@ -1,0 +1,31 @@
+* text=auto
+
+Cargo.lock text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.gitmodules text eol=lf
+
+*.rs text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.vue text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.py text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+
+*.ogg binary
+*.png binary
+*.jpg binary
+.githooks/* text eol=lf
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.zip binary
+*.cynpkg binary

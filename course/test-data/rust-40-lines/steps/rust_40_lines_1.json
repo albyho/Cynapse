@@ -1,0 +1,23 @@
+{
+  "step_id": "rust_40_lines_1",
+  "title": "Write a 40-line Rust lesson",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "src/main.rs"
+    },
+    {
+      "type": "OpenFile",
+      "path": "src/main.rs"
+    },
+    {
+      "type": "InsertText",
+      "path": "src/main.rs",
+      "target": {
+        "line": 1
+      },
+      "text": "// A 40-line Rust baseline used by Cynapse.\n\n#[derive(Debug, Clone)]\nstruct Lesson {\n    title: String,\n    completed: bool,\n}\n\nimpl Lesson {\n    fn new(title: &str) -> Self {\n        Self {\n            title: title.to_string(),\n            completed: false,\n        }\n    }\n\n    fn complete(&mut self) {\n        self.completed = true;\n    }\n}\n\nfn main() {\n    let mut lessons = Vec::new();\n\n    lessons.push(Lesson::new(\"Variables\"));\n    lessons.push(Lesson::new(\"Functions\"));\n    lessons.push(Lesson::new(\"Ownership\"));\n\n    if let Some(first) = lessons.first_mut() {\n        first.complete();\n    }\n\n    let completed = lessons\n        .iter()\n        .filter(|lesson| lesson.completed)\n        .count();\n\n    println!(\"Lessons: {}\", lessons.len());\n    println!(\"Completed: {}\", completed);\n}",
+      "speed_ms": 30
+    }
+  ]
+}

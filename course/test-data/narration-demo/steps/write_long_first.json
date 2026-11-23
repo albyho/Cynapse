@@ -1,0 +1,35 @@
+{
+  "step_id": "write_long_first",
+  "title": "First edit",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "long_edit.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "long_edit.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "long_edit.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "// first line while narration continues\n",
+      "speed_ms": 35,
+      "narration": {
+        "during": {
+          "asset_id": "long-continuation",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 5132,
+              "caption": "代码输入完成后，讲解还会继续，用来说明这次操作的结果。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

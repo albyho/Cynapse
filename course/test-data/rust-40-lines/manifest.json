@@ -1,0 +1,26 @@
+{
+  "id": "rust_40_line_baseline",
+  "title": "Rust 40-Line Baseline",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_rust_40_lines",
+      "title": "40-Line Demonstration",
+      "children": [
+        {
+          "id": "main",
+          "title": "40-Line Demonstration",
+          "steps": [
+            {
+              "step_file": "steps/rust_40_lines_1.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

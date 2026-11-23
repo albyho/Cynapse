@@ -1,0 +1,15 @@
+{
+  "v": 3,
+  "id": "8a1f2c3d-4e5b-4c6d-8e9f-0a1b2c3d4e5f",
+  "type": "action",
+  "payload": {
+    "type": "InsertText",
+    "path": "src/main.rs",
+    "target": {
+      "line": 1
+    },
+    "text": "fn main() {}\n",
+    "speed_ms": 30,
+    "target_hold_ms": 125
+  }
+}

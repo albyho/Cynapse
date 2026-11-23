@@ -1,0 +1,23 @@
+{
+  "step_id": "create_notice",
+  "title": "先听讲解，再创建文件",
+  "requires_human": false,
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "before-narration.txt",
+      "narration": {
+        "before": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 3716,
+              "caption": "先听完这段讲解，再创建第一个文本文件。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

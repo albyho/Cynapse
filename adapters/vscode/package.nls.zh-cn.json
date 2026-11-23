@@ -1,0 +1,5 @@
+{
+  "extension.displayName": "Cynapse VS Code 适配器",
+  "extension.description": "Cynapse 精确模式的 VS Code 适配器",
+  "cynapse.showStatus.title": "Cynapse: 显示 VS Code Adapter 状态"
+}

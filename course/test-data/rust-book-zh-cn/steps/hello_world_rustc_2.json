@@ -1,0 +1,11 @@
+{
+  "step_id": "hello_world_rustc_2",
+  "title": "1.2 Hello, world!：打开终端",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "main",
+      "cwd": "hello_world"
+    }
+  ]
+}

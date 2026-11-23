@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "d4a17e82-9c35-4b6e-8f02-5a7c1b9e3d64",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellRun",
+    "path": "ch/intro/lesson.ipynb",
+    "from_cell_id": "cell-print",
+    "to_cell_id": "cell-print",
+    "timeout_ms": 120000
+  }
+}

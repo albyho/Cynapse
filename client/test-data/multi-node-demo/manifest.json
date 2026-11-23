@@ -1,0 +1,131 @@
+{
+  "id": "multi_module_demo",
+  "title": "Multi-Group Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_foundation",
+      "title": "Foundation Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Foundation Group",
+          "steps": [
+            {
+              "step_file": "steps/foundation_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_workspace_basics",
+      "title": "Workspace Basics",
+      "children": [
+        {
+          "id": "main",
+          "title": "Workspace Basics",
+          "steps": [
+            {
+              "step_file": "steps/workspace_basics_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_configuration",
+      "title": "Configuration Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Configuration Group",
+          "steps": [
+            {
+              "step_file": "steps/configuration_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_validation",
+      "title": "Validation Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Validation Group",
+          "steps": [
+            {
+              "step_file": "steps/validation_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_advanced",
+      "title": "Advanced Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Advanced Group",
+          "steps": [
+            {
+              "step_file": "steps/advanced_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_integration",
+      "title": "Integration Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Integration Group",
+          "steps": [
+            {
+              "step_file": "steps/integration_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_automation",
+      "title": "Automation Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Automation Group",
+          "steps": [
+            {
+              "step_file": "steps/automation_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_deployment",
+      "title": "Deployment Group",
+      "children": [
+        {
+          "id": "main",
+          "title": "Deployment Group",
+          "steps": [
+            {
+              "step_file": "steps/deployment_1.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

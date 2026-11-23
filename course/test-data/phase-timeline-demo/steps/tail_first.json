@@ -1,0 +1,22 @@
+{
+  "step_id": "tail_first",
+  "title": "Action with a narration tail",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "tail-first.txt",
+      "narration": {
+        "during": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 500,
+              "caption": "The narration continues after the Action completes."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

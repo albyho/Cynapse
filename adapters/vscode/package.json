@@ -1,0 +1,57 @@
+{
+  "name": "cynapse-vscode-adapter",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
+  "version": "0.9.0",
+  "publisher": "tubumu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/albyho/Cynapse-release.git"
+  },
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.140.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cynapse.showStatus",
+        "title": "%cynapse.showStatus.title%"
+      }
+    ]
+  },
+  "scripts": {
+    "precompile": "pnpm --filter @cynapse/adapter-kit build",
+    "compile": "node -e \"require('node:fs').rmSync('out',{recursive:true,force:true})\" && tsc -p ./",
+    "format:check": "node scripts/checkChangedFormat.mjs",
+    "watch": "tsc -w -p ./",
+    "test": "pnpm compile && node --test --test-reporter=dot \"out/*.test.js\"",
+    "prebundle": "pnpm --filter @cynapse/adapter-kit build",
+    "bundle": "esbuild src/extension.ts --bundle --platform=node --external:vscode --external:bufferutil --external:utf-8-validate --outfile=out/extension.js",
+    "package": "pnpm bundle && node -e \"require('node:fs').mkdirSync('dist',{recursive:true})\" && vsce package --no-dependencies --out dist/cynapse-vscode-adapter.vsix"
+  },
+  "dependencies": {
+    "@cynapse/adapter-kit": "workspace:*",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "1.140.0",
+    "@types/ws": "^8.5.0",
+    "@vscode/vsce": "^3.0.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "esbuild": "^0.25.0",
+    "prettier": "^3.10.0",
+    "typescript": "^5.6.0"
+  }
+}

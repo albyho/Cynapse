@@ -1,0 +1,24 @@
+{
+  "step_id": "terminal",
+  "title": "Run a terminal command",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "operations",
+      "cwd": "."
+    },
+    {
+      "type": "TerminalCommand",
+      "session_key": "operations",
+      "cwd": ".",
+      "command": "python -c \"print('terminal-ok')\"",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [
+        "terminal-ok"
+      ],
+      "timeout_ms": 30000
+    }
+  ]
+}

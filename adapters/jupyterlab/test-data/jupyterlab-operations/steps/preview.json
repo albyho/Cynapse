@@ -1,0 +1,17 @@
+{
+  "step_id": "preview",
+  "title": "Preview the introduction",
+  "actions": [
+    {
+      "type": "JupyterLabOpenPreview",
+      "path": "INTRO.md"
+    },
+    {
+      "type": "JupyterLabCloseDocument",
+      "path": "INTRO.md"
+    },
+    {
+      "type": "Present"
+    }
+  ]
+}

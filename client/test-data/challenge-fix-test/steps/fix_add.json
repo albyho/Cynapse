@@ -1,0 +1,24 @@
+{
+  "step_id": "fix_add",
+  "title": "Fix add()",
+  "actions": [
+    { "type": "OpenFile", "path": "src/add.js" },
+    { "type": "TerminalEnsure", "session_key": "main", "cwd": "." }
+  ],
+  "challenge": {
+    "instructions": "Fix src/add.js so the test passes.",
+    "checks": [
+      {
+        "type": "COMMAND",
+        "session_key": "main",
+        "cwd": ".",
+        "command": "node --test",
+        "accepted_exit_codes": [0],
+        "expected_output": [],
+        "timeout_ms": 300000
+      }
+    ],
+    "hint": "Check the operator in add().",
+    "allow_skip": true
+  }
+}

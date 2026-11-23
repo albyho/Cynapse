@@ -1,0 +1,152 @@
+{
+  "id": "phase_timeline_demo",
+  "title": "Action Narration Phase Timeline",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "phases",
+      "title": "Action Narration Phases",
+      "children": [
+        {
+          "id": "before",
+          "title": "Before only",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/before.json"
+            }
+          ]
+        },
+        {
+          "id": "during",
+          "title": "During only",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/during.json"
+            }
+          ]
+        },
+        {
+          "id": "after",
+          "title": "After only",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/after.json"
+            }
+          ]
+        },
+        {
+          "id": "before_during",
+          "title": "Before and During",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/before_during.json"
+            }
+          ]
+        },
+        {
+          "id": "before_after",
+          "title": "Before and After",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/before_after.json"
+            }
+          ]
+        },
+        {
+          "id": "caption_only",
+          "title": "Caption only",
+          "steps": [
+            {
+              "step_file": "steps/caption_only.json"
+            }
+          ]
+        },
+        {
+          "id": "mode_boundaries",
+          "title": "Learning mode boundaries",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/tail_first.json"
+            },
+            {
+              "step_file": "steps/tail_second.json"
+            }
+          ]
+        },
+        {
+          "id": "human_tail",
+          "title": "Human boundary with narration tail",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/human_tail.json"
+            },
+            {
+              "step_file": "steps/tail_second.json"
+            }
+          ]
+        },
+        {
+          "id": "retry_from_first",
+          "title": "Step-scoped narration retry",
+          "assets": [
+            {
+              "id": "narration",
+              "path": "assets/narration/phases.ogg"
+            }
+          ],
+          "steps": [
+            {
+              "step_file": "steps/retry_second_action.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

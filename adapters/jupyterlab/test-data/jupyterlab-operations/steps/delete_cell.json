@@ -1,0 +1,31 @@
+{
+  "step_id": "delete_cell",
+  "title": "Delete Adapter-inserted Cells",
+  "actions": [
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_markdown_1"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_demo_1"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_numeric"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_rich"
+    },
+    {
+      "type": "JupyterLabCellDelete",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_error"
+    }
+  ]
+}

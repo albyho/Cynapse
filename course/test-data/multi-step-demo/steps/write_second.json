@@ -1,0 +1,19 @@
+{
+  "step_id": "write_second",
+  "title": "Second Step",
+  "actions": [
+    {
+      "type": "OpenFile",
+      "path": "multi_step_demo.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "multi_step_demo.txt",
+      "target": {
+        "line": 2
+      },
+      "text": "second\n",
+      "speed_ms": 10
+    }
+  ]
+}

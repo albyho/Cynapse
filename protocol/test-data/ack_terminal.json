@@ -1,0 +1,12 @@
+{
+  "v": 3,
+  "id": "b61cc1cf-63a9-4e7b-b7c9-9529edcba680",
+  "type": "ack",
+  "payload": {
+    "status": "done",
+    "exit_code": 0,
+    "output": "Hello, world!\n",
+    "output_truncated": false,
+    "completion_marker_found": true
+  }
+}

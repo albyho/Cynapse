@@ -1,0 +1,19 @@
+{
+  "step_id": "sentinel_1",
+  "title": "哨兵命令",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": ".",
+      "command": "Write-Output \"must not run after interruption\"",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [
+        "must not run after interruption"
+      ],
+      "timeout_ms": 300000
+    }
+  ]
+}

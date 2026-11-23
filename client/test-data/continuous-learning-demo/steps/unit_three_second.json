@@ -1,0 +1,19 @@
+{
+  "step_id": "unit_three_second",
+  "title": "Finish Unit Three",
+  "actions": [
+    {
+      "type": "OpenFile",
+      "path": "unit-three.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "unit-three.txt",
+      "target": {
+        "line": 2
+      },
+      "text": "Unit three, step two\n",
+      "speed_ms": 15
+    }
+  ]
+}

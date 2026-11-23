@@ -1,0 +1,9 @@
+{
+  "v": 3,
+  "id": "2e3d4c5b-6f70-4b8c-9d0e-1f2a3b4c5d6e",
+  "type": "action",
+  "payload": {
+    "type": "OpenFileWithPreview",
+    "path": "README.md"
+  }
+}

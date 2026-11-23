@@ -1,0 +1,104 @@
+{
+  "id": "jupyterlab_operations",
+  "title": "JupyterLab Operations",
+  "version": "0.1.7",
+  "workspace": "workspace",
+  "adapters": [
+    "jupyterlab"
+  ],
+  "children": [
+    {
+      "id": "ch",
+      "title": "Adapter operations",
+      "children": [
+        {
+          "id": "empty_notebook",
+          "title": "Empty Notebook first Cell",
+          "steps": [
+            {
+              "step_file": "steps/empty_open.json"
+            },
+            {
+              "step_file": "steps/empty_insert.json"
+            },
+            {
+              "step_file": "steps/empty_close.json"
+            }
+          ]
+        },
+        {
+          "id": "scroll_align",
+          "title": "Cell scroll alignment",
+          "steps": [
+            {
+              "step_file": "steps/scroll_align_start.json"
+            },
+            {
+              "step_file": "steps/scroll_align_center.json"
+            },
+            {
+              "step_file": "steps/scroll_align_end.json"
+            },
+            {
+              "step_file": "steps/scroll_align_auto.json"
+            },
+            {
+              "step_file": "steps/scroll_align_top_center.json"
+            },
+            {
+              "step_file": "steps/scroll_align_close.json"
+            }
+          ]
+        },
+        {
+          "id": "notebook_ops",
+          "title": "Notebook and Cell operations",
+          "steps": [
+            {
+              "step_file": "steps/preview.json"
+            },
+            {
+              "step_file": "steps/open_and_select.json"
+            },
+            {
+              "step_file": "steps/insert_and_type.json"
+            },
+            {
+              "step_file": "steps/run_text.json"
+            },
+            {
+              "step_file": "steps/run_numeric.json"
+            },
+            {
+              "step_file": "steps/run_rich_output.json"
+            },
+            {
+              "step_file": "steps/run_error.json"
+            },
+            {
+              "step_file": "steps/move_duplicate.json"
+            },
+            {
+              "step_file": "steps/delete_cell.json"
+            },
+            {
+              "step_file": "steps/restart_kernel.json"
+            },
+            {
+              "step_file": "steps/interrupt_kernel.json"
+            },
+            {
+              "step_file": "steps/terminal.json"
+            },
+            {
+              "step_file": "steps/manual_stop.json"
+            },
+            {
+              "step_file": "steps/close_notebook.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "step_id": "insert_and_type",
+  "title": "Insert Cells and type code",
+  "actions": [
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_markdown_1",
+      "after_cell_id": "intro",
+      "cell_type": "markdown",
+      "source": "## Inserted by the Adapter\nThis Cell was inserted during playback."
+    },
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_demo_1",
+      "after_cell_id": "setup",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_demo_1",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "print('text output', baseline + 1)\n"
+    }
+  ]
+}

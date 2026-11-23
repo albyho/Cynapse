@@ -1,0 +1,23 @@
+{
+  "step_id": "unit_four_only",
+  "title": "Finish the course",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "unit-four.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "unit-four.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "unit-four.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "Course complete\n",
+      "speed_ms": 15
+    }
+  ]
+}

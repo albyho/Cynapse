@@ -1,0 +1,155 @@
+{
+  "id": "multi_level_demo",
+  "title": "Multi-Level Navigation Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_environment",
+      "title": "Environment",
+      "children": [
+        {
+          "id": "inspect_environment",
+          "title": "Inspect",
+          "steps": [
+            {
+              "step_file": "steps/inspect_1.json"
+            }
+          ]
+        },
+        {
+          "id": "prepare_environment",
+          "title": "Prepare",
+          "steps": [
+            {
+              "step_file": "steps/edit_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_editing",
+      "title": "Editing",
+      "children": [
+        {
+          "id": "navigate_editor",
+          "title": "Navigate",
+          "steps": [
+            {
+              "step_file": "steps/edit_1_ch_editing_navigate_editor.json"
+            }
+          ]
+        },
+        {
+          "id": "enter_code",
+          "title": "Input",
+          "steps": [
+            {
+              "step_file": "steps/verify_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_verification",
+      "title": "Verification",
+      "children": [
+        {
+          "id": "check_result",
+          "title": "Check",
+          "steps": [
+            {
+              "step_file": "steps/verify_1_ch_verification_check_result.json"
+            }
+          ]
+        },
+        {
+          "id": "review_result",
+          "title": "Review",
+          "steps": [
+            {
+              "step_file": "steps/package_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_delivery",
+      "title": "Delivery",
+      "children": [
+        {
+          "id": "package_artifacts",
+          "title": "Package",
+          "steps": [
+            {
+              "step_file": "steps/package_1_ch_delivery_package_artifacts.json"
+            }
+          ]
+        },
+        {
+          "id": "publish_artifacts",
+          "title": "Publish",
+          "steps": [
+            {
+              "step_file": "steps/inspect_1_ch_delivery_publish_artifacts.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_automation",
+      "title": "Automation",
+      "children": [
+        {
+          "id": "prepare_automation",
+          "title": "Prepare",
+          "steps": [
+            {
+              "step_file": "steps/inspect_1_ch_automation_prepare_automation.json"
+            }
+          ]
+        },
+        {
+          "id": "reuse_workflow",
+          "title": "Reuse",
+          "steps": [
+            {
+              "step_file": "steps/edit_1_ch_automation_reuse_workflow.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_extension",
+      "title": "Extension",
+      "children": [
+        {
+          "id": "validate_extension",
+          "title": "Validate",
+          "steps": [
+            {
+              "step_file": "steps/verify_1_ch_extension_validate_extension.json"
+            }
+          ]
+        },
+        {
+          "id": "release_extension",
+          "title": "Release",
+          "steps": [
+            {
+              "step_file": "steps/package_1_ch_extension_release_extension.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "multi_step_demo",
+  "title": "Step Demo",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_multi_step",
+      "title": "Step Demo",
+      "children": [
+        {
+          "id": "main",
+          "title": "Step Demo",
+          "steps": [
+            {
+              "step_file": "steps/write_first.json"
+            },
+            {
+              "step_file": "steps/write_second.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

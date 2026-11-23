@@ -1,0 +1,12 @@
+{
+  "step_id": "build_program_b",
+  "title": "Build two C programs in one Unit：运行程序",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "program_b",
+      "command": "cc main.c -I ../shared -o main.exe"
+    }
+  ]
+}

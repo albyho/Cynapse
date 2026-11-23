@@ -1,0 +1,23 @@
+{
+  "step_id": "validation_1",
+  "title": "Validation Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "validation.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "validation.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "validation.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "validated\n",
+      "speed_ms": 10
+    }
+  ]
+}

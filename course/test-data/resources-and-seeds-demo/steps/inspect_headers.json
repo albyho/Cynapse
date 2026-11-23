@@ -1,0 +1,17 @@
+{
+  "step_id": "inspect_headers",
+  "title": "Resolve C and shared resources：执行组合操作（1）",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "main",
+      "cwd": "."
+    },
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": ".",
+      "command": "cc -I \"{{resource:course}}/include\" -I \"{{resource:ancestor}}\" main.c -o main"
+    }
+  ]
+}

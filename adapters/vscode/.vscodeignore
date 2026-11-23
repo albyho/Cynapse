@@ -1,0 +1,12 @@
+src/**
+test-data/**
+node_modules/**
+.vscode/**
+.env
+.env.*
+dist/**
+DEVELOPMENT.md
+tsconfig.json
+*.vsix
+out/**
+!out/extension.js

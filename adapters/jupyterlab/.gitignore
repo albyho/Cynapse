@@ -1,0 +1,6 @@
+# Build output.
+lib/
+out/
+dist/
+*.tsbuildinfo
+cynapse_jupyterlab_extension/labextension/

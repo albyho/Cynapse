@@ -1,0 +1,45 @@
+{
+  "step_id": "write_single",
+  "title": "Single step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "single_step.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "single_step.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "single_step.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "// executed while the long narration continues\n",
+      "speed_ms": 35,
+      "narration": {
+        "before": {
+          "asset_id": "single-intro",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 2166,
+              "caption": "先听两秒讲解。"
+            }
+          ]
+        },
+        "during": {
+          "asset_id": "single-during",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 8112,
+              "caption": "接下来执行这个步骤。操作完成后，讲解还会继续，用来说明结果和需要注意的细节。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

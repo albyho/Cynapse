@@ -1,0 +1,13 @@
+{
+  "step_id": "scroll_align_center",
+  "title": "Scroll align: center (target middle at the viewport middle)",
+  "actions": [
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "scroll_align.ipynb",
+      "cell_id": "align_target",
+      "scroll": true,
+      "align": "center"
+    }
+  ]
+}

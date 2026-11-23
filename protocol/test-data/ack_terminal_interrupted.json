@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "9d946a32-7f55-4c2c-8348-864a3205177d",
+  "type": "ack",
+  "payload": {
+    "status": "cancelled",
+    "code": "terminal_timeout",
+    "timed_out": true,
+    "message": "Command timed out after 300000 ms",
+    "output": "partial compiler output\n",
+    "output_truncated": false
+  }
+}

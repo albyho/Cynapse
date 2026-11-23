@@ -1,0 +1,9 @@
+{
+  "v": 3,
+  "id": "0b6f6c2e-4f3a-4c8e-9a5d-2f1c7e8a9b10",
+  "type": "hello",
+  "payload": {
+    "token": "test-token",
+    "role": "adapter"
+  }
+}

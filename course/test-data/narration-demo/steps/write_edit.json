@@ -1,0 +1,35 @@
+{
+  "step_id": "write_edit",
+  "title": "Edit",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "edit.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "edit.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "edit.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "first line\nsecond line\n",
+      "speed_ms": 35,
+      "narration": {
+        "during": {
+          "asset_id": "edit",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 8946,
+              "caption": "现在开始输入两行代码。请观察代码自动出现，等输入完成后我们再继续。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

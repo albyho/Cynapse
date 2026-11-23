@@ -1,0 +1,10 @@
+{
+  "step_id": "discriminated_union",
+  "title": "Discriminated Union",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "discriminated_union.txt"
+    }
+  ]
+}

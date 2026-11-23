@@ -1,0 +1,18 @@
+{
+  "v": 3,
+  "id": "d6f2d3c3-3f1e-4a0b-9f6b-5a0d6e7c8b91",
+  "type": "check",
+  "payload": {
+    "type": "COMMAND",
+    "unit_path": "ch/main",
+    "session_key": "main",
+    "cwd": ".",
+    "command": "node --test",
+    "accepted_exit_codes": [
+      0
+    ],
+    "expected_output": [],
+    "timeout_ms": 300000,
+    "save_dirty": false
+  }
+}

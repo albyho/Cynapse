@@ -1,0 +1,19 @@
+{
+  "step_id": "intentional_compile_error_3",
+  "title": "先观察不可变变量赋值失败：编译代码",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "variables",
+      "command": "rustc main.rs",
+      "accepted_exit_codes": [
+        1
+      ],
+      "expected_output": [
+        "cannot assign twice to immutable variable"
+      ],
+      "timeout_ms": 300000
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "step_id": "continue",
+  "title": "Continue after the exercise",
+  "actions": [
+    {
+      "type": "Present"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "6b4e1858-4b30-4dbc-8b65-f9097fb4c872",
+  "type": "action",
+  "payload": {
+    "type": "CreateDirectory",
+    "path": "lesson",
+    "create_parents": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "e3b6c7d8-9f10-4a11-8b12-c13d14e15f16",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabOpenPreview",
+    "path": "ch/intro/INTRO.md"
+  }
+}

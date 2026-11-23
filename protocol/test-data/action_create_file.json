@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "438cfaf9-d0f6-48d4-8346-5baf77bd9446",
+  "type": "action",
+  "payload": {
+    "type": "CreateFile",
+    "path": "lesson/src/hello.txt",
+    "create_parents": true
+  }
+}

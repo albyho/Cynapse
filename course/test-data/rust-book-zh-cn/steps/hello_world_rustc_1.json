@@ -1,0 +1,25 @@
+{
+  "step_id": "hello_world_rustc_1",
+  "title": "1.2 Hello, world!：输入代码",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "hello_world/main.rs"
+    },
+    {
+      "type": "OpenFile",
+      "path": "hello_world/main.rs"
+    },
+    {
+      "type": "InsertText",
+      "path": "hello_world/main.rs",
+      "target": {
+        "line": 1
+      },
+      "text": "fn main() {\n    println!(\"Hello, world!\");\n}\n",
+      "speed_ms": 50,
+      "source": "human_record",
+      "confidence": 1
+    }
+  ]
+}

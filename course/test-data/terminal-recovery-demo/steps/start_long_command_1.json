@@ -1,0 +1,11 @@
+{
+  "step_id": "start_long_command_1",
+  "title": "启动长命令：打开终端",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "main",
+      "cwd": "."
+    }
+  ]
+}

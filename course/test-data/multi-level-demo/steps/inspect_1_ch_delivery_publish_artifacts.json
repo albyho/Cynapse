@@ -1,0 +1,11 @@
+{
+  "step_id": "inspect_1_ch_delivery_publish_artifacts",
+  "title": "Inspect Workspace",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "inspect.txt",
+      "create_parents": true
+    }
+  ]
+}

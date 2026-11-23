@@ -1,0 +1,8 @@
+{
+  "v": 3,
+  "id": "405f6e7d-8192-4d0e-9f2a-3b4c5d6e7f80",
+  "type": "action",
+  "payload": {
+    "type": "ClearReveal"
+  }
+}

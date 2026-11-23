@@ -1,0 +1,32 @@
+{
+  "id": "filesystem_actions",
+  "title": "Filesystem Actions",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_filesystem",
+      "title": "Files and Directories",
+      "children": [
+        {
+          "id": "main",
+          "title": "Files and Directories",
+          "steps": [
+            {
+              "step_file": "steps/filesystem_1.json"
+            },
+            {
+              "step_file": "steps/filesystem_2.json"
+            },
+            {
+              "step_file": "steps/filesystem_3.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

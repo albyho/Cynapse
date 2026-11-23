@@ -1,0 +1,30 @@
+[global]
+respect-gitignore = true
+flavor = "gfm"
+exclude = [
+  "node_modules/**",
+  "target/**",
+  "dist/**",
+  ".vscode-test/**",
+  "adapters/vscode/.vscode-test/**",
+  "courses/*/resources/**",
+  "courses/*/authoring/sources/**",
+  "courses/*/workspace/**",
+]
+# MD013 is disabled: a column limit forces hard wraps inside Chinese prose.
+disable = ["MD013"]
+
+[MD004]
+style = "dash"
+
+[MD028]
+fix = true
+
+[MD033]
+allowed-elements = ["br", "details", "summary"]
+
+[MD049]
+style = "underscore"
+
+[MD050]
+style = "asterisk"

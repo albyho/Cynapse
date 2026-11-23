@@ -1,0 +1,13 @@
+{
+  "step_id": "scroll_align_top_center",
+  "title": "Scroll align: top-center (tall Cell top at the viewport middle)",
+  "actions": [
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "scroll_align.ipynb",
+      "cell_id": "align_tall",
+      "scroll": true,
+      "align": "top-center"
+    }
+  ]
+}

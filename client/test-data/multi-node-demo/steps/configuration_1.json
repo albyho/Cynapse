@@ -1,0 +1,23 @@
+{
+  "step_id": "configuration_1",
+  "title": "Configuration Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "configuration.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "configuration.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "configuration.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "configured\n",
+      "speed_ms": 10
+    }
+  ]
+}

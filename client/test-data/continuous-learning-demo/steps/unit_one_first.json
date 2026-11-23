@@ -1,0 +1,23 @@
+{
+  "step_id": "unit_one_first",
+  "title": "Write the first line",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "unit-one.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "unit-one.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "unit-one.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "Unit one, step one\n",
+      "speed_ms": 15
+    }
+  ]
+}

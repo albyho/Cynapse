@@ -1,0 +1,23 @@
+{
+  "step_id": "write_first",
+  "title": "First Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "multi_step_demo.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "multi_step_demo.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "multi_step_demo.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "first\n",
+      "speed_ms": 10
+    }
+  ]
+}

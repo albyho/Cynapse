@@ -1,0 +1,17 @@
+{
+  "step_id": "start_long_command_2",
+  "title": "启动长命令：执行命令",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": ".",
+      "command": "Start-Sleep -Seconds 30",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [],
+      "timeout_ms": 300000
+    }
+  ]
+}

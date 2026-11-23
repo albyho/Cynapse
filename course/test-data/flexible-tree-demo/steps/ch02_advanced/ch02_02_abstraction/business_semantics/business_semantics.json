@@ -1,0 +1,10 @@
+{
+  "step_id": "business_semantics",
+  "title": "Business Semantics",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "business_semantics.txt"
+    }
+  ]
+}

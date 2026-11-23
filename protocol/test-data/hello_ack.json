@@ -1,0 +1,8 @@
+{
+  "v": 3,
+  "id": "8e0f3b1a-6a57-4a2f-9f3e-3c6d2b1a0f11",
+  "type": "hello_ack",
+  "payload": {
+    "adapter": "vscode"
+  }
+}

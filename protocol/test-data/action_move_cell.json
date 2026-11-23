@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "f0c3d4e5-a687-4b78-9c19-d20e21f22a23",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellMove",
+    "path": "ch/intro/lesson.ipynb",
+    "cell_id": "cell-print",
+    "direction": "up",
+    "count": 1
+  }
+}

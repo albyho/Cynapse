@@ -1,0 +1,29 @@
+{
+  "step_id": "run_check",
+  "title": "Check",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": ".",
+      "command": "Start-Sleep -Seconds 2; Write-Output 'narration-check'",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [
+        "narration-check"
+      ],
+      "timeout_ms": 300000,
+      "narration": {
+        "during": {
+          "clips": [
+            {
+              "duration_ms": 1800,
+              "caption": "命令正在执行。只有操作真正完成后，才会进入下一步。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "step_id": "filesystem_2",
+  "title": "Create, write, and delete files：执行组合操作（1）",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "lesson/src/hello.txt",
+      "create_parents": true
+    },
+    {
+      "type": "OpenFile",
+      "path": "lesson/src/hello.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "lesson/src/hello.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "Hello from Cynapse!\n",
+      "speed_ms": 20
+    }
+  ]
+}

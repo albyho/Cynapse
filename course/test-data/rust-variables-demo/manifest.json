@@ -1,0 +1,55 @@
+{
+  "id": "rust_variables_demo",
+  "title": "Rust 变量与可变性",
+  "version": "1.1.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "environment": [
+    {
+      "id": "rustc",
+      "command": "rustc --version",
+      "minimum_version": "1.85.0",
+      "install_hint": "安装或升级 Rust 1.85 或更高版本：https://rustup.rs/"
+    },
+    {
+      "id": "cargo",
+      "command": "cargo --version",
+      "minimum_version": "1.85.0",
+      "install_hint": "安装或升级 Rust 1.85 或更高版本：https://rustup.rs/"
+    }
+  ],
+  "children": [
+    {
+      "id": "ch03_01_variables_and_mutability",
+      "title": "3.1 变量与可变性",
+      "children": [
+        {
+          "id": "main",
+          "title": "3.1 变量与可变性",
+          "steps": [
+            {
+              "step_file": "steps/intentional_compile_error_1.json"
+            },
+            {
+              "step_file": "steps/intentional_compile_error_2.json"
+            },
+            {
+              "step_file": "steps/intentional_compile_error_3.json"
+            },
+            {
+              "step_file": "steps/fix_and_compile_1.json"
+            },
+            {
+              "step_file": "steps/fix_and_compile_2.json"
+            },
+            {
+              "step_file": "steps/fix_and_compile_3.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

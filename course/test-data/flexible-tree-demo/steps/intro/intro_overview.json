@@ -1,0 +1,10 @@
+{
+  "step_id": "intro_overview",
+  "title": "Intro",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "intro.txt"
+    }
+  ]
+}

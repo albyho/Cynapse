@@ -1,0 +1,27 @@
+{
+  "v": 3,
+  "id": "9b2e3d4c-5f6a-4b7c-9d0e-1f2a3b4c5d6e",
+  "type": "action",
+  "payload": {
+    "type": "ReplaceText",
+    "path": "variables/main.rs",
+    "target": {
+      "start": {
+        "at": {
+          "text": "let x = 5;"
+        }
+      },
+      "end": {
+        "at": {
+          "text": "let x = 5;"
+        },
+        "placement": "after"
+      },
+      "expected_text": "let x = 5;"
+    },
+    "text": "let mut x = 5;",
+    "edit_mode": "overwrite_selection",
+    "speed_ms": 30,
+    "target_hold_ms": 250
+  }
+}

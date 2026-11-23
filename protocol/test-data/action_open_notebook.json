@@ -1,0 +1,10 @@
+{
+  "v": 3,
+  "id": "3c6f04f0-59b0-4c13-9d0a-8b2f3e7a1d42",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabOpenNotebook",
+    "path": "ch/intro/lesson.ipynb"
+  }
+}

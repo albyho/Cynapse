@@ -1,0 +1,31 @@
+{
+  "step_id": "run_error",
+  "title": "Execute an error Cell",
+  "actions": [
+    {
+      "type": "JupyterLabCellInsert",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_error",
+      "after_cell_id": "cynapse_rich",
+      "cell_type": "code",
+      "source": ""
+    },
+    {
+      "type": "JupyterLabCellInsertText",
+      "path": "lesson.ipynb",
+      "cell_id": "cynapse_error",
+      "speed_ms": 60,
+      "target": {
+        "eof": true
+      },
+      "text": "raise ValueError('expected error')\n"
+    },
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "timeout_ms": 30000,
+      "from_cell_id": "cynapse_error",
+      "to_cell_id": "cynapse_error"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "cases": [
+    {
+      "name": "insert a file body at line 1",
+      "text": "",
+      "action": {
+        "type": "InsertText",
+        "path": "src/main.rs",
+        "target": {
+          "line": 1
+        },
+        "text": "fn main() {}\n"
+      },
+      "expected": {
+        "text": "fn main() {}\n"
+      }
+    },
+    {
+      "name": "insert before a column",
+      "text": "fn main() {}\n",
+      "action": {
+        "type": "InsertText",
+        "path": "src/main.rs",
+        "target": {
+          "line": 1,
+          "at": 3
+        },
+        "text": "// "
+      },
+      "expected": {
+        "text": "fn // main() {}\n"
+      }
+    },
+    {
+      "name": "delete an exact range",
+      "text": "let x = 1; // temporary",
+      "action": {
+        "type": "DeleteText",
+        "path": "src/main.rs",
+        "target": {
+          "start": {
+            "at": {
+              "text": "// temporary"
+            }
+          },
+          "end": {
+            "at": {
+              "text": "// temporary"
+            },
+            "placement": "after"
+          },
+          "expected_text": "// temporary"
+        },
+        "direction": "delete"
+      },
+      "expected": {
+        "text": "let x = 1; "
+      }
+    },
+    {
+      "name": "replace an exact range",
+      "text": "let x = 5;\n",
+      "action": {
+        "type": "ReplaceText",
+        "path": "variables/main.rs",
+        "target": {
+          "start": {
+            "at": {
+              "text": "let x = 5;"
+            }
+          },
+          "end": {
+            "at": {
+              "text": "let x = 5;"
+            },
+            "placement": "after"
+          },
+          "expected_text": "let x = 5;\n"
+        },
+        "text": "let mut x = 5;\n",
+        "speed_ms": 1,
+        "edit_mode": "overwrite_selection"
+      },
+      "expected": {
+        "text": "let mut x = 5;\n"
+      }
+    },
+    {
+      "name": "replay a completed replacement whose anchors are gone",
+      "text": "println!(\"{}\", matrix);\n",
+      "action": {
+        "type": "ReplaceText",
+        "path": "tuples.rs",
+        "target": {
+          "start": {
+            "at": {
+              "text": "println!(\"{:?}\", matrix)"
+            }
+          },
+          "end": {
+            "at": {
+              "text": "println!(\"{:?}\", matrix)"
+            },
+            "placement": "after"
+          },
+          "expected_text": "println!(\"{:?}\", matrix)"
+        },
+        "text": "println!(\"{}\", matrix);",
+        "speed_ms": 1,
+        "edit_mode": "delete_then_type"
+      },
+      "expected": {
+        "text": "println!(\"{}\", matrix);\n"
+      }
+    },
+    {
+      "name": "replay a completed literal insertion",
+      "text": "// header\nfn main() {}\n",
+      "action": {
+        "type": "InsertText",
+        "path": "src/main.rs",
+        "target": {
+          "at": {
+            "text": "fn main() {"
+          },
+          "placement": "before"
+        },
+        "text": "// header\n",
+        "speed_ms": 1
+      },
+      "expected": {
+        "text": "// header\nfn main() {}\n"
+      }
+    },
+    {
+      "name": "replay a completed deletion",
+      "text": "keepend\n",
+      "action": {
+        "type": "DeleteText",
+        "path": "src/main.rs",
+        "target": {
+          "start": {
+            "at": {
+              "text": "keep"
+            },
+            "placement": "after"
+          },
+          "end": {
+            "at": {
+              "text": "end"
+            },
+            "placement": "before"
+          },
+          "expected_text": " temporary "
+        },
+        "direction": "delete"
+      },
+      "expected": {
+        "text": "keepend\n"
+      }
+    }
+  ]
+}

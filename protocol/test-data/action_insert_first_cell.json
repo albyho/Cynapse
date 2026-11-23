@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "d8a1b2c3-e465-4f56-9a17-b18c19d20e21",
+  "type": "action",
+  "unit_path": "ch/empty",
+  "payload": {
+    "type": "JupyterLabCellInsert",
+    "path": "ch/empty/empty.ipynb",
+    "cell_id": "cynapse_first",
+    "cell_type": "code",
+    "source": ""
+  }
+}

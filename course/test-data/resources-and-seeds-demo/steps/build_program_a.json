@@ -1,0 +1,17 @@
+{
+  "step_id": "build_program_a",
+  "title": "Build two C programs in one Unit：执行组合操作（1）",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "main",
+      "cwd": "program_a"
+    },
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": "program_a",
+      "command": "cc main.c -I ../shared -o main.exe"
+    }
+  ]
+}

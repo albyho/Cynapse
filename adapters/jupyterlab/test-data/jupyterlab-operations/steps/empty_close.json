@@ -1,0 +1,10 @@
+{
+  "step_id": "empty_close",
+  "title": "Close the empty-start Notebook",
+  "actions": [
+    {
+      "type": "JupyterLabCloseDocument",
+      "path": "empty.ipynb"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "step_id": "scroll_align_end",
+  "title": "Scroll align: end (target bottom at the viewport bottom)",
+  "actions": [
+    {
+      "type": "JupyterLabCellSelect",
+      "path": "scroll_align.ipynb",
+      "cell_id": "align_target",
+      "scroll": true,
+      "align": "end"
+    }
+  ]
+}

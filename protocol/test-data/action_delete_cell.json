@@ -1,0 +1,11 @@
+{
+  "v": 3,
+  "id": "b6e9f0a1-c243-4d34-9e15-f16a17b18c19",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellDelete",
+    "path": "ch/intro/lesson.ipynb",
+    "cell_id": "cynapse_intro_1"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "step_id": "before_after",
+  "title": "Before and After narration",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "before-after-first.txt",
+      "narration": {
+        "before": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 500,
+              "caption": "Before clip"
+            }
+          ]
+        },
+        "after": {
+          "asset_id": "narration",
+          "clips": [
+            {
+              "offset_ms": 500,
+              "duration_ms": 500,
+              "caption": "After clip"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "CreateFile",
+      "path": "before-after-second.txt"
+    }
+  ]
+}

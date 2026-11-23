@@ -1,0 +1,21 @@
+{
+  "step_id": "rust_hello_2",
+  "title": "Write a Rust Hello World：输入代码（2）",
+  "actions": [
+    {
+      "type": "OpenFile",
+      "path": "src/main.rs"
+    },
+    {
+      "type": "InsertText",
+      "path": "src/main.rs",
+      "target": {
+        "line": 2
+      },
+      "text": "    println!(\"Hello, world!\");\n}\n",
+      "speed_ms": 50,
+      "source": "human_record",
+      "confidence": 1
+    }
+  ]
+}

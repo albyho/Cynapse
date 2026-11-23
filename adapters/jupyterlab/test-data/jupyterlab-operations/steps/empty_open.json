@@ -1,0 +1,10 @@
+{
+  "step_id": "empty_open",
+  "title": "Open an empty Notebook",
+  "actions": [
+    {
+      "type": "JupyterLabOpenNotebook",
+      "path": "empty.ipynb"
+    }
+  ]
+}

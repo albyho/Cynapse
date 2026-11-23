@@ -1,0 +1,47 @@
+{
+  "id": "terminal_recovery_demo",
+  "title": "终端中断与恢复验收",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_long_running",
+      "title": "1. 长命令中断",
+      "children": [
+        {
+          "id": "main",
+          "title": "1. 长命令中断",
+          "steps": [
+            {
+              "step_file": "steps/start_long_command_1.json"
+            },
+            {
+              "step_file": "steps/start_long_command_2.json"
+            },
+            {
+              "step_file": "steps/sentinel_1.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_timeout",
+      "title": "2. 命令超时",
+      "children": [
+        {
+          "id": "main",
+          "title": "2. 命令超时",
+          "steps": [
+            {
+              "step_file": "steps/timeout_1.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

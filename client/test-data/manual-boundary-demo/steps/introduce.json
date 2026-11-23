@@ -1,0 +1,9 @@
+{
+  "step_id": "introduce",
+  "title": "Introduce the exercise",
+  "actions": [
+    {
+      "type": "Present"
+    }
+  ]
+}

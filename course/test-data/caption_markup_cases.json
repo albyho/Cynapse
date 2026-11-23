@@ -1,0 +1,67 @@
+[
+  {
+    "caption": "重点：<c.aqua>变量遮蔽</c.aqua>。",
+    "valid": true,
+    "visible": "重点：变量遮蔽。"
+  },
+  {
+    "caption": "先判断 a < b，再看 <c.aqua>重点</c.aqua>。",
+    "valid": true,
+    "visible": "先判断 a < b，再看 重点。"
+  },
+  {
+    "caption": "用 a < b 表示小于，强调<c.aqua>重点</c.aqua>。",
+    "valid": true,
+    "visible": "用 a < b 表示小于，强调重点。"
+  },
+  {
+    "caption": "用 Vec<T> 存值，判断 a < b。",
+    "valid": true,
+    "visible": "用 Vec<T> 存值，判断 a < b。"
+  },
+  {
+    "caption": "<C.AQUA>重点</C.AQUA>",
+    "valid": true,
+    "visible": "重点"
+  },
+  {
+    "caption": "判断 a < b",
+    "valid": true,
+    "visible": "判断 a < b"
+  },
+  {
+    "caption": "重点：<c.red>遮蔽</c>",
+    "valid": false,
+    "error": "unknown"
+  },
+  {
+    "caption": "<c.aqua >重点</c.aqua>",
+    "valid": false,
+    "error": "unknown"
+  },
+  {
+    "caption": "重点：<c.aqua>遮蔽</c.aqua >",
+    "valid": false,
+    "error": "unknown"
+  },
+  {
+    "caption": "重点：<c.aqua>遮蔽",
+    "valid": false,
+    "error": "unclosed"
+  },
+  {
+    "caption": "先看<c.aqua>重点</c>，再补一个</c>。",
+    "valid": false,
+    "error": "closing"
+  },
+  {
+    "caption": "<c.aqua>外<c.aqua>内</c>外</c>",
+    "valid": false,
+    "error": "nested"
+  },
+  {
+    "caption": "重点：<c.aqua></c>",
+    "valid": false,
+    "error": "empty"
+  }
+]

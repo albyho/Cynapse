@@ -1,0 +1,35 @@
+{
+  "step_id": "write_delayed",
+  "title": "Delayed edit",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "delayed_edit.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "delayed_edit.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "delayed_edit.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "// typed after two seconds of narration\n",
+      "speed_ms": 35,
+      "narration": {
+        "before": {
+          "asset_id": "delayed",
+          "clips": [
+            {
+              "offset_ms": 0,
+              "duration_ms": 2166,
+              "caption": "先听两秒讲解。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

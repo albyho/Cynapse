@@ -1,0 +1,13 @@
+{
+  "step_id": "run_text",
+  "title": "Execute the typed Cell",
+  "actions": [
+    {
+      "type": "JupyterLabCellRun",
+      "path": "lesson.ipynb",
+      "timeout_ms": 30000,
+      "from_cell_id": "setup",
+      "to_cell_id": "cynapse_demo_1"
+    }
+  ]
+}

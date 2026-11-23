@@ -1,0 +1,11 @@
+{
+  "step_id": "shared_1_node_unit_d",
+  "title": "Shared Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": ".cynapse-node-dependency",
+      "create_parents": true
+    }
+  ]
+}

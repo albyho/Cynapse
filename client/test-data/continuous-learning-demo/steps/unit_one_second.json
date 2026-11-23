@@ -1,0 +1,19 @@
+{
+  "step_id": "unit_one_second",
+  "title": "Resume with the second line",
+  "actions": [
+    {
+      "type": "OpenFile",
+      "path": "unit-one.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "unit-one.txt",
+      "target": {
+        "line": 2
+      },
+      "text": "Unit one, step two\n",
+      "speed_ms": 15
+    }
+  ]
+}

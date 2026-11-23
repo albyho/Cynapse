@@ -1,0 +1,19 @@
+{
+  "v": 3,
+  "id": "35e5d83d-1dfc-46d5-a545-8f44768b5dc7",
+  "type": "action",
+  "payload": {
+    "type": "DeleteText",
+    "path": "src/main.rs",
+    "target": {
+      "cursor": {
+        "line": 1,
+        "column": 0,
+        "count": 3
+      },
+      "expected_text": "fn "
+    },
+    "direction": "delete",
+    "speed_ms": 30
+  }
+}

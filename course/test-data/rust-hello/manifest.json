@@ -1,0 +1,29 @@
+{
+  "id": "rust_hello_world",
+  "title": "Rust Hello World",
+  "version": "1.0.0",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_rust_hello",
+      "title": "Hello World",
+      "children": [
+        {
+          "id": "main",
+          "title": "Hello World",
+          "steps": [
+            {
+              "step_file": "steps/rust_hello_1.json"
+            },
+            {
+              "step_file": "steps/rust_hello_2.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

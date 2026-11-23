@@ -1,0 +1,27 @@
+{
+  "v": 3,
+  "id": "ac3f4e5d-6a7b-4c8d-9e0f-2a3b4c5d6e7f",
+  "type": "action",
+  "payload": {
+    "type": "DeleteText",
+    "path": "src/main.rs",
+    "target": {
+      "start": {
+        "at": {
+          "text": "// temporary",
+          "index": 0
+        }
+      },
+      "end": {
+        "at": {
+          "text": "// temporary",
+          "index": 0
+        },
+        "placement": "after"
+      },
+      "expected_text": "// temporary"
+    },
+    "direction": "delete",
+    "target_hold_ms": 200
+  }
+}

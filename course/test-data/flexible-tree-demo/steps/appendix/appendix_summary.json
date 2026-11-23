@@ -1,0 +1,10 @@
+{
+  "step_id": "appendix_summary",
+  "title": "Appendix",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "appendix.txt"
+    }
+  ]
+}

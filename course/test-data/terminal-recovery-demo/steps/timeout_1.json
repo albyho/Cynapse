@@ -1,0 +1,17 @@
+{
+  "step_id": "timeout_1",
+  "title": "一秒后超时",
+  "actions": [
+    {
+      "type": "TerminalCommand",
+      "session_key": "main",
+      "cwd": ".",
+      "command": "Start-Sleep -Seconds 30",
+      "accepted_exit_codes": [
+        0
+      ],
+      "expected_output": [],
+      "timeout_ms": 1000
+    }
+  ]
+}

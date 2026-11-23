@@ -1,0 +1,23 @@
+{
+  "step_id": "filesystem_3",
+  "title": "Create, write, and delete files：执行组合操作（2）",
+  "actions": [
+    {
+      "type": "DeleteFile",
+      "path": "lesson/src/hello.txt",
+      "if_missing": "ignore"
+    },
+    {
+      "type": "DeleteDirectory",
+      "path": "lesson/src",
+      "recursive": false,
+      "if_missing": "ignore"
+    },
+    {
+      "type": "DeleteDirectory",
+      "path": "lesson",
+      "recursive": false,
+      "if_missing": "ignore"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "step_id": "filesystem_1",
+  "title": "Create, write, and delete files：创建目录",
+  "actions": [
+    {
+      "type": "CreateDirectory",
+      "path": "lesson",
+      "create_parents": true
+    }
+  ]
+}

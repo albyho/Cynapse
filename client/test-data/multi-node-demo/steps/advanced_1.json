@@ -1,0 +1,23 @@
+{
+  "step_id": "advanced_1",
+  "title": "Advanced Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "advanced.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "advanced.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "advanced.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "advanced\n",
+      "speed_ms": 10
+    }
+  ]
+}

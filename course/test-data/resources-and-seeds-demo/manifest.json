@@ -1,0 +1,77 @@
+{
+  "id": "resources_and_seeds_demo",
+  "title": "Unit-scoped Seeds and Shared Resources",
+  "version": "1.0.1",
+  "adapters": [
+    "vscode"
+  ],
+  "workspace": "workspace",
+  "children": [
+    {
+      "id": "ch_foundation",
+      "title": "Foundation",
+      "children": [
+        {
+          "id": "c_basics",
+          "title": "C headers and two terminals",
+          "steps": [
+            {
+              "step_file": "steps/write_c_report.json"
+            },
+            {
+              "step_file": "steps/inspect_headers.json"
+            },
+            {
+              "step_file": "steps/inspect_data.json"
+            }
+          ]
+        },
+        {
+          "id": "python_basics",
+          "title": "Python module path",
+          "steps": [
+            {
+              "step_file": "steps/run_python.json"
+            }
+          ]
+        },
+        {
+          "id": "c_multiple_programs",
+          "title": "Multiple C main programs",
+          "steps": [
+            {
+              "step_file": "steps/build_program_a.json"
+            },
+            {
+              "step_file": "steps/build_program_b.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch_advanced",
+      "title": "Advanced",
+      "children": [
+        {
+          "id": "model_demo",
+          "title": "Model weights",
+          "steps": [
+            {
+              "step_file": "steps/run_model.json"
+            }
+          ]
+        },
+        {
+          "id": "empty_unit",
+          "title": "Course and ancestor seed only",
+          "steps": [
+            {
+              "step_file": "steps/write_seed_report.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

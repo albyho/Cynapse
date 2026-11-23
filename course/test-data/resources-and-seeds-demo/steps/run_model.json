@@ -1,0 +1,17 @@
+{
+  "step_id": "run_model",
+  "title": "Reference model weights in place",
+  "actions": [
+    {
+      "type": "TerminalEnsure",
+      "session_key": "model",
+      "cwd": "."
+    },
+    {
+      "type": "TerminalCommand",
+      "session_key": "model",
+      "cwd": ".",
+      "command": "python infer.py --weights \"{{resource:node}}/model.bin\""
+    }
+  ]
+}

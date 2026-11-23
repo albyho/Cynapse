@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "incremental": false,
+    "module": "commonjs",
+    "outDir": "out"
+  },
+  "include": ["src"],
+  "exclude": []
+}

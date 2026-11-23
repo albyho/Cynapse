@@ -1,0 +1,58 @@
+{
+  "name": "cynapse",
+  "private": true,
+  "version": "0.9.0",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=12"
+  },
+  "scripts": {
+    "dev:client": "cargo run -p cynapse-client",
+    "dev:jupyterlab": "node scripts/devJupyterLab.mjs",
+
+    "build": "pnpm build:client && pnpm build:adapter",
+    "build:adapter": "pnpm --filter cynapse-vscode-adapter compile",
+    "build:adapter:vsix": "pnpm --filter cynapse-vscode-adapter package",
+    "build:client": "cargo build --release -p cynapse-client",
+    "build:msix": "node scripts/buildMsixStage.mjs",
+    "package:msix": "node scripts/packageMsix.mjs",
+    "build:jupyterlab": "pnpm --filter cynapse-jupyterlab-adapter build:extension && pnpm --filter cynapse-jupyterlab-adapter build:wheel",
+    "set:version": "node scripts/setVersion.mjs",
+
+    "run:scenario": "cargo run -p cynapse-client-harness --bin cynapse-scenario --",
+    "agent:worktree": "pwsh -NoProfile -File scripts/agentWorktree.ps1",
+    "hooks:install": "node scripts/installGitHooks.mjs",
+
+    "verify:client": "node scripts/stopClient.mjs && cargo fmt -p cynapse-client-core -p cynapse-client-harness -p cynapse-client-model -p cynapse-client-i18n -p cynapse-client -- --check && cargo clippy -p cynapse-client-core -p cynapse-client-harness -p cynapse-client-model -p cynapse-client-i18n -p cynapse-client --all-targets -- -D warnings && cargo test -p cynapse-client-core -p cynapse-client-harness -p cynapse-client-model -p cynapse-client-i18n -p cynapse-client --quiet",
+    "verify:client:core": "node scripts/stopClient.mjs && cargo fmt -p cynapse-client-core -p cynapse-client-i18n -- --check && cargo clippy -p cynapse-client-core -p cynapse-client-i18n --all-targets -- -D warnings && cargo test -p cynapse-client-core -p cynapse-client-i18n --quiet && cargo check -p cynapse-client -p cynapse-client-harness --all-targets",
+    "verify:client:perf": "node scripts/stopClient.mjs && cargo test -p cynapse-client-core --release --test state_perf -- --ignored --nocapture",
+    "verify:client:tests": "node scripts/stopClient.mjs && cargo test -p cynapse-client-model -p cynapse-client-harness --quiet && cargo test -p cynapse-client --lib --bins --test startup --test isolation --quiet",
+    "verify:client:ui": "node scripts/stopClient.mjs && cargo test -p cynapse-client --lib -- --test-threads=1 && cargo test -p cynapse-client --test ui -- --test-threads=1 && cargo test -p cynapse-client --test language --test reset_overlay -- --test-threads=1",
+    "verify:course": "cargo fmt -p cynapse-course -- --check && cargo clippy -p cynapse-course --all-targets -- -D warnings && cargo test -p cynapse-course --quiet",
+    "verify:course:dependents": "pnpm verify:course && cargo test -p cynapse-client-core --quiet && cargo check -p cynapse-client-core -p cynapse-client-harness -p cynapse-client-model -p cynapse-client --all-targets",
+    "verify:adapter": "pnpm --filter @cynapse/adapter-kit --filter cynapse-vscode-adapter --filter cynapse-jupyterlab-adapter format:check && pnpm --filter @cynapse/adapter-kit test && pnpm --filter cynapse-vscode-adapter --filter cynapse-jupyterlab-adapter test",
+
+    "verify:voicestudio": "node scripts/python.mjs tools/run_python_tests.py tools/tts/voicestudio-client --require-ffmpeg VoiceStudio",
+    "verify:narration-assembler": "node scripts/python.mjs tools/run_python_tests.py tools/narration-assembler --require-ffmpeg narration-assembler",
+    "verify:speech-audit": "node scripts/python.mjs tools/run_python_tests.py tools/speech-audit",
+    "verify:speech-edits": "node scripts/python.mjs tools/run_python_tests.py tools/speech-edits",
+    "verify:course-authoring": "node --test scripts/verifyCourseAuthoring.test.mjs && node scripts/verifyCourseAuthoring.mjs",
+
+    "verify:content": "cargo run -p cynapse-client-harness --bin cynapse-content-verify",
+    "verify:content:changed": "cargo run -p cynapse-client-harness --bin cynapse-content-verify -- --changed",
+    "verify:isolation": "node --test scripts/componentTestIsolation.test.mjs && node scripts/componentTestIsolation.mjs",
+    "verify:line-endings": "node scripts/checkTextLineEndings.mjs",
+    "verify:docs": "node --test scripts/checkDocsCommands.test.mjs && node scripts/checkDocsCommands.mjs",
+    "verify:markdown": "node --test scripts/checkMarkdown.test.mjs && node scripts/checkMarkdown.mjs",
+    "verify:audit": "node --test scripts/checkAuditStatus.test.mjs && node scripts/checkAuditStatus.mjs",
+    "verify:scripts": "node --test scripts/checkOrphanScripts.test.mjs scripts/reviewPrepare.test.mjs scripts/syncPublic.test.mjs && node scripts/checkOrphanScripts.mjs",
+    "verify:version": "node --test scripts/setVersion.test.mjs && node scripts/setVersion.mjs --check",
+    "verify:orphan-fixtures": "node --test scripts/checkOrphanFixtures.test.mjs && node scripts/checkOrphanFixtures.mjs",
+    "verify:commit": "pnpm verify:isolation && pnpm verify:line-endings && pnpm verify:docs && pnpm verify:markdown && pnpm verify:audit && pnpm verify:scripts && pnpm verify:version && pnpm verify:orphan-fixtures && git diff --check",
+    "verify:push": "pnpm verify",
+    "review:prepare": "node scripts/reviewPrepare.mjs",
+    "sync:public": "node scripts/syncPublic.mjs",
+
+    "verify": "node scripts/stopClient.mjs && pnpm verify:commit && pnpm verify:voicestudio && pnpm verify:narration-assembler && pnpm verify:speech-audit && pnpm verify:speech-edits && pnpm verify:course && pnpm verify:client && pnpm verify:adapter"
+  }
+}

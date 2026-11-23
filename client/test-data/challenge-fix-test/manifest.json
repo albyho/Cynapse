@@ -1,0 +1,20 @@
+{
+  "id": "challenge_fix_test",
+  "title": "Challenge Fix Test",
+  "version": "0.1.4",
+  "workspace": "workspace",
+  "adapters": ["vscode"],
+  "children": [
+    {
+      "id": "ch",
+      "title": "Challenge",
+      "children": [
+        {
+          "id": "main",
+          "title": "Fix add()",
+          "steps": [{ "step_file": "steps/fix_add.json" }]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "step_id": "workspace_basics_1",
+  "title": "Workspace Basics Step",
+  "actions": [
+    {
+      "type": "CreateFile",
+      "path": "workspace-basics.txt"
+    },
+    {
+      "type": "OpenFile",
+      "path": "workspace-basics.txt"
+    },
+    {
+      "type": "InsertText",
+      "path": "workspace-basics.txt",
+      "target": {
+        "line": 1
+      },
+      "text": "workspace basics\n",
+      "speed_ms": 10
+    }
+  ]
+}

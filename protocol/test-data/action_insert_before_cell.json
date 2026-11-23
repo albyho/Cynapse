@@ -1,0 +1,14 @@
+{
+  "v": 3,
+  "id": "e9b2c3d4-f576-4a67-8b18-c19d20e21f22",
+  "type": "action",
+  "unit_path": "ch/intro",
+  "payload": {
+    "type": "JupyterLabCellInsert",
+    "path": "ch/intro/lesson.ipynb",
+    "cell_id": "cynapse_before",
+    "before_cell_id": "cell-print",
+    "cell_type": "markdown",
+    "source": "## Before"
+  }
+}
