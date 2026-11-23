@@ -37,6 +37,7 @@
     "verify:narration-assembler": "node scripts/python.mjs tools/run_python_tests.py tools/narration-assembler --require-ffmpeg narration-assembler",
     "verify:speech-audit": "node scripts/python.mjs tools/run_python_tests.py tools/speech-audit",
     "verify:speech-edits": "node scripts/python.mjs tools/run_python_tests.py tools/speech-edits",
+    "verify:tools": "pnpm verify:voicestudio && pnpm verify:narration-assembler && pnpm verify:speech-audit && pnpm verify:speech-edits",
     "verify:course-authoring": "node --test scripts/verifyCourseAuthoring.test.mjs && node scripts/verifyCourseAuthoring.mjs",
 
     "verify:content": "cargo run -p cynapse-client-harness --bin cynapse-content-verify",
@@ -50,10 +51,10 @@
     "verify:version": "node --test scripts/setVersion.test.mjs && node scripts/setVersion.mjs --check",
     "verify:orphan-fixtures": "node --test scripts/checkOrphanFixtures.test.mjs && node scripts/checkOrphanFixtures.mjs",
     "verify:commit": "pnpm verify:isolation && pnpm verify:line-endings && pnpm verify:docs && pnpm verify:markdown && pnpm verify:audit && pnpm verify:scripts && pnpm verify:version && pnpm verify:orphan-fixtures && git diff --check",
-    "verify:push": "pnpm verify",
+    "verify:push": "pnpm verify && pnpm verify:tools",
     "review:prepare": "node scripts/reviewPrepare.mjs",
     "sync:public": "node scripts/syncPublic.mjs",
 
-    "verify": "node scripts/stopClient.mjs && pnpm verify:commit && pnpm verify:voicestudio && pnpm verify:narration-assembler && pnpm verify:speech-audit && pnpm verify:speech-edits && pnpm verify:course && pnpm verify:client && pnpm verify:adapter"
+    "verify": "node scripts/stopClient.mjs && pnpm verify:commit && pnpm verify:course && pnpm verify:client && pnpm verify:adapter"
   }
 }
