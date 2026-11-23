@@ -11,16 +11,15 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 
 [介绍视频](https://www.bilibili.com/video/BV1BSsD6MEaY/)
 
-## 目录结构
+## 下载
 
-| 路径 | 内容 |
+| 组件 | 下载 |
 | --- | --- |
-| `client/` | GPUI 客户端：`core/`（协议服务器与状态机）、`model/`（应用状态与用例）、`app/`（窗口与平台集成） |
-| `course/` | 共享的 `cynapse-course` 课程包契约 |
-| `adapters/` | 应用适配器：VS Code 扩展与 JupyterLab 预构建扩展 |
-| `protocol/` | 通信契约与共享协议样例 |
-| `packaging/` | MSIX 打包模板与图标生成 |
-| `scripts/` | 构建、打包与校验脚本 |
+| Cynapse Client + JupyterLab Adapter（Windows x64） | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
+| Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
+
+每次构建都把客户端与匹配版本的 JupyterLab 适配器 wheel 打在一起，不需要单独安装
+适配器。各版本变化见[版本记录](CHANGELOG.md)。当前构建面向 Windows x64。
 
 ## 示例课程
 
@@ -41,6 +40,17 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 > 这些是示例，不是完整的课程目录。`rust-by-example-zh-cn` 目前只包含简介和第
 > 1–4 章，并非完整的《通过例子学 Rust》；`signal-processing-roadmap-zh-cn` 目前只
 > 包含简介和第 1 周，尚未覆盖完整路线图。
+
+## 目录结构
+
+| 路径 | 内容 |
+| --- | --- |
+| `client/` | GPUI 客户端：`core/`（协议服务器与状态机）、`model/`（应用状态与用例）、`app/`（窗口与平台集成） |
+| `course/` | 共享的 `cynapse-course` 课程包契约 |
+| `adapters/` | 应用适配器：VS Code 扩展与 JupyterLab 预构建扩展 |
+| `protocol/` | 通信契约与共享协议样例 |
+| `packaging/` | MSIX 打包模板与图标生成 |
+| `scripts/` | 构建、打包与校验脚本 |
 
 ## 构建与测试
 
@@ -64,16 +74,6 @@ pnpm verify:commit     # 快速检查：行尾、文档、脚本、版本
 
 JupyterLab 适配器在 `adapters/jupyterlab` 下构建；构建扩展前先安装那里的
 `requirements-build.txt`。
-
-## 下载
-
-| 组件 | 下载 |
-| --- | --- |
-| Cynapse Client + JupyterLab Adapter（Windows x64） | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
-| Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
-
-每次构建都把客户端与匹配版本的 JupyterLab 适配器 wheel 打在一起，不需要单独安装
-适配器。各版本变化见[版本记录](CHANGELOG.md)。当前构建面向 Windows x64。
 
 ## 问题反馈
 

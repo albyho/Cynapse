@@ -14,16 +14,16 @@ without changing the course contract.
 
 [Introduction video](https://www.youtube.com/watch?v=fk4KJ7OfV-U)
 
-## Layout
+## Download
 
-| Path | Contents |
+| Component | Download |
 | --- | --- |
-| `client/` | GPUI Client: `core/` (protocol server and state machines), `model/` (application state and use cases), and `app/` (windows and platform integration) |
-| `course/` | Shared `cynapse-course` Course Package contract |
-| `adapters/` | App Adapters: the VS Code extension and the JupyterLab prebuilt extension |
-| `protocol/` | Wire contract and shared protocol samples |
-| `packaging/` | MSIX packaging template and icon generation |
-| `scripts/` | Build, packaging, and verification scripts |
+| Cynapse Client + JupyterLab Adapter (Windows x64) | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
+| Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
+
+Every build bundles the Client with the matching JupyterLab Adapter wheel, so the
+Adapter needs no separate install. See the [release log](CHANGELOG.md) for what
+changed in each version. Current builds target Windows x64.
 
 ## Sample courses
 
@@ -49,6 +49,17 @@ so the whole step happens inside the app.
 > `signal-processing-roadmap-zh-cn` is an in-progress adaptation that currently
 > covers the introduction and Week 1 only, not the complete roadmap.
 
+## Layout
+
+| Path | Contents |
+| --- | --- |
+| `client/` | GPUI Client: `core/` (protocol server and state machines), `model/` (application state and use cases), and `app/` (windows and platform integration) |
+| `course/` | Shared `cynapse-course` Course Package contract |
+| `adapters/` | App Adapters: the VS Code extension and the JupyterLab prebuilt extension |
+| `protocol/` | Wire contract and shared protocol samples |
+| `packaging/` | MSIX packaging template and icon generation |
+| `scripts/` | Build, packaging, and verification scripts |
+
 ## Build and test
 
 Requires Node 24, pnpm 12, Rust 1.100+, and Python 3. Building the Client on
@@ -71,17 +82,6 @@ pnpm verify:commit     # fast checks: line endings, docs, scripts, versions
 
 The JupyterLab Adapter builds through `adapters/jupyterlab`; install
 `requirements-build.txt` there before building the extension wheel.
-
-## Download
-
-| Component | Download |
-| --- | --- |
-| Cynapse Client + JupyterLab Adapter (Windows x64) | [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
-| Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
-
-Every build bundles the Client with the matching JupyterLab Adapter wheel, so the
-Adapter needs no separate install. See the [release log](CHANGELOG.md) for what
-changed in each version. Current builds target Windows x64.
 
 ## Issues
 
