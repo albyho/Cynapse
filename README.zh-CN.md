@@ -14,7 +14,7 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 
 | 组件 | 下载 |
 | --- | --- |
-| Cynapse Client + JupyterLab Adapter（Windows x64） | [Microsoft Store](https://apps.microsoft.com/detail/9p145r16w33t) · [`cynapse-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
+| Cynapse Client + JupyterLab Adapter（Windows x64） | [Microsoft Store](https://apps.microsoft.com/detail/9p145r16w33t) · [`cynapse-client-<version>-windows-x64.zip`](https://github.com/albyho/Cynapse/releases/latest) |
 | Cynapse VS Code Adapter | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter) |
 
 应用商店版本负责安装与更新，两条渠道是同一份构建，都已内置匹配版本的 JupyterLab 适配器 wheel，不需要单独安装适配器。各版本变化见[版本记录](CHANGELOG.md)。当前构建面向 Windows x64。

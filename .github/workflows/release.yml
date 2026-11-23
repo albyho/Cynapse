@@ -107,7 +107,7 @@ jobs:
             throw "JupyterLab extension wheel is missing: $wheel"
           }
           $bundle = "dist/windows-x64"
-          $zip = "dist/cynapse-$version-windows-x64.zip"
+          $zip = "dist/cynapse-client-$version-windows-x64.zip"
           Remove-Item $bundle -Recurse -Force -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Force $bundle | Out-Null
           Copy-Item "target/release/cynapse-client.exe" $bundle
@@ -131,7 +131,7 @@ jobs:
           body: |
             Cynapse ${{ github.ref_name }} for Windows x64.
 
-            - `cynapse-${{ steps.version.outputs.version }}-windows-x64.zip` — Client and JupyterLab Adapter
+            - `cynapse-client-${{ steps.version.outputs.version }}-windows-x64.zip` — Client and JupyterLab Adapter
 
             Extract the zip and run `cynapse-client.exe`; the JupyterLab Adapter
             wheel is included beside it. The VS Code Adapter is distributed
@@ -140,7 +140,7 @@ jobs:
             Built from Cynapse commit ${{ github.sha }}.
             Release log: https://github.com/albyho/Cynapse/blob/main/CHANGELOG.md
           files: |
-            dist/cynapse-${{ steps.version.outputs.version }}-windows-x64.zip
+            dist/cynapse-client-${{ steps.version.outputs.version }}-windows-x64.zip
           fail_on_unmatched_files: true
 
       - name: Publish the Adapter to the Marketplace
