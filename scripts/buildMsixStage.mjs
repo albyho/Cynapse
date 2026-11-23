@@ -8,7 +8,15 @@
 //! 这一步只组装松散目录；要打成 `.msix` 走 `packageMsix.mjs`。
 
 import { spawnSync } from 'node:child_process'
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
 import path from 'node:path'
 import { isMain } from './isMain.mjs'
 
@@ -127,6 +135,12 @@ export function build(root, env = process.env) {
   )
 
   const wheel = `cynapse_jupyterlab_extension-${version}-py3-none-any.whl`
+  // 同名 payload 会被覆盖，旧版本的 wheel 却会留在 stage 里一起进包。
+  for (const entry of readdirSync(stageDir)) {
+    if (entry.endsWith('.whl') && entry !== wheel) {
+      rmSync(path.join(stageDir, entry), { force: true })
+    }
+  }
   const wheelPath = path.join(root, 'adapters', 'jupyterlab', 'dist', wheel)
   if (existsSync(wheelPath)) {
     copyInto(wheelPath, path.join(stageDir, wheel), wheel)
