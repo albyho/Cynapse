@@ -3,8 +3,9 @@
 //
 // The include list is the only source of truth: a path that is not matched here
 // is never copied, so a new internal document cannot reach the public tree just
-// by being added to the repository. `README.md`, `README.zh-CN.md` and
-// `.github/` belong to the public repository and are never touched.
+// by being added to the repository. `README.md`, `README.zh-CN.md`,
+// `.gitignore` and `.github/` belong to the public repository and are never
+// touched -- a shared `.gitignore` would publish the private directory layout.
 
 import { execFileSync } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs'
@@ -28,7 +29,6 @@ const INCLUDED = [
   'pnpm-lock.yaml',
   'pnpm-workspace.yaml',
   '.gitattributes',
-  '.gitignore',
   '.rumdl.toml',
   'CHANGELOG.md',
 ]

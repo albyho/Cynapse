@@ -71,7 +71,7 @@ Cynapse: Show VS Code Adapter Status
 1. Run `Cynapse: Show VS Code Adapter Status` to see the error.
 2. Restart Cynapse Client.
 3. If the problem persists, open an
-   [issue](https://github.com/albyho/Cynapse-release/issues) with your VS Code
+   [issue](https://github.com/albyho/Cynapse/issues) with your VS Code
    version, OS version, and the status details.
 
 ## Security and privacy
@@ -91,7 +91,7 @@ It lets you learn in real software while keeping the process observable,
 pausable, and resumable.
 
 Releases and issue tracker:
-[github.com/albyho/Cynapse-release](https://github.com/albyho/Cynapse-release)
+[github.com/albyho/Cynapse](https://github.com/albyho/Cynapse)
 
 ## License
 

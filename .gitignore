@@ -1,43 +1,26 @@
-# 本地工具 / Agent 与运行时状态
-.agents/
-.claude/
-.cynapse/
-.scratch/
-.superpowers/
-.vscode-test/
-.workbuddy/
-# Narration Assembler Clip cache (tool-local, never committed)
-tools/narration-assembler/.cache/
+# Dependencies and build output
+node_modules/
+out/
+target/
+dist/
+*.vsix
+__pycache__/
 
-# 环境变量
+# Local MSIX staging produced by pnpm build:msix
+packaging/msix/stage/
+
+# Environment files
 .env
 .env.*
 !.env.example
 
-# 依赖与构建产物
-*.vsix
-/skills-lock.json
-dist/
-# 本地 MSIX 注册的松散文件目录（由 pnpm build:msix 生成）
-packaging/msix/stage/
-node_modules/
-out/
-target/
-__pycache__/
-
-# 课程与测试数据的运行时工作区
+# Workspaces created while running tests
 client/test-data/*/workspace/*
 !client/test-data/*/workspace/.gitkeep
 course/test-data/*/workspace/*
 !course/test-data/*/workspace/.gitkeep
 adapters/jupyterlab/test-data/*/workspace/*
 !adapters/jupyterlab/test-data/*/workspace/.gitkeep
-courses/*/workspace/*
-!courses/*/workspace/.gitkeep
 
-# agent-desktop 源码 clone：本地获取，随 zip 分发，不进开发者仓库
-courses/agent-desktop-source-analysis-zh-cn/resources/
-
-# 音频产物（Studio 测试数据除外）
-*.ogg
-!client/test-data/narration-seek.ogg
+# Editor state
+.vscode-test/

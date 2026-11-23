@@ -35,6 +35,7 @@ test('keeps internal documents and assets out of the public tree', () => {
     '.github/workflows/release.yml',
     'README.md',
     'README.zh-CN.md',
+    '.gitignore',
     'adapters/scratch/research/demo-snap-chain.js',
     'packaging/msix/store-submission.md',
   ]) {

@@ -64,7 +64,7 @@ Cynapse: 显示 VS Code Adapter 状态
 
 1. 运行 `Cynapse: Show VS Code Adapter Status` 查看错误信息。
 2. 重新启动 Cynapse Client。
-3. 如果问题持续，提交 [Issue](https://github.com/albyho/Cynapse-release/issues)，
+3. 如果问题持续，提交 [Issue](https://github.com/albyho/Cynapse/issues)，
    并附上 VS Code 版本、操作系统版本和状态信息。
 
 ## 安全与隐私
@@ -80,7 +80,7 @@ Cynapse 是本地优先的交互式软件教程与工作流平台。它让你在
 同时保留可观察、可暂停、可恢复的学习过程。
 
 发布与问题反馈：
-[github.com/albyho/Cynapse-release](https://github.com/albyho/Cynapse-release)
+[github.com/albyho/Cynapse](https://github.com/albyho/Cynapse)
 
 ## License
 
