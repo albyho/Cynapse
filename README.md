@@ -49,6 +49,14 @@ so the whole step happens inside the app.
 > `signal-processing-roadmap-zh-cn` is an in-progress adaptation that currently
 > covers the introduction and Week 1 only, not the complete roadmap.
 
+## Roadmap
+
+- Ship `Cynapse Studio`, the course authoring application.
+- Add more sample courses.
+- Add AI agent support.
+- Add Accessibility Tree support.
+- Add more UI languages and course-content localization (i18n / L10n).
+
 ## Layout
 
 | Path | Contents |

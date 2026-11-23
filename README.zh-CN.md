@@ -41,6 +41,14 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 > 1–4 章，并非完整的《通过例子学 Rust》；`signal-processing-roadmap-zh-cn` 目前只
 > 包含简介和第 1 周，尚未覆盖完整路线图。
 
+## 路线图
+
+- 提供课程创作工具 `Cynapse Studio`。
+- 增加更多示例课程。
+- 支持 AI Agent。
+- 支持 Accessibility Tree。
+- 支持更多界面语言和课程内容本地化（i18n / L10n）。
+
 ## 目录结构
 
 | 路径 | 内容 |
