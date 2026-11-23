@@ -1,5 +1,7 @@
 # Cynapse
 
+[![verify](https://github.com/albyho/Cynapse/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/albyho/Cynapse/actions/workflows/verify.yml)
+
 English | [简体中文](README.zh-CN.md)
 
 Cynapse (Code + Synapse) is a local-first platform for interactive tutorials and

@@ -1,5 +1,7 @@
 # Cynapse
 
+[![verify](https://github.com/albyho/Cynapse/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/albyho/Cynapse/actions/workflows/verify.yml)
+
 [English](README.md) | 简体中文
 
 Cynapse（Code + Synapse）是一个本地优先、面向真实软件的交互式教学与工作流平台。课程包驱动交互界面、可恢复的分步状态机，搭配一个或多个应用程序适配器，让学习者直接在软件里跟着做，而不是看录屏，也不是在模拟器里练。
