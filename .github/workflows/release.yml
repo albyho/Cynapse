@@ -122,10 +122,6 @@ jobs:
             }
           }
 
-      - name: Package the MSIX for Microsoft Store
-        shell: pwsh
-        run: pnpm package:msix
-
       - name: Publish the release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v3
@@ -136,7 +132,6 @@ jobs:
             Cynapse ${{ github.ref_name }} for Windows x64.
 
             - `cynapse-${{ steps.version.outputs.version }}-windows-x64.zip` — Client and JupyterLab Adapter
-            - `dist/msix/*.msix` — unsigned MSIX for Microsoft Store submission (identity from `packaging/msix/identity.json`)
 
             Extract the zip and run `cynapse-client.exe`; the JupyterLab Adapter
             wheel is included beside it. The VS Code Adapter is distributed
@@ -146,7 +141,6 @@ jobs:
             Release log: https://github.com/albyho/Cynapse/blob/main/CHANGELOG.md
           files: |
             dist/cynapse-${{ steps.version.outputs.version }}-windows-x64.zip
-            dist/msix/*.msix
           fail_on_unmatched_files: true
 
       - name: Publish the Adapter to the Marketplace
