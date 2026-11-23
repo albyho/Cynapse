@@ -11,7 +11,8 @@ exclude = [
   "courses/*/authoring/sources/**",
   "courses/*/workspace/**",
 ]
-# MD013 is disabled: a column limit forces hard wraps inside Chinese prose.
+# MD013 is disabled: Chinese prose is one line per paragraph, so a column limit
+# would only report every paragraph as too long.
 disable = ["MD013"]
 
 [MD004]

@@ -86,9 +86,9 @@ Cynapse: Show VS Code Adapter Status
 
 ## About Cynapse
 
-Cynapse is a local-first interactive software tutorial and workflow platform.
-It lets you learn in real software while keeping the process observable,
-pausable, and resumable.
+Cynapse is a local-first platform for interactive tutorials and workflows in
+real software. It lets you learn inside the application while keeping the
+process observable, pausable, and resumable.
 
 Releases and issue tracker:
 [github.com/albyho/Cynapse](https://github.com/albyho/Cynapse)

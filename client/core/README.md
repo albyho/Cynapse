@@ -19,9 +19,7 @@
 | [`discovery`](src/discovery.rs) | 单例运行时发现文件和 SQLite 状态路径 |
 | [`window_position`](src/window_position.rs) | 多显示器可见性、窗口位置约束和持久化 |
 
-本 crate 只提供库，不含可执行入口。`cynapse-scenario` 与
-`cynapse-content-verify` 位于 [`client/harness`](../harness)，那里也是 Scenario
-运行器与假文件系统的家；本 crate 不依赖它，生产路径因此不包含任何验证设施。
+本 crate 只提供库，不含可执行入口。`cynapse-scenario` 与 `cynapse-content-verify` 位于 [`client/harness`](../harness)，那里也是 Scenario 运行器与假文件系统的家；本 crate 不依赖它，生产路径因此不包含任何验证设施。
 
 ## 测试组织
 
@@ -43,14 +41,10 @@
 
 ## Loader 边界
 
-- `course` 的加载阶段校验包结构、引用安全、Action 字段与组合限制、媒体结构，
-  以及编辑 Step 必须先 `OpenFile` 的静态自包含契约。
-- 加载阶段不检查真实 Workspace 文件是否存在、编辑器是否打开或 dirty、literal
-  实际匹配情况、行列边界、环境、终端和命令结果。
-- 这些运行时条件由 `course_session`、Server 和 Adapter 在执行或恢复当前 Step
-  时检查；失败时保留当前 Step，不能由 Loader 推断课程已经完成。
-- Caption emphasis markup 由内容验证和 Narration Assembler 检查，不由
-  `load_package` 自身执行。
+- `course` 的加载阶段校验包结构、引用安全、Action 字段与组合限制、媒体结构，以及编辑 Step 必须先 `OpenFile` 的静态自包含契约。
+- 加载阶段不检查真实 Workspace 文件是否存在、编辑器是否打开或 dirty、literal 实际匹配情况、行列边界、环境、终端和命令结果。
+- 这些运行时条件由 `course_session`、Server 和 Adapter 在执行或恢复当前 Step 时检查；失败时保留当前 Step，不能由 Loader 推断课程已经完成。
+- Caption emphasis markup 由内容验证和 Narration Assembler 检查，不由 `load_package` 自身执行。
 
 ## 验证
 
@@ -69,7 +63,4 @@ pnpm verify:content
 pnpm run:scenario --course courses/rust-by-example-zh-cn --unit introduction --mode continuous
 ```
 
-开发迭代按改动范围选择：只改 Client 时运行 `pnpm verify:client`，只改
-`cynapse-course` 时运行 `pnpm verify:course`；共享课程库改动会同时影响两个应用，
-运行 `pnpm verify:course:dependents`。完整的 `pnpm verify:push` 留到 merge/release
-前或 CI 不可用时。
+开发迭代按改动范围选择：只改 Client 时运行 `pnpm verify:client`，只改 `cynapse-course` 时运行 `pnpm verify:course`；共享课程库改动会同时影响两个应用，运行 `pnpm verify:course:dependents`。完整的 `pnpm verify:push` 留到 merge/release 前或 CI 不可用时。
