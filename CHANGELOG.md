@@ -6,6 +6,19 @@ Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
 Downloads live on the Releases page.
 
+## 0.10.1 — 2026-11-24
+
+- Client: fix caption clipping caused by DPI rounding, keep measurement stable
+  when formula painting fails, and express width slack in logical pixels.
+- Course packages: identify the exact clip in caption errors and cover formula
+  speech edits in both Rust and Python.
+
+Cynapse commit: `3f740791`
+
+### Downloads
+
+- [`cynapse-0.10.1-windows-x64.zip`](https://github.com/albyho/Cynapse/releases)
+
 ## 0.10.0 — 2026-11-24
 
 - Client: render inline formulas in captions, sharing the baseline with

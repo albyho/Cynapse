@@ -1,6 +1,6 @@
 {
   "name": "cynapse-jupyterlab-adapter",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "private": true,
   "description": "Cynapse JupyterLab Adapter: the prebuilt extension and its Protocol connection client.",
   "license": "MIT",
