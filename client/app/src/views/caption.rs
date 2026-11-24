@@ -62,10 +62,10 @@ fn plain_card_width(
                 .iter()
                 .map(|line| line.size(px(0.)).width)
                 .fold(px(0.), Pixels::max);
-            // scale * 1.0 is one logical pixel of extra width, expressed in device pixels.
-            // This slack absorbs GPUI's pixel snapping so the last word doesn't wrap unexpectedly.
+            // Round up to a device pixel, then add one logical pixel of slack so
+            // GPUI's layout rounding does not force the last word onto another line.
             let scale = window.scale_factor();
-            let device_aligned = ((natural * scale).ceil() + px(scale)) / scale;
+            let device_aligned = (natural * scale).ceil() / scale + px(1.0);
             (device_aligned + snapped_padding(window) - px(crate::caption_metrics::CAPTION_PADDING))
                 .ceil()
         })
