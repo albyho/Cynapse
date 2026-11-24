@@ -1,14 +1,117 @@
 use crate::platform::window;
 use crate::view_model::ClientViewModel;
-use cynapse_client_core::caption_segments;
+use cynapse_client_core::{CaptionPosition, caption_segments};
 use gpui_kit::prelude::*;
 use gpui_kit::*;
 use std::time::Duration;
 
 use super::color::parse_hex_color;
 
+mod formula;
+
 /// Hover latency and wakeup budget while a caption is visible.
 const HOVER_POLL_INTERVAL: Duration = Duration::from_millis(50);
+
+/// Measure the caption's content width and the resulting window height.
+///
+/// This is a pure measurement that only needs a window for GPUI's text system
+/// and SVG renderer. It is called BEFORE the caption window is shown, using the
+/// main window's context, so the caption window can be sized correctly on its
+/// very first visible frame (no flash/resize cycle).
+pub(crate) fn measure_caption(
+    params: &crate::caption_metrics::CaptionMeasureParams,
+    window: &mut Window,
+    cx: &App,
+) -> Option<(f32, f32)> {
+    let text_color =
+        parse_hex_color(&params.text_color).unwrap_or_else(|| rgb(0xffffff).into());
+    let accent_color =
+        parse_hex_color(&params.accent_color).unwrap_or_else(|| rgb(0x00ffff).into());
+    let segments = caption_segments(&params.text);
+    if segments.is_empty() {
+        return None;
+    }
+    let plain = segments
+        .iter()
+        .map(|segment| segment.text.as_str())
+        .collect::<String>();
+
+    let text_style = window.text_style();
+    let mut runs = Vec::new();
+    let mut offset = 0;
+    for segment in &segments {
+        let end = offset + segment.text.len();
+        let mut font = text_style.font();
+        if let Some(family) = params.font_family.as_deref() {
+            font.family = family.into();
+        }
+        if segment.aqua {
+            font.weight = gpui::FontWeight::BOLD;
+        }
+        runs.push(gpui::TextRun {
+            len: segment.text.len(),
+            font,
+            color: if segment.aqua { accent_color } else { text_color },
+            background_color: None,
+            underline: None,
+            strikethrough: None,
+        });
+        offset = end;
+    }
+
+    let line_height = px(params.font_size * 1.3);
+    let monitor_width = window
+        .display(cx)
+        .map(|display| display.visible_bounds().size.width.as_f32())
+        .unwrap_or(1920.0);
+    let max_card_width = px(crate::caption_metrics::max_card_width(
+        monitor_width,
+        params.width_percent,
+    ));
+
+    let mixed = segments.iter().any(|segment| segment.formula).then(|| {
+        formula::layout(
+            &segments,
+            &runs,
+            px(params.font_size),
+            line_height,
+            max_card_width,
+            window,
+            cx,
+        )
+    });
+    let card_size = if let Some(layout) = &mixed {
+        (layout.width(), layout.height())
+    } else {
+        let text_system = window.text_system();
+        let natural = plain
+            .split('\n')
+            .map(|line| {
+                text_system
+                    .shape_line(line.to_owned().into(), px(params.font_size), &runs, None)
+                    .width()
+            })
+            .fold(px(0.), Pixels::max);
+        let card_width = natural.min(max_card_width);
+        let height: Pixels = text_system
+            .shape_text(
+                plain.clone().into(),
+                px(params.font_size),
+                &runs,
+                Some(card_width),
+                None,
+            )
+            .map(|lines| lines.iter().map(|l| l.size(line_height).height).sum())
+            .unwrap_or(line_height);
+        (card_width, height)
+    };
+
+    Some(crate::caption_metrics::content_to_window_size(
+        card_size.0.as_f32(),
+        card_size.1.as_f32(),
+        line_height.as_f32(),
+    ))
+}
 
 /// Declarative caption-overlay view.
 ///
@@ -94,7 +197,8 @@ impl Render for CaptionView {
             accent_color,
             segments,
             font_size,
-            current_height,
+            width_percent,
+            position,
             font_family,
         ) = {
             let view_model = self.view_model.read(cx);
@@ -114,7 +218,8 @@ impl Render for CaptionView {
                     .unwrap_or_else(|| rgb(0x00ffff).into()),
                 caption_segments(view_model.caption_text()),
                 view_model.caption_font_size(),
-                view_model.caption_height(),
+                view_model.caption_width_percent(),
+                view_model.caption_position(),
                 view_model.caption_font_family().family_name(),
             )
         };
@@ -161,63 +266,102 @@ impl Render for CaptionView {
         }
 
         let line_height = px(font_size * 1.3);
-        if !plain.is_empty() {
-            let available_width = (window.bounds().size.width - px(64.)).max(px(80.));
-            if let Ok(lines) = window.text_system().shape_text(
-                plain.clone().into(),
-                px(font_size),
-                &runs,
-                Some(available_width),
-                None,
-            ) {
-                let measured = lines
-                    .iter()
-                    .map(|line| line.size(line_height).height.as_f32())
-                    .sum::<f32>()
-                    + 32.0;
-                if (measured - current_height as f32).abs() > 1.0 {
-                    tracing::debug!(
-                        target: "cynapse.client.caption",
-                        measured,
-                        current_height,
-                        font_size,
-                        "caption content height changed"
-                    );
-                    let view_model = self.view_model.clone();
-                    cx.defer(move |cx| {
-                        view_model.update(cx, |view_model, cx| {
-                            view_model.set_caption_height(measured, cx);
-                        });
-                    });
-                }
-            }
-        }
+        let monitor_width = window
+            .display(cx)
+            .map(|display| display.visible_bounds().size.width.as_f32())
+            .unwrap_or(1920.0);
+        // Settings percentage is the hard ceiling for the card width.
+        let max_card_width = px(crate::caption_metrics::max_card_width(monitor_width, width_percent));
 
-        div()
-            .size_full()
+        // Measure the true text size: natural (unwrapped) glyph width determines
+        // the card width; wrapping at that width gives the height. The window
+        // width is fixed, so this measured card width is stable frame to frame.
+        let mixed = segments.iter().any(|segment| segment.formula).then(|| {
+            formula::layout(
+                &segments,
+                &runs,
+                px(font_size),
+                line_height,
+                max_card_width,
+                window,
+                cx,
+            )
+        });
+        let card_size = if let Some(layout) = &mixed {
+            Some((layout.width(), layout.height()))
+        } else if plain.is_empty() {
+            None
+        } else {
+            let text_system = window.text_system();
+            let natural = plain
+                .split('\n')
+                .map(|line| {
+                    text_system
+                        .shape_line(line.to_owned().into(), px(font_size), &runs, None)
+                        .width()
+                })
+                .fold(px(0.), Pixels::max);
+            let card_width = natural.min(max_card_width);
+            let height: Pixels = text_system
+                .shape_text(
+                    plain.clone().into(),
+                    px(font_size),
+                    &runs,
+                    Some(card_width),
+                    None,
+                )
+                .map(|lines| lines.iter().map(|l| l.size(line_height).height).sum())
+                .unwrap_or(line_height);
+            Some((card_width, height))
+        };
+        // Card width for rendering only. The window height was measured before
+        // the window was shown (see show_caption flow), so no height update or
+        // transparent placeholder frame is needed here.
+        let card_width_px = card_size.map(|(width, _)| width.as_f32());
+
+        // The window stays transparent; the inner card hugs the measured text
+        // width instead of filling the window. w() includes padding, so add the
+        // 16px back to keep the content box equal to the measured width.
+        let card = div()
+            .when_some(card_width_px, |el, width| {
+                el.w(px(width + crate::caption_metrics::CAPTION_PADDING))
+            })
             .flex()
             .items_center()
             .justify_center()
-            .px_4()
-            .py_2()
-            .child({
-                let card = div().max_w_full().rounded_md().border_0().px_4().py_2();
-                let card = if let Some(color) = background_color {
-                    card.bg(color.opacity(background_opacity))
+            .rounded_md()
+            .p_2();
+        let card = if let Some(color) = background_color {
+            card.bg(color.opacity(background_opacity))
+        } else {
+            card
+        };
+        let card = card.child(
+            div()
+                .w_full()
+                .text_center()
+                .text_size(px(font_size))
+                .line_height(line_height)
+                .font_weight(gpui::FontWeight::SEMIBOLD)
+                .text_color(text_color)
+                .opacity(text_opacity)
+                .when_some(font_family, |text, family| text.font_family(family))
+                .child(if let Some(layout) = mixed {
+                    layout.into_element(plain)
                 } else {
-                    card
-                };
-                card.child(
-                    div()
-                        .text_center()
-                        .text_size(px(font_size))
-                        .line_height(line_height)
-                        .font_weight(gpui::FontWeight::SEMIBOLD)
-                        .text_color(text_color)
-                        .opacity(text_opacity)
-                        .when_some(font_family, |text, family| text.font_family(family))
-                        .child(gpui::StyledText::new(plain).with_highlights(highlights)),
-                )
-            })
+                    gpui::StyledText::new(plain)
+                        .with_highlights(highlights)
+                        .into_any_element()
+                }),
+        );
+        // Pin the card to the window edge matching the screen edge. While the
+        // first (unmeasured) frame uses a full-screen-height window, this keeps
+        // the card at the correct edge instead of flashing in the center.
+        let root = div().size_full().flex().justify_center();
+        let root = match position {
+            CaptionPosition::Bottom => root.items_end(),
+            CaptionPosition::Top => root.items_start(),
+        };
+        root.child(card).into_any_element()
     }
 }

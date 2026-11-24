@@ -37,8 +37,8 @@ mod file_ops;
 
 pub use actions::*;
 pub use caption_markup::{
-    CaptionSegment, caption_segments, narration_clip_speech_text, validate_caption_markup,
-    visible_caption_text,
+    CaptionSegment, caption_formula_layout, caption_segments, narration_clip_speech_text,
+    validate_caption_markup, visible_caption_text,
 };
 pub use check::{
     PackageLoad, PackageReport, check_course, check_package, load_package_with_report,

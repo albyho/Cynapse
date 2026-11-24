@@ -19,8 +19,14 @@ Counts are Unit nodes with `steps` and referenced Step files. A challenge count
 is the number of Steps with a `challenge` object. Keep this table in sync when a
 fixture's manifest changes.
 
+When adding or splitting Step files, a `step_file` name (without `.json`) must
+equal its `step_id`; the loader rejects a mismatch. The rule and its check live
+in `course/src/steps.rs` (`step_files_must_use_json_and_match_their_step_id` in
+`course/src/tests/manifest.rs`); validate with `pnpm verify:content -- --course <path>`.
+
 | Fixture | Units | Steps | Challenges | Notes |
 | --- | ---: | ---: | ---: | --- |
+| `caption-formula-demo` | 1 | 4 | 0 | Silent inline formulas and Caption Emphasis |
 | `challenge-fix-test` | 1 | 1 | 1 | Single Unit; the challenge is also the final course Step |
 | `continuous-learning-demo` | 4 | 7 | 0 | Continuous progression across Units |
 | `independent-units` | 5 | 5 | 0 | Shared Steps across independent Units |

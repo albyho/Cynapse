@@ -1,0 +1,19 @@
+{
+  "step_id": "piecewise-formula",
+  "title": "分段递推公式",
+  "actions": [
+    {
+      "type": "Wait",
+      "duration_ms": 20000,
+      "narration": {
+        "during": {
+          "clips": [
+            {
+              "caption": "观察分段递推式 <c.aqua>\\(T(n)=\\begin{cases}1&n=1\\\\2T(n/2)+n&n>1\\end{cases}\\)</c.aqua>，确认两行条件和后面的正文都完整显示。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

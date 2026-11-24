@@ -63,5 +63,25 @@
     "caption": "重点：<c.aqua></c>",
     "valid": false,
     "error": "empty"
+  },
+  {
+    "caption": "  当  <c.aqua>\\(x  +  y\\)</c>  继续，金额 $5。  ",
+    "valid": true,
+    "visible": "当 \\(x  +  y\\) 继续，金额 $5。"
+  },
+  {
+    "caption": "字面 \\\\(",
+    "valid": true,
+    "visible": "字面 \\("
+  },
+  {
+    "caption": "\\(x<c.aqua>+y</c>\\)",
+    "valid": false,
+    "error": "emphasis"
+  },
+  {
+    "caption": "\\(x",
+    "valid": false,
+    "error": "unclosed"
   }
 ]

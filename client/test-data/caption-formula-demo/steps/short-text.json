@@ -1,0 +1,19 @@
+{
+  "step_id": "short-text",
+  "title": "无公式短文本",
+  "actions": [
+    {
+      "type": "Wait",
+      "duration_ms": 20000,
+      "narration": {
+        "during": {
+          "clips": [
+            {
+              "caption": "无公式短文本"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

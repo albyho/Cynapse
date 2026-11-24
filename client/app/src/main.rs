@@ -49,11 +49,20 @@ fn place_caption(
     caption_window: platform::CaptionWindow,
 ) {
     let position = view_model.read(cx).caption_position();
-    let width = view_model.read(cx).caption_width_percent();
+    let width_percent = view_model.read(cx).caption_width_percent();
+    let width = view_model.read(cx).caption_width();
     let height = view_model.read(cx).caption_height();
     cx.spawn(async move |cx| {
-        let rect =
-            cx.update(|cx| platform::caption_rect(cx, main_window.handle, position, width, height));
+        let rect = cx.update(|cx| {
+            platform::caption_rect(
+                cx,
+                main_window.handle,
+                position,
+                width_percent,
+                width,
+                height,
+            )
+        });
         if let Some(rect) = rect {
             view_model.update(cx, |view_model, _| view_model.set_caption_rect(Some(rect)));
             platform::show_caption_window(caption_window, rect);
@@ -158,16 +167,17 @@ fn main() {
                     ClientIntent::ShowCaption => {
                         let visible = view_model.read(cx).caption_visible();
                         let position = view_model.read(cx).caption_position();
-                        let width = view_model.read(cx).caption_width_percent();
-                        let height = view_model.read(cx).caption_height();
+                        let width_percent = view_model.read(cx).caption_width_percent();
                         tracing::debug!(
                             target: "cynapse.client.caption",
                             visible,
-                            width,
-                            height,
+                            width_percent,
                             ?position,
                             "caption show requested"
                         );
+                        // Measure before showing: the caption window is sized
+                        // correctly on its first visible frame.
+                        platform::measure_caption_size(cx, main_window.handle, &view_model);
                         place_caption(cx, view_model, main_window, caption_window);
                     }
                     ClientIntent::HideCaption => {
@@ -177,18 +187,6 @@ fn main() {
                         );
                         cx.spawn(async move |_| platform::hide_caption_window(caption_window))
                             .detach();
-                    }
-                    ClientIntent::CaptionHeight(height) => {
-                        let visible = view_model.read(cx).caption_visible();
-                        tracing::debug!(
-                            target: "cynapse.client.caption",
-                            height,
-                            visible,
-                            "caption height measured"
-                        );
-                        if visible {
-                            place_caption(cx, view_model, main_window, caption_window);
-                        }
                     }
                     ClientIntent::CaptionFlipped => {
                         if view_model.read(cx).caption_visible() {
@@ -245,6 +243,7 @@ fn main() {
                             .detach();
                         }
                         if *caption_geometry_changed && view_model.read(cx).caption_visible() {
+                            platform::measure_caption_size(cx, main_window.handle, &view_model);
                             place_caption(cx, view_model, main_window, caption_window);
                         }
                     }

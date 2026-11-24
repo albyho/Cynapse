@@ -1,0 +1,26 @@
+{
+  "id": "caption_formula_demo",
+  "title": "字幕公式测试",
+  "version": "1.0.0",
+  "adapters": [],
+  "children": [
+    {
+      "id": "formula",
+      "title": "行内公式",
+          "steps": [
+            {
+              "step_file": "steps/short-text.json"
+            },
+            {
+              "step_file": "steps/long-text.json"
+            },
+            {
+              "step_file": "steps/sum-formula.json"
+            },
+            {
+              "step_file": "steps/piecewise-formula.json"
+            }
+          ]
+    }
+  ]
+}

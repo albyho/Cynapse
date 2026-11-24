@@ -17,10 +17,7 @@ pub mod window;
 const DEFAULT_MAIN_WINDOW_SIZE: (i32, i32) = (420, 640);
 const MAIN_WINDOW_EDGE_MARGIN: i32 = 8;
 const SETTINGS_WINDOW_SIZE: (f32, f32) = (760.0, 560.0);
-// Minimum caption height; the caption view reports the measured content height.
-const CAPTION_MIN_HEIGHT: f32 = 96.0;
-const CAPTION_MIN_WIDTH: f32 = 320.0;
-const CAPTION_EDGE_MARGIN: f32 = 4.0;
+use crate::caption_metrics::{CAPTION_MIN_HEIGHT, CAPTION_MIN_WIDTH};
 
 #[cfg(target_os = "windows")]
 pub fn system_language() -> String {
@@ -226,7 +223,8 @@ pub fn caption_rect(
     main: AnyWindowHandle,
     position: CaptionPosition,
     width_percent: u8,
-    height: u32,
+    measured_width: u32,
+    measured_height: u32,
 ) -> Option<(i32, i32, i32, i32)> {
     let (visible, scale) = main
         .update(cx, |_, window, cx| {
@@ -241,23 +239,19 @@ pub fn caption_rect(
         ?visible,
         scale,
         width_percent,
-        height,
+        measured_width,
+        measured_height,
         ?position,
         "caption rect inputs"
     );
 
-    let width = (visible.size.width.as_f32() * f32::from(width_percent.clamp(50, 100)) / 100.0)
-        .max(CAPTION_MIN_WIDTH);
-    let height = (height as f32)
-        .max(CAPTION_MIN_HEIGHT)
-        .min((visible.size.height.as_f32() - 80.0).max(CAPTION_MIN_HEIGHT));
-    let x = visible.origin.x.as_f32() + (visible.size.width.as_f32() - width) / 2.0;
-    let y = match position {
-        CaptionPosition::Bottom => {
-            visible.origin.y.as_f32() + visible.size.height.as_f32() - height - CAPTION_EDGE_MARGIN
-        }
-        CaptionPosition::Top => visible.origin.y.as_f32() + CAPTION_EDGE_MARGIN,
-    };
+    let (x, y, width, height) = crate::caption_metrics::caption_rect_logical(
+        (visible.origin.x.as_f32(), visible.origin.y.as_f32()),
+        (visible.size.width.as_f32(), visible.size.height.as_f32()),
+        width_percent,
+        (measured_width, measured_height),
+        position,
+    );
     let scale = scale.max(0.1);
     let to_physical = |value: f32| (value * scale).round() as i32;
 
@@ -273,6 +267,39 @@ pub fn caption_rect(
         "caption rect computed"
     );
     Some(rect)
+}
+
+/// Measure the current caption against the main window's display and store the
+/// resulting size on the view model. Called BEFORE the caption window is shown,
+/// so the first visible frame is already at the correct size (no flash).
+pub fn measure_caption_size(
+    cx: &mut App,
+    main: AnyWindowHandle,
+    view_model: &Entity<crate::view_model::ClientViewModel>,
+) {
+    let params = {
+        let vm = view_model.read(cx);
+        crate::caption_metrics::CaptionMeasureParams {
+            text: vm.caption_text().to_owned(),
+            font_size: vm.caption_font_size(),
+            font_family: vm.caption_font_family().family_name().map(str::to_owned),
+            text_color: vm.caption_text_color().to_owned(),
+            accent_color: vm.caption_accent_color().to_owned(),
+            width_percent: vm.caption_width_percent(),
+        }
+    };
+    let measured = main.update(cx, |_, window, cx| {
+        crate::views::caption::measure_caption(&params, window, cx)
+    });
+    if let Ok(Some((width, height))) = measured {
+        view_model.update(cx, |vm, _| vm.set_caption_size_silent(width, height));
+        tracing::debug!(
+            target: "cynapse.client.caption",
+            width,
+            height,
+            "caption measured before show"
+        );
+    }
 }
 
 /// Shows and positions the caption. Call this with no `App` borrow held.

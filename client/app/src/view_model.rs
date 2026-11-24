@@ -253,7 +253,6 @@ pub(crate) fn step_advance_label(
 pub enum ClientIntent {
     ShowCaption,
     HideCaption,
-    CaptionHeight(u32),
     CaptionFlipped,
     SettingsChanged {
         settings: ClientSettings,
@@ -291,6 +290,8 @@ pub struct ClientViewModel {
     model: ClientModel,
     caption_visible: bool,
     caption_text: String,
+    /// Measured window size in logical pixels; the window hugs the caption card.
+    caption_width: u32,
     caption_height: u32,
     /// Runtime hover toggle; never written back to the persisted settings.
     caption_flipped: bool,
@@ -464,7 +465,8 @@ impl ClientViewModel {
             model,
             caption_visible: false,
             caption_text: String::new(),
-            caption_height: 96,
+            caption_width: crate::caption_metrics::CAPTION_MIN_WIDTH as u32,
+            caption_height: crate::caption_metrics::CAPTION_MIN_HEIGHT as u32,
             caption_flipped: false,
             caption_rect: None,
             narration,
@@ -2041,20 +2043,16 @@ impl ClientViewModel {
         self.caption_height
     }
 
-    pub fn set_caption_height(&mut self, height: f32, cx: &mut Context<Self>) {
-        let height = height.max(96.0).round() as u32;
-        if height == self.caption_height {
-            return;
-        }
-        tracing::debug!(
-            target: "cynapse.client.caption",
-            previous = self.caption_height,
-            height,
-            "caption height updated"
-        );
-        self.caption_height = height;
-        cx.emit(ClientIntent::CaptionHeight(height));
-        cx.notify();
+    pub fn caption_width(&self) -> u32 {
+        self.caption_width
+    }
+
+    /// Set the pre-measured window size silently (no re-place intent): this is
+    /// called before the caption window is shown, so place_caption uses the
+    /// correct size on the very first visible frame.
+    pub fn set_caption_size_silent(&mut self, width: f32, height: f32) {
+        self.caption_width = width.round().max(1.0) as u32;
+        self.caption_height = height.round().max(1.0) as u32;
     }
 
     pub fn caption_font_size(&self) -> f32 {
@@ -2116,6 +2114,9 @@ impl ClientViewModel {
     pub fn toggle_caption_edge(&mut self, cx: &mut Context<Self>) {
         self.caption_flipped = !self.caption_flipped;
         cx.emit(ClientIntent::CaptionFlipped);
+        // CaptionView reads caption_position() to pin the card to the matching
+        // edge; re-render so the card follows the window on hover flip.
+        cx.notify();
     }
 
     pub fn settings(&self) -> &ClientSettings {
@@ -2360,6 +2361,9 @@ impl ClientViewModel {
         if !visible {
             self.caption_rect = None;
         }
+        // Keep the last measured height. Resetting to 0 makes caption_rect jump
+        // to a full-screen window for one frame, which is visible as a flash.
+        // CaptionView re-measures on the text change and adjusts from there.
         cx.emit(if visible {
             ClientIntent::ShowCaption
         } else {

@@ -5,6 +5,7 @@
 
 pub mod assets;
 pub mod audio;
+pub mod caption_metrics;
 pub mod platform;
 pub mod settings;
 pub mod view_model;

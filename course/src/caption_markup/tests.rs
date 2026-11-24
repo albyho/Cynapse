@@ -1,7 +1,19 @@
 use super::{CaptionSegment, caption_segments, validate_caption_markup, visible_caption_text};
 
+#[test]
+fn validates_inline_caption_formulas() {
+    assert!(validate_caption_markup(r"金额 $5，<c.aqua>\(\frac{a}{b}\)</c>").is_ok());
+    assert!(validate_caption_markup(r"残缺 \(x").is_err());
+    assert!(validate_caption_markup(r"空 \( \)").is_err());
+    assert!(validate_caption_markup(r"\(\unsupportedcommand{x}\)").is_err());
+    assert!(validate_caption_markup(r"\(\rule{1em}{1000000em}\)").is_err());
+    assert!(validate_caption_markup(r"\(x<c.aqua>+y</c>\)").is_err());
+    assert_eq!(visible_caption_text(r"字面 \\("), r"字面 \(");
+}
+
 fn segment(text: &str, aqua: bool) -> CaptionSegment {
     CaptionSegment {
+        formula: false,
         text: text.to_string(),
         aqua,
     }

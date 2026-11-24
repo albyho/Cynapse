@@ -10,6 +10,9 @@ exclude = [
   "courses/*/resources/**",
   "courses/*/authoring/sources/**",
   "courses/*/workspace/**",
+  # Stage 0 research: converted source material must stay verbatim to preserve
+  # line anchors, and the design notes are working documents, not prose.
+  "courses/*/research/**",
 ]
 # MD013 is disabled: Chinese prose is one line per paragraph, so a column limit
 # would only report every paragraph as too long.

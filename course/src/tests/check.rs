@@ -28,6 +28,29 @@ fn check_package_reports_caption_markup_errors() {
 }
 
 #[test]
+fn caption_only_formula_needs_no_speech_edit_and_bad_formula_names_its_clip() {
+    let mut step = self_contained_step();
+    let path = "steps/write_hello.json";
+    for (caption, valid) in [
+        (r"观察 \(A=\begin{pmatrix}1&2\\3&4\end{pmatrix}\)。", true),
+        (r"观察 \(\unsupportedcommand{x}\)。", false),
+    ] {
+        step["actions"][0]["narration"] = serde_json::json!({
+            "after": {"clips": [{"duration_ms": 1000, "caption": caption}]}
+        });
+        let package = write_test_package(path, step.clone());
+        let result = load_package(package.path());
+        if valid {
+            assert!(result.is_ok(), "{result:?}");
+        } else {
+            let error = result.unwrap_err().to_string();
+            assert!(error.contains("after clip 0"), "{error}");
+            assert!(error.contains(r"\unsupportedcommand{x}"), "{error}");
+        }
+    }
+}
+
+#[test]
 fn check_package_reports_invalid_adapter_configuration() {
     let package = write_test_package("steps/write_hello.json", self_contained_step());
     disable_unit_adapters(&package);

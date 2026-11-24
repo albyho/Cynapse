@@ -39,8 +39,9 @@ pub use course::{
     JupyterLabOpenNotebookAction, JupyterLabRestartKernelAction, LoadedStep, MissingTargetPolicy,
     OpenFileAction, PackageLoad, PackageReport, Placement, PlaybackAction, PlaybackStep,
     ReplaceTextAction, ReplaceTextEditMode, Step, StepReference, TerminalCommandAction,
-    TerminalEnsureAction, TextAnchor, Unit, UnitAsset, UnitEntry, WaitAction, caption_segments,
-    check_course, check_package, load_package, load_package_with_report, validate_caption_markup,
+    TerminalEnsureAction, TextAnchor, Unit, UnitAsset, UnitEntry, WaitAction,
+    caption_formula_layout, caption_segments, check_course, check_package, load_package,
+    load_package_with_report, validate_caption_markup,
 };
 pub use course_session::{
     ActionNarrationAudioView, ChallengeStatus, ChallengeView, CommandExecutionStart,

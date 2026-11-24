@@ -19,12 +19,15 @@ cynapse-client-model = { path = "../model" }
 gpui-kit = "=0.9.1"
 gpui-tray = { version = "0.3", default-features = false, features = ["gpui-kit", "menu-state"] }
 image = { version = "0.25", default-features = false, features = ["png"] }
+ratex-layout = { version = "=0.1.16", default-features = false }
+ratex-svg = { version = "=0.1.16", default-features = false, features = ["embed-fonts"] }
 raw-window-handle = "0.6"
 rodio = { version = "0.23", default-features = false, features = ["playback", "vorbis"] }
 serde_json = "1"
 tokio = { version = "1", features = ["sync"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["tracing-log"] }
+unicode-linebreak = "0.1"
 windows = { version = "0.62", features = [
   "Win32_Foundation",
   "Win32_Globalization",
