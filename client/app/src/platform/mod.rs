@@ -286,6 +286,7 @@ pub fn measure_caption_size(
             text_color: vm.caption_text_color().to_owned(),
             accent_color: vm.caption_accent_color().to_owned(),
             width_percent: vm.caption_width_percent(),
+            formulas_enabled: vm.caption_formulas_enabled(),
         }
     };
     let measured = main.update(cx, |_, window, cx| {

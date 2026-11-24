@@ -308,6 +308,112 @@ fn a_committed_plan_failure_stops_learning_but_pre_commit_failures_keep_retry() 
     assert_eq!(model.state().learning().phase, LearningPhase::Running);
 }
 
+#[gpui_kit::test]
+fn formula_source_fallback_is_limited_to_the_current_caption(cx: &mut gpui_kit::TestAppContext) {
+    use gpui_kit::AppContext;
+
+    let directory = tempfile::tempdir().unwrap();
+    let (model, events) =
+        ClientModel::new_at(ClientSettings::default(), directory.path().join("state.db")).unwrap();
+    cx.update(|cx| {
+        let view_model =
+            cx.new(|cx| super::ClientViewModel::new_without_narration(model, events, cx));
+        view_model.update(cx, |view_model, cx| {
+            let first = r"观察 \(x\)，再继续。";
+            let next = r"观察 \(y\)，再继续。";
+            view_model.set_caption(Some(first.into()), cx);
+            view_model.show_caption_formula_source(first, cx);
+            assert!(!view_model.caption_formulas_enabled());
+            assert_eq!(view_model.caption_text(), first);
+
+            view_model.set_caption(Some(next.into()), cx);
+            view_model.show_caption_formula_source(first, cx);
+            assert!(view_model.caption_formulas_enabled());
+            assert_eq!(view_model.caption_text(), next);
+        });
+    });
+}
+
+#[gpui_kit::test]
+fn caption_card_fits_precalculated_window(cx: &mut gpui_kit::TestAppContext) {
+    use crate::{platform, views::caption::CaptionView};
+    use cynapse_client_core::CaptionPosition;
+    use gpui_kit::test::TestWindowExt;
+    use gpui_kit::{AppContext, px, size};
+
+    let directory = tempfile::tempdir().unwrap();
+    let mut settings = ClientSettings::default();
+    settings.caption.background_color = Some("#dd2020".into());
+    let (model, events) = ClientModel::new_at(settings, directory.path().join("state.db")).unwrap();
+    let view_model = cx
+        .update(|cx| cx.new(|cx| super::ClientViewModel::new_without_narration(model, events, cx)));
+    let main = cx.open_window(size(px(500.), px(500.)), |_, _| gpui_kit::Empty);
+    let overlay = cx.open_window(size(px(500.), px(200.)), |_, cx| {
+        CaptionView::new(view_model.clone(), cx)
+    });
+    cx.update_window(overlay.into(), |_, window, cx| {
+        window.render_frame(cx);
+        assert!(window.try_find("caption-card").is_none());
+    })
+    .unwrap();
+
+    for scale in [1.0, 1.25, 1.5, 1.75, 2.0] {
+        for window in [main.into(), overlay.into()] {
+            cx.simulate_window_scale_factor_change(window, scale);
+        }
+        for (position, text, single_line) in [
+            (CaptionPosition::Top, "第 1 章《Hello World》。", Some(true)),
+            (
+                CaptionPosition::Bottom,
+                "第 1111111111111111111 章《Hello World》",
+                None,
+            ),
+            (
+                CaptionPosition::Bottom,
+                concat!(
+                    "Rust <c.aqua>类型系统</c>会根据上下文推断类型。",
+                    "这是一条需要换行的长字幕，用来确认窗口高度能容纳完整内容。",
+                    "这是一条需要换行的长字幕，用来确认窗口高度能容纳完整内容。",
+                    "字幕的红色背景和圆角也应该完整显示。"
+                ),
+                Some(false),
+            ),
+        ] {
+            let (width, height) = cx.update(|cx| {
+                view_model.update(cx, |view_model, cx| {
+                    view_model.set_caption_position(position, cx);
+                    view_model.set_caption(Some(text.into()), cx);
+                });
+                platform::measure_caption_size(cx, main.into(), &view_model);
+                let view_model = view_model.read(cx);
+                (view_model.caption_width(), view_model.caption_height())
+            });
+            let native_size = |dimension: u32| px((dimension as f32 * scale).round() / scale);
+            cx.simulate_window_resize(
+                overlay.into(),
+                size(native_size(width), native_size(height)),
+            );
+            cx.update_window(overlay.into(), |_, window, cx| {
+                window.render_frame(cx);
+                let bounds = window.find("caption-card").bounds();
+                assert!(
+                    bounds.top() >= px(0.) && bounds.bottom() <= window.viewport_size().height,
+                    "{position:?} caption card {bounds:?} exceeds {width} × {height} at scale {scale}"
+                );
+                if let Some(single_line) = single_line {
+                    let line_height = window.pixel_snap(px(32. * 1.3));
+                    assert_eq!(
+                        (bounds.size.height - line_height - px(16.)).abs() < px(1.),
+                        single_line,
+                        "unexpected line count at scale {scale} for {text:?}, got {bounds:?}"
+                    );
+                }
+            })
+            .unwrap();
+        }
+    }
+}
+
 #[test]
 fn narration_tail_survives_step_completion_while_media_runs() {
     let completed = PlaybackState::StepComplete {

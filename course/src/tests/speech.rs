@@ -4,6 +4,29 @@ use super::*;
 use serde_json::json;
 
 #[test]
+fn formula_speech_edits_match_the_python_assembler() {
+    let cases: Vec<serde_json::Value> =
+        serde_json::from_str(include_str!("../../test-data/caption_markup_cases.json")).unwrap();
+    for case in cases {
+        if let Some(speech_cases) = case["speech_cases"].as_array() {
+            for speech in speech_cases {
+                let clip = json!({
+                    "caption": case["caption"],
+                    "speech_edits": speech["speech_edits"],
+                });
+                let result = narration_clip_speech_text(&clip);
+                if let Some(expected) = speech["spoken"].as_str() {
+                    assert_eq!(result.unwrap(), expected);
+                } else {
+                    let error = result.unwrap_err();
+                    assert!(error.contains(speech["error"].as_str().unwrap()), "{error}");
+                }
+            }
+        }
+    }
+}
+
+#[test]
 fn emphasis_markup_is_removed_and_whitespace_is_collapsed() {
     let clip = json!({
         "caption": "  欢迎  来到 <c.aqua>Cynapse Studio</c>。 "

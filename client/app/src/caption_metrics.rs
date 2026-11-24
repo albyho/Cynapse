@@ -31,6 +31,7 @@ pub struct CaptionMeasureParams {
     pub text_color: String,
     pub accent_color: String,
     pub width_percent: u8,
+    pub formulas_enabled: bool,
 }
 
 /// Widest card text allowed by the Settings percentage, after card padding.
@@ -52,8 +53,9 @@ pub fn content_to_window_size(
     line_height: f32,
 ) -> (f32, f32) {
     let width = content_width + CAPTION_PADDING;
-    let height =
-        content_height + CAPTION_PADDING + (line_height * VERTICAL_MARGIN_RATIO).max(VERTICAL_MARGIN_MIN);
+    let height = content_height
+        + CAPTION_PADDING
+        + (line_height * VERTICAL_MARGIN_RATIO).max(VERTICAL_MARGIN_MIN);
     (width, height)
 }
 

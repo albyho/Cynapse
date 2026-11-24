@@ -3,13 +3,13 @@
   "title": "无公式短文本",
   "actions": [
     {
-      "type": "Wait",
-      "duration_ms": 20000,
+      "type": "Present",
       "narration": {
         "during": {
           "clips": [
             {
-              "caption": "无公式短文本"
+              "duration_ms": 20000,
+              "caption": "第 1 章《Hello World》。"
             }
           ]
         }

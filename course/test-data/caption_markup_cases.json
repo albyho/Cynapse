@@ -75,6 +75,33 @@
     "visible": "字面 \\("
   },
   {
+    "caption": "😀  <c.aqua>\\(x  +  y\\)</c>，再 \\(x  +  y\\)。",
+    "valid": true,
+    "visible": "😀 \\(x  +  y\\)，再 \\(x  +  y\\)。",
+    "speech_cases": [
+      {
+        "speech_edits": [
+          {"i": 0, "s": "😀", "p": "笑脸"},
+          {"i": 2, "s": "\\(x  +  y\\)", "p": "x 加 y"},
+          {"i": 16, "s": "\\(x  +  y\\)", "p": "两数之和"}
+        ],
+        "spoken": "笑脸 x 加 y，再 两数之和。"
+      },
+      {
+        "speech_edits": [{"i": 2, "s": "\\(x  +  y\\)", "p": "x 加 y"}],
+        "error": "requires one complete speech edit"
+      },
+      {
+        "speech_edits": [{"i": 4, "s": "x", "p": "字母 x"}],
+        "error": "requires one complete speech edit"
+      },
+      {
+        "speech_edits": [{"i": 3, "s": "\\(x  +  y\\)", "p": "x 加 y"}],
+        "error": "does not match"
+      }
+    ]
+  },
+  {
     "caption": "\\(x<c.aqua>+y</c>\\)",
     "valid": false,
     "error": "emphasis"

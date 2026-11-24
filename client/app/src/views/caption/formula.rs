@@ -52,7 +52,24 @@ impl Layout {
             .fold(px(0.), Pixels::max)
     }
 
-    pub(super) fn into_element(self, source: String) -> AnyElement {
+    pub(super) fn into_element(
+        self,
+        source: String,
+        on_image_error: impl FnOnce(&mut App) + 'static,
+    ) -> AnyElement {
+        self.into_element_with(source, on_image_error, |window, bounds, image| {
+            window
+                .paint_image(bounds, bounds, Default::default(), image, 0, false)
+                .is_ok()
+        })
+    }
+
+    fn into_element_with(
+        self,
+        source: String,
+        on_image_error: impl FnOnce(&mut App) + 'static,
+        paint_image: impl Fn(&mut Window, Bounds<Pixels>, Arc<RenderImage>) -> bool + 'static,
+    ) -> AnyElement {
         let height = self.height();
         div()
             .id("caption-formulas")
@@ -77,23 +94,17 @@ impl Layout {
                                 y + (height - line.ascent - line.descent) / 2. + line.ascent;
                             let mut x = bounds.origin.x + (bounds.size.width - line.width) / 2.;
                             for item in line.items {
-                                let painted = item.image.is_some_and(|image| {
+                                if let Some(image) = item.image {
                                     let bounds = Bounds::new(
                                         point(x, baseline - item.ascent),
                                         size(item.width, item.ascent + item.descent),
                                     );
-                                    window
-                                        .paint_image(
-                                            bounds,
-                                            bounds,
-                                            Default::default(),
-                                            image,
-                                            0,
-                                            false,
-                                        )
-                                        .is_ok()
-                                });
-                                if !painted {
+                                    if !paint_image(window, bounds, image) {
+                                        // Source text needs a new layout before it can be painted.
+                                        cx.defer(on_image_error);
+                                        return;
+                                    }
+                                } else {
                                     let _ = item.text.paint(
                                         point(x, baseline - item.text.ascent),
                                         item.text.ascent + item.text.descent,
@@ -246,7 +257,7 @@ mod tests {
         AppContext, Context, IntoElement, Render, TestAppContext, TextRun, Window, px, size,
     };
 
-    struct CaptionExample;
+    struct CaptionExample(Option<std::rc::Rc<std::cell::Cell<bool>>>);
 
     impl Render for CaptionExample {
         fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
@@ -264,14 +275,18 @@ mod tests {
                     strikethrough: None,
                 })
                 .collect();
-            layout(&segments, &runs, px(24.), px(32.), px(330.), window, cx)
-                .into_element(source.into())
+            let layout = layout(&segments, &runs, px(24.), px(32.), px(330.), window, cx);
+            if let Some(failed) = self.0.clone() {
+                layout.into_element_with(source.into(), move |_| failed.set(true), |_, _, _| false)
+            } else {
+                layout.into_element(source.into(), |_| {})
+            }
         }
     }
 
     #[gpui_kit::test]
     fn formula_caption_reserves_height_and_exposes_source(cx: &mut TestAppContext) {
-        let window = cx.open_window(size(px(400.), px(200.)), |_, _| CaptionExample);
+        let window = cx.open_window(size(px(400.), px(200.)), |_, _| CaptionExample(None));
         cx.update_window(window.into(), |_, window, cx| {
             window.render_frame(cx);
             let caption = window.find("caption-formulas");
@@ -279,5 +294,19 @@ mod tests {
             assert!(caption.label().unwrap().contains(r"递推 \(T(n)="));
         })
         .expect("formula Caption window");
+    }
+
+    #[gpui_kit::test]
+    fn image_paint_failure_requests_source_relayout(cx: &mut TestAppContext) {
+        let failed = std::rc::Rc::new(std::cell::Cell::new(false));
+        let window = cx.open_window(size(px(400.), px(200.)), |_, _| {
+            CaptionExample(Some(failed.clone()))
+        });
+        cx.update_window(window.into(), |_, window, cx| window.render_frame(cx))
+            .expect("formula Caption window");
+        assert!(
+            failed.get(),
+            "the source layout must be requested after the failed paint"
+        );
     }
 }

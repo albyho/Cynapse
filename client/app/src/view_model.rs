@@ -290,6 +290,7 @@ pub struct ClientViewModel {
     model: ClientModel,
     caption_visible: bool,
     caption_text: String,
+    caption_formulas_enabled: bool,
     /// Measured window size in logical pixels; the window hugs the caption card.
     caption_width: u32,
     caption_height: u32,
@@ -465,6 +466,7 @@ impl ClientViewModel {
             model,
             caption_visible: false,
             caption_text: String::new(),
+            caption_formulas_enabled: true,
             caption_width: crate::caption_metrics::CAPTION_MIN_WIDTH as u32,
             caption_height: crate::caption_metrics::CAPTION_MIN_HEIGHT as u32,
             caption_flipped: false,
@@ -2039,6 +2041,18 @@ impl ClientViewModel {
         &self.caption_text
     }
 
+    pub(crate) fn caption_formulas_enabled(&self) -> bool {
+        self.caption_formulas_enabled
+    }
+
+    pub(crate) fn show_caption_formula_source(&mut self, caption: &str, cx: &mut Context<Self>) {
+        if self.caption_text == caption && self.caption_visible && self.caption_formulas_enabled {
+            self.caption_formulas_enabled = false;
+            cx.emit(ClientIntent::ShowCaption);
+            cx.notify();
+        }
+    }
+
     pub fn caption_height(&self) -> u32 {
         self.caption_height
     }
@@ -2357,6 +2371,7 @@ impl ClientViewModel {
             return;
         }
         self.caption_text = text;
+        self.caption_formulas_enabled = true;
         self.caption_visible = visible;
         if !visible {
             self.caption_rect = None;
