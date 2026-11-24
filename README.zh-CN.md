@@ -42,6 +42,8 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 - 增加更多示例课程。
 - 支持 AI Agent。
 - 支持 Accessibility Tree。
+- 支持 TurboWarp（Scratch）Adapter。
+- 支持 Blender Adapter。
 - 支持更多界面语言和课程内容本地化（i18n / L10n）。
 
 ## 目录结构

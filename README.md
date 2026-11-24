@@ -60,6 +60,8 @@ so the whole step happens inside the app.
 - Add more sample courses.
 - Add AI agent support.
 - Add Accessibility Tree support.
+- Add a TurboWarp (Scratch) Adapter.
+- Add a Blender Adapter.
 - Add more UI languages and course-content localization (i18n / L10n).
 
 ## Layout
