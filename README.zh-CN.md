@@ -1,6 +1,8 @@
 # Cynapse
 
 [![verify](https://github.com/albyho/Cynapse/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/albyho/Cynapse/actions/workflows/verify.yml)
+[![VS Marketplace Version](https://vsmarketplacebadges.dev/version/tubumu.cynapse-vscode-adapter.svg)](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter)
+[![VS Marketplace Downloads](https://vsmarketplacebadges.dev/downloads/tubumu.cynapse-vscode-adapter.svg)](https://marketplace.visualstudio.com/items?itemName=tubumu.cynapse-vscode-adapter)
 
 [English](README.md) | 简体中文
 
