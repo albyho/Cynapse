@@ -6,6 +6,21 @@ Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
 Downloads live on the Releases page.
 
+## 0.10.0 — 2026-11-24
+
+- Client: render inline formulas in captions, sharing the baseline with
+  surrounding text and wrapping as part of the line. Caption windows are
+  measured before they appear and hug the card, so short captions stay narrow
+  and the first frame is correctly sized.
+- Client and course packages: extend caption markup validation to formulas.
+- Build: publish the release zip without packaging an MSIX.
+
+Cynapse commit: `bbf29505`
+
+### Downloads
+
+- [`cynapse-0.10.0-windows-x64.zip`](https://github.com/albyho/Cynapse/releases)
+
 ## 0.9.0 — 2026-11-23
 
 - Client: import course packages from URLs, choose a course storage folder,
