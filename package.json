@@ -1,7 +1,7 @@
 {
   "name": "cynapse",
   "private": true,
-  "version": "0.10.2",
+  "version": "0.10.3",
   "license": "MIT",
   "engines": {
     "node": ">=24",

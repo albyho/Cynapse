@@ -6,6 +6,24 @@ Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
 Downloads live on the Releases page.
 
+## 0.10.3 — 2026-11-26
+
+- Client: use `Dialog` for every cancelable confirmation, with a consistent
+  footer and close/cancel/outside-click dismissal. Keep that behavior on
+  destructive confirmations as well.
+- Client: drop the stale Step title from the breadcrumb and status bar after
+  Stop, Unit switches, and deselection. Clear the in-memory playback position
+  when the selection changes; the persisted resume cursor still restores
+  progress across sessions.
+- Client: refine dialog, tooltip, in-progress, and connection-error copy.
+- Tooling: guard against hard-coded i18n copy in Client sources.
+
+Cynapse commit: `771b1af6`
+
+### Downloads
+
+- [`cynapse-0.10.3-windows-x64.zip`](https://github.com/albyho/Cynapse/releases)
+
 ## 0.10.2 — 2026-11-26
 
 - Build: upgrade GPUI Kit and direct Rust dependencies.
