@@ -26,9 +26,9 @@ fn adapter_warning_text_follows_the_active_locale() {
 
     assert_eq!(
         english,
-        "The required target software is not connected. Connect it and start learning again."
+        "The required target software is not connected. Please connect it before starting."
     );
-    assert_eq!(chinese, "所需目标软件未连接。连接后重新开始学习。");
+    assert_eq!(chinese, "所需目标软件未连接。请连接后再开始。");
     assert_eq!(english, adapter_disconnected_message());
     assert_eq!(
         Warning::AdapterDisconnected.to_string(),

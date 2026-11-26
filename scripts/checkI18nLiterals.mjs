@@ -4,7 +4,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const MIN_LENGTH = 20
-const TEST_ROOT = path.join('client', 'app', 'tests')
+const CLIENT_ROOT = 'client'
 
 export function removedLocaleValues(diff) {
   const values = []
@@ -18,11 +18,11 @@ export function removedLocaleValues(diff) {
   return values
 }
 
-function rustTestFiles(dir) {
+function rustFiles(dir) {
   const files = []
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name)
-    if (entry.isDirectory()) files.push(...rustTestFiles(full))
+    if (entry.isDirectory()) files.push(...rustFiles(full))
     else if (entry.isFile() && entry.name.endsWith('.rs')) files.push(full)
   }
   return files
@@ -50,7 +50,7 @@ function main() {
   const values = removedLocaleValues(diff)
   if (values.length === 0) return
 
-  const findings = findStaleLiterals(values, rustTestFiles(TEST_ROOT))
+  const findings = findStaleLiterals(values, rustFiles(CLIENT_ROOT))
   if (findings.length === 0) return
 
   for (const finding of findings) {
@@ -58,7 +58,7 @@ function main() {
       `stale i18n literal for ${finding.key} in ${finding.file}:${finding.line}: ${finding.value}`
     )
   }
-  console.error('Update the hard-coded test literal to the new copy.')
+  console.error('Update the hard-coded literal to the new copy.')
   process.exit(1)
 }
 

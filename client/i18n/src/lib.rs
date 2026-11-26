@@ -149,7 +149,7 @@ mod tests {
         set_locale("en");
         assert_eq!(
             t("error.adapter_disconnected"),
-            "The required target software is not connected. Connect it and start learning again."
+            "The required target software is not connected. Please connect it before starting."
         );
         assert_eq!(
             t("error.challenge_check_timeout"),
@@ -163,7 +163,7 @@ mod tests {
         set_locale("zh-CN");
         assert_eq!(
             t("error.adapter_disconnected"),
-            "所需目标软件未连接。连接后重新开始学习。"
+            "所需目标软件未连接。请连接后再开始。"
         );
         assert_eq!(
             t("error.challenge_check_timeout"),
