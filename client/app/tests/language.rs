@@ -65,7 +65,7 @@ fn switching_language_updates_labels_and_settings(cx: &mut TestAppContext) {
     );
     assert_eq!(
         cynapse_client_i18n::t("error.adapter_disconnected"),
-        "The required target software is not connected. Connect it and start learning again."
+        "The required target software is not connected. Please connect it before starting."
     );
 
     cx.update_window(window.into(), |_, window, cx| {
@@ -96,7 +96,7 @@ fn switching_language_updates_labels_and_settings(cx: &mut TestAppContext) {
         );
         assert_eq!(
             cynapse_client_i18n::t("error.adapter_disconnected"),
-            "所需目标软件未连接。连接后重新开始学习。"
+            "所需目标软件未连接。请连接后再开始。"
         );
     })
     .expect("main window");
