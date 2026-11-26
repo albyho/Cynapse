@@ -4,7 +4,7 @@ use super::{
     interruption_is_passive, learner_action_needed, learner_action_pending, learning_launch_label,
     passive_wait_needs_learner, retry_advance_after_failure, should_stop_narration,
     start_controls_visible, step_advance_label, transition_blocks_controls, tree_actions_available,
-    unit_progress_summary,
+    unit_progress_summary, visible_playback_position,
 };
 use cynapse_client_core::{
     AdapterId, ChallengeStatus, ChallengeView, ClientTransitionKind, CourseTreeNodeView,
@@ -57,6 +57,36 @@ fn unit_view(steps: Vec<StepView>) -> UnitView {
         completed: false,
         skipped_challenges: 1,
     }
+}
+
+#[test]
+fn stale_playback_position_is_hidden_outside_the_active_selected_unit() {
+    let position = PlaybackPosition {
+        unit_path: "ch/unit".into(),
+        step_title: "Step".into(),
+        ..Default::default()
+    };
+    let playing = PlaybackState::Playing {
+        action_id: "action".into(),
+        action_label: "Action".into(),
+        position: position.clone(),
+    };
+
+    assert!(visible_playback_position(&playing, true, Some("ch/unit")).is_some());
+    assert!(visible_playback_position(&playing, false, Some("ch/unit")).is_none());
+    assert!(visible_playback_position(&playing, true, None).is_none());
+    assert!(visible_playback_position(&playing, true, Some("ch/other")).is_none());
+
+    let paused = PlaybackState::Paused {
+        position,
+        interruption: PlaybackInterruption {
+            reason: PlaybackInterruptionReason::UserStop,
+            exit_code: None,
+            output: None,
+            output_truncated: None,
+        },
+    };
+    assert!(visible_playback_position(&paused, false, Some("ch/unit")).is_none());
 }
 
 #[test]

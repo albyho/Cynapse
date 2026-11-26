@@ -122,6 +122,31 @@ fn has_passive_pause(playback: &PlaybackState) -> bool {
     )
 }
 
+/// A stale server cursor is kept after Stop and across Unit switches. The
+/// breadcrumb and status bar must only surface it while learning is active and
+/// that cursor still belongs to the selected Unit.
+fn visible_playback_position<'a>(
+    playback: &'a PlaybackState,
+    learning_active: bool,
+    selected_unit_path: Option<&str>,
+) -> Option<&'a cynapse_client_core::PlaybackPosition> {
+    if !learning_active {
+        return None;
+    }
+    let position = match playback {
+        PlaybackState::Ready { position } => position.as_ref()?,
+        PlaybackState::Playing { position, .. }
+        | PlaybackState::Narrating { position, .. }
+        | PlaybackState::Paused { position, .. }
+        | PlaybackState::StepComplete { position, .. }
+        | PlaybackState::UnitComplete { position } => position,
+        PlaybackState::Error { position, .. } => position.as_ref()?,
+        PlaybackState::Idle => return None,
+    };
+    let selected = selected_unit_path?;
+    (position.unit_path == selected).then_some(position)
+}
+
 fn passive_wait_needs_learner(adapter_ready: bool, playback: &PlaybackState) -> bool {
     matches!(playback, PlaybackState::Error { .. })
         || (!adapter_ready
@@ -1036,32 +1061,31 @@ impl ClientViewModel {
     }
 
     pub fn playback_label(&self) -> Option<String> {
-        match self.model.state().playback() {
+        let learning_active = self.learning_active();
+        if !learning_active {
+            return None;
+        }
+        let playback = self.model.state().playback();
+        let position =
+            visible_playback_position(playback, learning_active, self.selected_unit_path());
+        match playback {
             PlaybackState::Idle => None,
-            PlaybackState::Ready { position } => Some(
+            PlaybackState::Ready { .. } => Some(
                 position
-                    .as_ref()
                     .map(|position| {
                         t_with("playback.ready_step", &[("step", &position.step_title)])
                     })
                     .unwrap_or_else(|| t("playback.ready")),
             ),
-            PlaybackState::Playing {
-                action_label,
-                position,
-                ..
-            } => Some(t_with(
+            PlaybackState::Playing { action_label, .. } => Some(t_with(
                 "playback.executing",
-                &[("step", &position.step_title), ("action", action_label)],
+                &[("step", &position?.step_title), ("action", action_label)],
             )),
-            PlaybackState::Narrating { position, .. } => Some(t_with(
+            PlaybackState::Narrating { .. } => Some(t_with(
                 "playback.narrating",
-                &[("step", &position.step_title)],
+                &[("step", &position?.step_title)],
             )),
-            PlaybackState::Paused {
-                position,
-                interruption,
-            } => {
+            PlaybackState::Paused { interruption, .. } => {
                 let key = if interruption.reason
                     == PlaybackInterruptionReason::JupyterLabKernelRestarted
                 {
@@ -1069,15 +1093,15 @@ impl ClientViewModel {
                 } else {
                     "playback.stopped_at"
                 };
-                Some(t_with(key, &[("step", &position.step_title)]))
+                Some(t_with(key, &[("step", &position?.step_title)]))
             }
-            PlaybackState::StepComplete { position, .. } => Some(t_with(
+            PlaybackState::StepComplete { .. } => Some(t_with(
                 "playback.step_complete",
-                &[("step", &position.step_title)],
+                &[("step", &position?.step_title)],
             )),
-            PlaybackState::UnitComplete { position } => Some(t_with(
+            PlaybackState::UnitComplete { .. } => Some(t_with(
                 "playback.unit_complete",
-                &[("unit", &position.unit_title)],
+                &[("unit", &position?.unit_title)],
             )),
             PlaybackState::Error { message, .. } => {
                 Some(t_with("playback.error", &[("message", message)]))
@@ -1086,16 +1110,12 @@ impl ClientViewModel {
     }
 
     pub fn current_step_title(&self) -> Option<String> {
-        let position = match self.model.state().playback() {
-            PlaybackState::Ready { position } => position.as_ref()?,
-            PlaybackState::Playing { position, .. }
-            | PlaybackState::Narrating { position, .. }
-            | PlaybackState::Paused { position, .. }
-            | PlaybackState::StepComplete { position, .. } => position,
-            PlaybackState::Error { position, .. } => position.as_ref()?,
-            PlaybackState::Idle | PlaybackState::UnitComplete { .. } => return None,
-        };
-        Some(position.step_title.clone())
+        let playback = self.model.state().playback();
+        if matches!(playback, PlaybackState::UnitComplete { .. }) {
+            return None;
+        }
+        visible_playback_position(playback, self.learning_active(), self.selected_unit_path())
+            .map(|position| position.step_title.clone())
     }
 
     pub fn warning_label(&self) -> Option<String> {
