@@ -29,7 +29,7 @@ Windows 是当前支持的平台。客户端核心、通信契约与应用适配
 
 | 课程 | 版本 | 课程包 | 改编自 |
 | --- | --- | --- | --- |
-| Rust by Example（中文） | `0.20.21` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/rust-by-example-zh-cn-0.20.21/rust-by-example-zh-cn-0.20.21.zip) | [Rust by Example（中文）](https://rustwiki.org/zh-CN/rust-by-example/) |
+| Rust by Example（中文） | `0.20.27` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/rust-by-example-zh-cn-0.20.27/rust-by-example-zh-cn-0.20.27.zip) | [Rust by Example（中文）](https://rustwiki.org/zh-CN/rust-by-example/) |
 | agent-desktop 源码分析（中文） | `0.39.0` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/agent-desktop-source-analysis-zh-cn-0.39.0/agent-desktop-source-analysis-zh-cn-0.39.0.zip) | [agent-desktop](https://github.com/vercel-labs/agent-desktop) |
 | 信号处理路线图（中文） | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-zh-cn-0.2.4/signal-processing-roadmap-zh-cn-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
 | 信号处理路线图（英文） | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-0.2.4/signal-processing-roadmap-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
