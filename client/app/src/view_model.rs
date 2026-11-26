@@ -1418,7 +1418,19 @@ impl ClientViewModel {
         self.model.clear_warnings();
         self.model.set_pending_learning_intent(None);
         self.clear_challenge_transient();
-        self.run_session_op(cx, |session| async move { session.clear_selection().await });
+        self.run_session_op_with(
+            cx,
+            |session| async move { session.clear_selection().await },
+            |this, result, cx| {
+                if result.is_ok() {
+                    // The persisted resume cursor is already cleared by
+                    // CourseSessionState. Drop the stale in-memory playback too.
+                    this.model
+                        .apply(ClientEvent::Playback(Box::new(PlaybackState::Idle)));
+                }
+                this.apply_course_result(result, cx);
+            },
+        );
     }
 
     pub fn start_learning(&mut self, mode: LearningMode, cx: &mut Context<Self>) {
@@ -1749,6 +1761,10 @@ impl ClientViewModel {
         match result {
             Ok(state) => {
                 self.model.apply_course_state(state);
+                // Selecting a Unit replaces the persisted cursor; the old
+                // in-memory playback position no longer belongs to it.
+                self.model
+                    .apply(ClientEvent::Playback(Box::new(PlaybackState::Idle)));
                 if let Some(mode) = resume_mode {
                     self.start_learning(mode, cx);
                 }

@@ -1649,6 +1649,74 @@ fn playback_adapter_loss_stops_learning_and_shows_the_warning(cx: &mut TestAppCo
 }
 
 #[gpui_kit::test]
+fn selecting_another_unit_clears_the_in_memory_playback_position(cx: &mut TestAppContext) {
+    let (window, view_model, _directory) = open_test_window_parts_after(
+        cx,
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../test-data/multi-unit-demo"),
+        |_, state| {
+            state.selected_unit = find_unit(
+                &state.active_course.as_ref().expect("course").tree,
+                "ch_units/first_unit",
+            )
+            .cloned();
+        },
+        |model| {
+            model.apply(ClientEvent::Playback(Box::new(paused_state(
+                PlaybackInterruptionReason::UserStop,
+            ))));
+        },
+    );
+    cx.update(|cx| assert!(view_model.read(cx).current_position().is_some()));
+
+    cx.update_window(window.into(), |_, window, cx| {
+        window.click("unit-select-ch_units/second_unit", cx);
+    })
+    .expect("main window");
+    cx.run_until_parked();
+
+    cx.update(|cx| {
+        assert!(
+            view_model.read(cx).current_position().is_none(),
+            "selecting another Unit must not keep the old Unit's playback position"
+        );
+    });
+}
+
+#[gpui_kit::test]
+fn clearing_selection_clears_the_in_memory_playback_position(cx: &mut TestAppContext) {
+    let (window, view_model, _directory) = open_test_window_parts_after(
+        cx,
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../test-data/multi-unit-demo"),
+        |_, state| {
+            state.selected_unit = find_unit(
+                &state.active_course.as_ref().expect("course").tree,
+                "ch_units/first_unit",
+            )
+            .cloned();
+        },
+        |model| {
+            model.apply(ClientEvent::Playback(Box::new(paused_state(
+                PlaybackInterruptionReason::UserStop,
+            ))));
+        },
+    );
+    cx.update(|cx| assert!(view_model.read(cx).current_position().is_some()));
+
+    cx.update_window(window.into(), |_, window, cx| {
+        window.click("unit-unselect-ch_units/first_unit", cx);
+    })
+    .expect("main window");
+    cx.run_until_parked();
+
+    cx.update(|cx| {
+        assert!(
+            view_model.read(cx).current_position().is_none(),
+            "deselecting must drop the stale in-memory playback position"
+        );
+    });
+}
+
+#[gpui_kit::test]
 fn cancelling_selection_clears_the_adapter_warning(cx: &mut TestAppContext) {
     let (window, _directory) = open_test_window(cx);
     cx.update_window(window.into(), |_, window, cx| {
