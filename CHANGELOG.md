@@ -6,6 +6,18 @@ Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
 Downloads live on the Releases page.
 
+## 0.10.4 — 2026-11-27
+
+- Client: render Challenge hints as Markdown, and add inline formulas to
+  narration captions. Register the Challenge panel focus handler only once.
+- Tooling: format Challenge hints as Markdown in the authoring workflow.
+
+Cynapse commit: `3059fddf`
+
+### Downloads
+
+- [`cynapse-0.10.4-windows-x64.zip`](https://github.com/albyho/Cynapse/releases)
+
 ## 0.10.3 — 2026-11-26
 
 - Client: use `Dialog` for every cancelable confirmation, with a consistent

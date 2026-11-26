@@ -17,7 +17,7 @@ use gpui_kit::base::Root;
 use gpui_kit::component::WindowExt as _;
 use gpui_kit::prelude::*;
 use gpui_kit::test::TestWindowExt;
-use gpui_kit::{Entity, TestAppContext, px, size};
+use gpui_kit::{Entity, TestAppContext, point, px, size};
 use std::path::PathBuf;
 
 fn open_test_window(cx: &mut TestAppContext) -> (gpui_kit::WindowHandle<Root>, tempfile::TempDir) {
@@ -285,6 +285,9 @@ fn step(step_id: &str, challenge: bool, status: ChallengeStatus) -> StepView {
     }
 }
 
+const TRANSPOSE_HINT_CODE: &str =
+    r#"println!("Matrix:\n{}\nTranspose:\n{}", matrix, transpose(matrix));"#;
+
 fn open_challenge_window(
     cx: &mut TestAppContext,
     status: ChallengeStatus,
@@ -294,11 +297,18 @@ fn open_challenge_window(
         cx,
         package,
         |_, state| {
-            set_unit_steps(
-                state,
-                "ch_units/first_unit",
-                vec![step("challenge", true, status)],
+            let mut challenge = step("challenge", true, status);
+            challenge.challenge.as_mut().unwrap().hint = Some(
+                [
+                    "`transpose` 交换 `matrix.1` 和 `matrix.2`，打印用：",
+                    "",
+                    "```rust",
+                    TRANSPOSE_HINT_CODE,
+                    "```",
+                ]
+                .join("\n"),
             );
+            set_unit_steps(state, "ch_units/first_unit", vec![challenge]);
         },
         |model| {
             model.apply(ClientEvent::Playback(Box::new(
@@ -364,6 +374,44 @@ fn cancelling_the_skip_challenge_popover_keeps_the_challenge_pending(cx: &mut Te
             "cancelling skip must leave the challenge pending"
         );
         assert!(window.try_find("skip-challenge-cancel").is_none());
+    })
+    .expect("main window");
+}
+
+#[gpui_kit::test]
+fn challenge_hint_renders_markdown_and_copies_selected_text(cx: &mut TestAppContext) {
+    let (window, _directory) = open_challenge_window(cx, ChallengeStatus::NotStarted);
+    cx.update_window(window.into(), |_, window, cx| {
+        window.click("challenge-hint", cx);
+        window.blur(cx);
+        window.click("challenge-hint-content", cx);
+        assert!(window.focused(cx).is_some(), "challenge panel has focus");
+        let bounds = window.find("challenge-hint-content").bounds();
+        window.drag(
+            point(bounds.left() + px(9.), bounds.top() + px(14.)),
+            point(bounds.right() - px(9.), bounds.bottom() - px(9.)),
+            cx,
+        );
+        let selection = gpui_kit::base::TextSelection::selected_text(window, cx);
+        assert!(
+            selection.contains("transpose 交换 matrix.1"),
+            "{selection:?}"
+        );
+        assert!(selection.contains(TRANSPOSE_HINT_CODE), "{selection:?}");
+        assert!(!selection.contains('`'), "{selection:?}");
+        window.press("ctrl-c", cx);
+        assert_eq!(
+            cx.read_from_clipboard()
+                .and_then(|item| item.text())
+                .as_deref(),
+            Some(selection.trim_end())
+        );
+        window.click("challenge-hint-copy-code", cx);
+        let copied = cx
+            .read_from_clipboard()
+            .and_then(|item| item.text())
+            .unwrap();
+        assert_eq!(copied.trim_end_matches('\n'), TRANSPOSE_HINT_CODE);
     })
     .expect("main window");
 }

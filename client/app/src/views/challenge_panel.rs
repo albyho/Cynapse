@@ -5,11 +5,13 @@ use cynapse_client_core::ChallengeStatus;
 use cynapse_client_i18n::{t, t_with};
 use gpui_kit::base::{SelectableText, TextSelection};
 use gpui_kit::component::button::{Button, ButtonVariants};
+use gpui_kit::component::clipboard::Clipboard;
 use gpui_kit::component::collapsible::Collapsible;
 use gpui_kit::component::group_box::{GroupBox, GroupBoxVariants as _};
 use gpui_kit::component::menu::{ContextMenuExt, PopupMenu, PopupMenuItem};
 use gpui_kit::component::popover::Popover;
 use gpui_kit::component::shimmer::ShimmerText;
+use gpui_kit::component::text::{MarkdownExtensions, TextView, TextViewStyle};
 use gpui_kit::component::{ActiveTheme, Disableable, Icon, IconName, Sizable};
 use gpui_kit::prelude::*;
 use gpui_kit::*;
@@ -161,6 +163,7 @@ impl Render for ChallengePanelView {
                         .child(
                             div()
                                 .id("challenge-hint")
+                                .test_support()
                                 .flex()
                                 .items_center()
                                 .gap_1p5()
@@ -190,8 +193,8 @@ impl Render for ChallengePanelView {
                         .content(
                             div()
                                 .id("challenge-hint-content")
+                                .test_support()
                                 .role(Role::Group)
-                                .track_focus(&panel_focus)
                                 .on_mouse_down(MouseButton::Left, cx.listener(|this, _, window, cx| {
                                     this.focus_handle.focus(window, cx);
                                 }))
@@ -201,7 +204,42 @@ impl Render for ChallengePanelView {
                                 .p_2()
                                 .text_xs()
                                 .text_color(cx.theme().muted_foreground)
-                                .child(SelectableText::new("challenge-hint-text", hint))
+                                .child(
+                                    TextView::markdown("challenge-hint-text", hint)
+                                        .markdown_extensions(MarkdownExtensions::default().raw_html(false))
+                                        .code_block_actions(|block, _, cx| {
+                                            let copy_code = t("common.copy_code");
+                                            div()
+                                                .flex()
+                                                .items_center()
+                                                .gap_1()
+                                                .text_xs()
+                                                .text_color(cx.theme().muted_foreground)
+                                                .children(block.lang())
+                                                .child(
+                                                    Clipboard::new("challenge-hint-copy-code")
+                                                        .value(block.code())
+                                                        .tooltip(copy_code.clone())
+                                                        .accessibility_label(copy_code),
+                                                )
+                                        })
+                                        .style(
+                                            TextViewStyle::default()
+                                                .paragraph_gap(rems(0.25))
+                                                .code_block(
+                                                    StyleRefinement::default()
+                                                        .px_2()
+                                                        .pt(rems(2.))
+                                                        .pb_2()
+                                                        .border_color(if cx.theme().is_dark() {
+                                                            cx.theme().muted_foreground.opacity(0.6)
+                                                        } else {
+                                                            cx.theme().border
+                                                        }),
+                                                ),
+                                        )
+                                        .selectable(true),
+                                )
                                 .context_menu(move |menu, window, cx| {
                                     text_context_menu(menu, hint_copy.clone(), window, cx)
                                 }),
@@ -375,7 +413,6 @@ impl Render for ChallengePanelView {
                     div()
                         .id("challenge-result")
                         .role(Role::Group)
-                        .track_focus(&panel_focus)
                         .on_mouse_down(MouseButton::Left, cx.listener(|this, _, window, cx| {
                             this.focus_handle.focus(window, cx);
                         }))
@@ -439,6 +476,7 @@ impl Render for ChallengePanelView {
         div()
             .id("challenge-panel")
             .role(Role::Group)
+            // Only this node registers panel_focus, so GPUI reports it once to AccessKit.
             .track_focus(&panel_focus)
             .on_key_down(cx.listener(|_, event: &KeyDownEvent, window, cx| {
                 let modifiers = event.keystroke.modifiers;

@@ -1501,7 +1501,7 @@ dependencies = [
 
 [[package]]
 name = "cynapse-client"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "cynapse-client-core",
  "cynapse-client-i18n",
@@ -1526,7 +1526,7 @@ dependencies = [
 
 [[package]]
 name = "cynapse-client-core"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "cynapse-client-i18n",
  "cynapse-course",
@@ -1546,7 +1546,7 @@ dependencies = [
 
 [[package]]
 name = "cynapse-client-harness"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "cynapse-client-core",
  "cynapse-course",
@@ -1562,7 +1562,7 @@ dependencies = [
 
 [[package]]
 name = "cynapse-client-i18n"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "rust-i18n",
  "serde-saphyr 2.2.0",
@@ -1570,7 +1570,7 @@ dependencies = [
 
 [[package]]
 name = "cynapse-client-model"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "cynapse-client-core",
  "cynapse-client-i18n",
@@ -1586,7 +1586,7 @@ dependencies = [
 
 [[package]]
 name = "cynapse-course"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "ratex-layout",
  "ratex-parser",
