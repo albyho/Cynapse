@@ -199,7 +199,7 @@ impl Render for BusyOverlay {
                     .when_some(self.content.cancel_label.clone(), |card, label| {
                         card.child(
                             Button::new("busy-overlay-cancel")
-                                .ghost()
+                                .secondary()
                                 .small()
                                 .label(label)
                                 .on_click(cx.listener(|_, _, _, cx| {

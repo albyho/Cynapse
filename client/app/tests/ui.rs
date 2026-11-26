@@ -543,11 +543,7 @@ fn course_conflict_dialog_offers_open_overwrite_and_cancel(cx: &mut TestAppConte
                 cx,
             )
         });
-        window.open_dialog(cx, move |dialog, _, _| {
-            dialog
-                .title(t("course_import.conflict.title"))
-                .child(dialog_view.clone())
-        });
+        window.open_dialog(cx, move |dialog, _, _| dialog.child(dialog_view.clone()));
         window.render_frame(cx);
         assert!(window.find("course-import-open-existing").visible());
         assert!(window.find("course-import-overwrite").visible());

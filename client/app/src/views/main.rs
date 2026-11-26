@@ -9,6 +9,9 @@ use cynapse_client_i18n::{t, t_with};
 use cynapse_client_model::{ThemePreference, UnitProgressKind, unit_progress_kind};
 use gpui_kit::component::breadcrumb::{Breadcrumb, BreadcrumbItem};
 use gpui_kit::component::button::{Button, ButtonVariants};
+use gpui_kit::component::dialog::{
+    DialogAction, DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+};
 use gpui_kit::component::popover::Popover;
 use gpui_kit::component::scroll::ScrollableElement as _;
 use gpui_kit::component::shimmer::ShimmerText;
@@ -161,10 +164,7 @@ impl MainView {
                     });
                     this.focus_handle.focus(window, cx);
                     window.open_dialog(cx, move |dialog, _, _| {
-                        dialog
-                            .title(t("course_import.conflict.title"))
-                            .width(px(400.))
-                            .child(dialog_view.clone())
+                        dialog.width(px(400.)).child(dialog_view.clone())
                     });
                 });
             }
@@ -749,21 +749,61 @@ impl Render for MainView {
                                                 return;
                                             };
                                             let view_model = this.view_model.clone();
-                                            window.open_alert_dialog(cx, move |alert, _, _| {
-                                                let view_model = view_model.clone();
-                                                let identity = identity.clone();
-                                                alert
-                                                    .title(t("main.reset_course.title"))
-                                                    .description(t("main.reset_course.message"))
-                                                    .show_cancel(true)
+                                            window.open_dialog(cx, move |dialog, _, _| {
+                                                let ok_view_model = view_model.clone();
+                                                let ok_identity = identity.clone();
+                                                dialog
+                                                    .width(px(380.))
                                                     .on_ok(move |_, _, cx| {
-                                                        let identity = identity.clone();
-                                                        view_model.update(cx, |view_model, cx| {
-                                                            view_model.reset_course_if_current(
-                                                                identity, cx,
-                                                            )
-                                                        });
+                                                        let identity = ok_identity.clone();
+                                                        ok_view_model.update(
+                                                            cx,
+                                                            |view_model, cx| {
+                                                                view_model
+                                                                    .reset_course_if_current(
+                                                                        identity, cx,
+                                                                    )
+                                                            },
+                                                        );
                                                         true
+                                                    })
+                                                    .content(|content, _, cx| {
+                                                        content
+                                                            .child(
+                                                                DialogHeader::new()
+                                                                    .child(
+                                                                        DialogTitle::new().child(
+                                                                            t("main.reset_course.title"),
+                                                                        ),
+                                                                    )
+                                                                    .child(
+                                                                        DialogDescription::new().child(
+                                                                            t("main.reset_course.message"),
+                                                                        ),
+                                                                    ),
+                                                            )
+                                                            .child(
+                                                                DialogFooter::new()
+                                                                    .pt_3()
+                                                                    .border_t_1()
+                                                                    .border_color(cx.theme().border)
+                                                                    .child(
+                                                                        DialogClose::new().child(
+                                                                            Button::new("cancel")
+                                                                                .w_full()
+                                                                                .secondary()
+                                                                                .label(t("common.cancel")),
+                                                                        ),
+                                                                    )
+                                                                    .child(
+                                                                        DialogAction::new().child(
+                                                                            Button::new("ok")
+                                                                                .w_full()
+                                                                                .primary()
+                                                                                .label(t("main.reset_course")),
+                                                                        ),
+                                                                    ),
+                                                            )
                                                     })
                                             });
                                         })),
@@ -784,21 +824,61 @@ impl Render for MainView {
                                                 return;
                                             };
                                             let view_model = this.view_model.clone();
-                                            window.open_alert_dialog(cx, move |alert, _, _| {
-                                                let view_model = view_model.clone();
-                                                let identity = identity.clone();
-                                                alert
-                                                    .title(t("main.close_course.title"))
-                                                    .description(t("main.close_course.message"))
-                                                    .show_cancel(true)
+                                            window.open_dialog(cx, move |dialog, _, _| {
+                                                let ok_view_model = view_model.clone();
+                                                let ok_identity = identity.clone();
+                                                dialog
+                                                    .width(px(380.))
                                                     .on_ok(move |_, _, cx| {
-                                                        let identity = identity.clone();
-                                                        view_model.update(cx, |view_model, cx| {
-                                                            view_model.close_course_if_current(
-                                                                identity, cx,
-                                                            )
-                                                        });
+                                                        let identity = ok_identity.clone();
+                                                        ok_view_model.update(
+                                                            cx,
+                                                            |view_model, cx| {
+                                                                view_model
+                                                                    .close_course_if_current(
+                                                                        identity, cx,
+                                                                    )
+                                                            },
+                                                        );
                                                         true
+                                                    })
+                                                    .content(|content, _, cx| {
+                                                        content
+                                                            .child(
+                                                                DialogHeader::new()
+                                                                    .child(
+                                                                        DialogTitle::new().child(
+                                                                            t("main.close_course.title"),
+                                                                        ),
+                                                                    )
+                                                                    .child(
+                                                                        DialogDescription::new().child(
+                                                                            t("main.close_course.message"),
+                                                                        ),
+                                                                    ),
+                                                            )
+                                                            .child(
+                                                                DialogFooter::new()
+                                                                    .pt_3()
+                                                                    .border_t_1()
+                                                                    .border_color(cx.theme().border)
+                                                                    .child(
+                                                                        DialogClose::new().child(
+                                                                            Button::new("cancel")
+                                                                                .w_full()
+                                                                                .secondary()
+                                                                                .label(t("common.cancel")),
+                                                                        ),
+                                                                    )
+                                                                    .child(
+                                                                        DialogAction::new().child(
+                                                                            Button::new("ok")
+                                                                                .w_full()
+                                                                                .primary()
+                                                                                .label(t("main.close_course")),
+                                                                        ),
+                                                                    ),
+                                                            )
                                                     })
                                             });
                                         })),
@@ -846,10 +926,7 @@ impl Render for MainView {
                                 });
                                 this.focus_handle.focus(window, cx);
                                 window.open_dialog(cx, move |dialog, _, _| {
-                                    dialog
-                                        .title(t("course_import.url.title"))
-                                        .width(px(400.))
-                                        .child(dialog_view.clone())
+                                    dialog.width(px(400.)).child(dialog_view.clone())
                                 });
                             })),
                     )

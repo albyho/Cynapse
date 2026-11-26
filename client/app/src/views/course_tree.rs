@@ -4,6 +4,9 @@ use cynapse_client_i18n::{t, t_with};
 use cynapse_client_model::ProjectedCourseRow;
 use gpui_kit::base::{ScrollBounce, Tree as BaseTree};
 use gpui_kit::component::button::{Button, ButtonVariants};
+use gpui_kit::component::dialog::{
+    DialogAction, DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+};
 use gpui_kit::component::list::ListItem;
 use gpui_kit::component::scroll::ScrollableElement as _;
 use gpui_kit::component::tooltip::Tooltip;
@@ -172,17 +175,47 @@ impl Render for CourseTreeView {
                                 .label(t("course_tree.clear_recent"))
                                 .on_click(move |_, window, cx| {
                                     let view_model = view_model.clone();
-                                    window.open_alert_dialog(cx, move |alert, _, _| {
-                                        let view_model = view_model.clone();
-                                        alert
-                                            .title(t("course_tree.clear_recent.title"))
-                                            .description(t("course_tree.clear_recent.message"))
-                                            .show_cancel(true)
+                                    window.open_dialog(cx, move |dialog, _, _| {
+                                        let ok_view_model = view_model.clone();
+                                        dialog
+                                            .width(px(380.))
                                             .on_ok(move |_, _, cx| {
-                                                view_model.update(cx, |view_model, cx| {
+                                                ok_view_model.update(cx, |view_model, cx| {
                                                     view_model.clear_recent_courses(cx)
                                                 });
                                                 true
+                                            })
+                                            .content(|content, _, cx| {
+                                                content
+                                                    .child(
+                                                        DialogHeader::new()
+                                                            .child(DialogTitle::new().child(t(
+                                                                "course_tree.clear_recent.title",
+                                                            )))
+                                                            .child(DialogDescription::new().child(t(
+                                                                "course_tree.clear_recent.message",
+                                                            ))),
+                                                    )
+                                                    .child(
+                                                        DialogFooter::new()
+                                                            .pt_3()
+                                                            .border_t_1()
+                                                            .border_color(cx.theme().border)
+                                                            .child(DialogClose::new().child(
+                                                                Button::new("cancel")
+                                                                    .w_full()
+                                                                    .secondary()
+                                                                    .label(t("common.cancel")),
+                                                            ))
+                                                            .child(DialogAction::new().child(
+                                                                Button::new("ok")
+                                                                    .w_full()
+                                                                    .primary()
+                                                                    .label(t(
+                                                                        "course_tree.clear_recent",
+                                                                    )),
+                                                            )),
+                                                    )
                                             })
                                     });
                                 })
@@ -344,29 +377,62 @@ impl Render for CourseTreeView {
                                                         .unwrap_or_else(|_| {
                                                             t("unit.reset.description")
                                                         });
-                                                    window.open_alert_dialog(
+                                                    let title_text = t_with(
+                                                        "unit.reset.title",
+                                                        &[("title", &title)],
+                                                    );
+                                                    window.open_dialog(
                                                         cx,
-                                                        move |alert, _, _| {
-                                                            let model = model.clone();
-                                                            let path = path.clone();
-                                                            let identity = identity.clone();
-                                                            alert
-                                                                .title(t_with(
-                                                                    "unit.reset.title",
-                                                                    &[("title", &title)],
-                                                                ))
-                                                                .description(description.clone())
-                                                                .show_cancel(true)
+                                                        move |dialog, _, _| {
+                                                            let ok_model = model.clone();
+                                                            let ok_path = path.clone();
+                                                            let ok_identity = identity.clone();
+                                                            let dialog_title = title_text.clone();
+                                                            let dialog_description = description.clone();
+                                                            dialog
+                                                                .width(px(380.))
                                                                 .on_ok(move |_, _, cx| {
-                                                                    let identity = identity.clone();
-                                                                    model.update(cx, |model, cx| {
-                                                                model.reset_unit_if_current(
-                                                                    identity,
-                                                                    path.clone(),
-                                                                    cx,
-                                                                )
-                                                            });
+                                                                    let identity = ok_identity.clone();
+                                                                    let path = ok_path.clone();
+                                                                    ok_model.update(cx, |model, cx| {
+                                                                        model.reset_unit_if_current(
+                                                                            identity, path, cx,
+                                                                        )
+                                                                    });
                                                                     true
+                                                                })
+                                                                .content(move |content, _, cx| {
+                                                                    let title = dialog_title.clone();
+                                                                    let description = dialog_description.clone();
+                                                                    content
+                                                                        .child(
+                                                                            DialogHeader::new()
+                                                                                .child(
+                                                                                    DialogTitle::new()
+                                                                                        .child(title),
+                                                                                )
+                                                                                .child(
+                                                                                    DialogDescription::new().child(description),
+                                                                                ),
+                                                                        )
+                                                                        .child(
+                                                                            DialogFooter::new()
+                                                                                .pt_3()
+                                                                                .border_t_1()
+                                                                                .border_color(cx.theme().border)
+                                                                                .child(DialogClose::new().child(
+                                                                                    Button::new("cancel")
+                                                                                        .w_full()
+                                                                                        .secondary()
+                                                                                        .label(t("common.cancel")),
+                                                                                ))
+                                                                                .child(DialogAction::new().child(
+                                                                                    Button::new("ok")
+                                                                                        .w_full()
+                                                                                        .primary()
+                                                                                        .label(t("unit.reset.confirm")),
+                                                                                )),
+                                                                        )
                                                                 })
                                                         },
                                                     );

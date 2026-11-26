@@ -3,6 +3,9 @@
 use crate::view_model::ClientViewModel;
 use cynapse_client_i18n::{t, t_with};
 use gpui_kit::component::button::{Button, ButtonVariants};
+use gpui_kit::component::dialog::{
+    DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+};
 use gpui_kit::component::input::{Input, InputState};
 use gpui_kit::component::{ActiveTheme, Disableable, WindowExt};
 use gpui_kit::prelude::*;
@@ -118,33 +121,32 @@ impl CourseImportDialogView {
             .gap_3()
             .w_full()
             .child(
-                div()
-                    .text_sm()
-                    .text_color(cx.theme().foreground)
-                    .child(t_with("course_import.conflict.message", &[("path", &path)])),
+                DialogHeader::new()
+                    .child(DialogTitle::new().child(t("course_import.conflict.title")))
+                    .child(
+                        DialogDescription::new()
+                            .child(div().text_color(cx.theme().foreground).child(t_with(
+                                "course_import.conflict.message",
+                                &[("path", &path)],
+                            )))
+                            .when(active, |description| {
+                                description.child(
+                                    div()
+                                        .text_color(cx.theme().warning)
+                                        .child(t("course_import.conflict.active_course")),
+                                )
+                            })
+                            .child(t("course_import.conflict.overwrite_warning")),
+                    ),
             )
-            .when(active, |column| {
-                column.child(
-                    div()
-                        .text_sm()
-                        .text_color(cx.theme().warning)
-                        .child(t("course_import.conflict.active_course")),
-                )
-            })
             .child(
-                div()
-                    .text_sm()
-                    .text_color(cx.theme().muted_foreground)
-                    .child(t("course_import.conflict.overwrite_warning")),
-            )
-            .child(
-                div()
-                    .flex()
-                    .justify_end()
-                    .gap_2()
+                DialogFooter::new()
+                    .pt_3()
+                    .border_t_1()
+                    .border_color(cx.theme().border)
                     .child(
                         Button::new("course-import-cancel")
-                            .ghost()
+                            .secondary()
                             .label(t("course_import.conflict.cancel"))
                             .on_click(cx.listener(|_, _, window, cx| {
                                 window.close_dialog(cx);
@@ -177,30 +179,32 @@ impl CourseImportDialogView {
             .gap_3()
             .w_full()
             .child(
-                div()
-                    .text_sm()
-                    .text_color(cx.theme().muted_foreground)
-                    .child(t("course_import.url.description")),
+                DialogHeader::new()
+                    .child(DialogTitle::new().child(t("course_import.url.title")))
+                    .child(DialogDescription::new().child(t("course_import.url.description"))),
             )
             .child(Input::new(&self.input).w_full())
             .when_some(self.error.clone(), |column, error| {
                 column.child(div().text_sm().text_color(cx.theme().danger).child(error))
             })
             .child(
-                div()
-                    .flex()
-                    .justify_end()
-                    .gap_2()
+                DialogFooter::new()
+                    .pt_3()
+                    .border_t_1()
+                    .border_color(cx.theme().border)
                     .child(
-                        Button::new("course-import-url-cancel")
-                            .ghost()
-                            .label(t("course_import.conflict.cancel"))
-                            .on_click(cx.listener(|_, _, window, cx| {
-                                window.close_dialog(cx);
-                            })),
+                        div().flex_1().child(
+                            DialogClose::new().child(
+                                Button::new("course-import-url-cancel")
+                                    .w_full()
+                                    .secondary()
+                                    .label(t("course_import.conflict.cancel")),
+                            ),
+                        ),
                     )
                     .child(
                         Button::new("course-import-url-open")
+                            .flex_1()
                             .primary()
                             .label(t("course_import.url.open"))
                             .on_click(cx.listener(|this, _, window, cx| {
