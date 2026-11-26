@@ -2,7 +2,7 @@
   "name": "cynapse-vscode-adapter",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "publisher": "tubumu",
   "repository": {
     "type": "git",

@@ -16,7 +16,7 @@ embed-resource = "3"
 cynapse-client-core = { path = "../core" }
 cynapse-client-i18n = { path = "../i18n" }
 cynapse-client-model = { path = "../model" }
-gpui-kit = "=0.9.1"
+gpui-kit = "=0.11.0"
 gpui-tray = { version = "0.3", default-features = false, features = ["gpui-kit", "menu-state"] }
 image = { version = "0.25", default-features = false, features = ["png"] }
 ratex-layout = { version = "=0.1.16", default-features = false }
@@ -37,5 +37,5 @@ windows = { version = "0.62", features = [
 
 [dev-dependencies]
 futures = "0.3"
-gpui-kit = { version = "=0.9.1", features = ["test-support"] }
+gpui-kit = { version = "=0.11.0", features = ["test-support"] }
 tempfile = "3"

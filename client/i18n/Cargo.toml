@@ -9,4 +9,4 @@ publish = false
 rust-i18n = "4"
 
 [dev-dependencies]
-serde-saphyr = "1"
+serde-saphyr = "2"

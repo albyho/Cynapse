@@ -10,16 +10,16 @@ cynapse-course = { path = "../../course" }
 futures-util = "0.3"
 log = "0.4"
 reqwest = { version = "0.13", default-features = false, features = ["blocking", "rustls", "system-proxy"] }
-rusqlite = { version = "0.40.2", features = ["bundled"] }
+rusqlite = { version = "0.43.0", features = ["bundled"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tempfile = "3"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync", "time"] }
 tokio-tungstenite = "0.30"
 uuid = { version = "1", features = ["v4"] }
-zip = { version = "6", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+zip = { version = "9", default-features = false, features = ["deflate-flate2-zlib-rs"] }
 
 [dev-dependencies]
-jsonschema = { version = "0.59", default-features = false }
+jsonschema = { version = "0.63", default-features = false }
 tempfile = "3"
 tokio = { version = "1", features = ["test-util"] }

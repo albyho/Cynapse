@@ -6,6 +6,16 @@ Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
 Downloads live on the Releases page.
 
+## 0.10.2 — 2026-11-26
+
+- Build: upgrade GPUI Kit and direct Rust dependencies.
+
+Cynapse commit: `3e2f29ca`
+
+### Downloads
+
+- [`cynapse-0.10.2-windows-x64.zip`](https://github.com/albyho/Cynapse/releases)
+
 ## 0.10.1 — 2026-11-24
 
 - Client: fix caption clipping caused by DPI rounding, keep measurement stable
