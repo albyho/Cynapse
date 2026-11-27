@@ -43,10 +43,10 @@ so the whole step happens inside the app.
 
 | Course | Version | Package | Based on |
 | --- | --- | --- | --- |
-| Rust by Example (Chinese) | `0.20.27` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/rust-by-example-zh-cn-0.20.27/rust-by-example-zh-cn-0.20.27.zip) | [Rust by Example (Chinese)](https://rustwiki.org/zh-CN/rust-by-example/) |
-| agent-desktop Source Analysis (Chinese) | `0.39.0` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/agent-desktop-source-analysis-zh-cn-0.39.0/agent-desktop-source-analysis-zh-cn-0.39.0.zip) | [agent-desktop](https://github.com/vercel-labs/agent-desktop) |
-| Signal Processing Roadmap (Chinese) | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-zh-cn-0.2.4/signal-processing-roadmap-zh-cn-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
-| Signal Processing Roadmap (English) | `0.2.4` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-0.2.4/signal-processing-roadmap-0.2.4.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
+| Rust by Example (Chinese) | `0.20.31` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/rust-by-example-zh-cn-0.20.31/rust-by-example-zh-cn-0.20.31.zip) | [Rust by Example (Chinese)](https://rustwiki.org/zh-CN/rust-by-example/) |
+| agent-desktop Source Analysis (Chinese) | `0.39.2` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/agent-desktop-source-analysis-zh-cn-0.39.2/agent-desktop-source-analysis-zh-cn-0.39.2.zip) | [agent-desktop](https://github.com/vercel-labs/agent-desktop) |
+| Signal Processing Roadmap (Chinese) | `0.2.5` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-zh-cn-0.2.5/signal-processing-roadmap-zh-cn-0.2.5.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
+| Signal Processing Roadmap (English) | `0.2.5` | [zip](https://github.com/albyho/Cynapse-courses/releases/download/signal-processing-roadmap-0.2.5/signal-processing-roadmap-0.2.5.zip) | [Signal processing roadmap](https://github.com/minthanthtoo/signal-processing-roadmap) |
 
 > These are samples, not a finished catalogue. `rust-by-example-zh-cn` is an
 > in-progress adaptation that currently covers the introduction and chapters 1–4
