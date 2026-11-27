@@ -6,6 +6,20 @@ Windows zip and publish the VS Code Adapter through the VS Code Marketplace.
 
 Downloads live on the Releases page.
 
+## 0.11.0 — 2026-11-28
+
+- Client and course packages: support inline caption emphasis and speech
+  aliases, including nested aliases, with stricter markup validation.
+- Adapter and Client: add the `SetCursor` action so playback can position the
+  course cursor; update the protocol schema and VS Code command bindings.
+- Narration: derive audio tracks from course assets.
+
+Cynapse commit: `7cf9dc4f`
+
+### Downloads
+
+- [`cynapse-0.11.0-windows-x64.zip`](https://github.com/albyho/Cynapse/releases)
+
 ## 0.10.4 — 2026-11-27
 
 - Client: render Challenge hints as Markdown, and add inline formulas to
