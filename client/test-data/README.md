@@ -26,7 +26,7 @@ in `course/src/steps.rs` (`step_files_must_use_json_and_match_their_step_id` in
 
 | Fixture | Units | Steps | Challenges | Notes |
 | --- | ---: | ---: | ---: | --- |
-| `caption-formula-demo` | 1 | 4 | 0 | Silent inline formulas and Caption Emphasis |
+| `caption-formula-demo` | 1 | 4 | 0 | Silent inline formulas, Caption Emphasis, and a Speech Alias |
 | `challenge-fix-test` | 1 | 1 | 1 | Single Unit; the challenge is also the final course Step |
 | `continuous-learning-demo` | 4 | 7 | 0 | Continuous progression across Units |
 | `independent-units` | 5 | 5 | 0 | Shared Steps across independent Units |

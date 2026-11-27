@@ -365,6 +365,41 @@ fn formula_source_fallback_is_limited_to_the_current_caption(cx: &mut gpui_kit::
 }
 
 #[gpui_kit::test]
+fn caption_shows_original_text_and_exposes_formula_source_with_either_nesting_order(
+    cx: &mut gpui_kit::TestAppContext,
+) {
+    use crate::views::caption::CaptionView;
+    use gpui_kit::test::TestWindowExt;
+    use gpui_kit::{AppContext, px, size};
+
+    let directory = tempfile::tempdir().unwrap();
+    let (model, events) =
+        ClientModel::new_at(ClientSettings::default(), directory.path().join("state.db")).unwrap();
+    let view_model = cx
+        .update(|cx| cx.new(|cx| super::ClientViewModel::new_without_narration(model, events, cx)));
+    let overlay = cx.open_window(size(px(800.), px(200.)), |_, cx| {
+        CaptionView::new(view_model.clone(), cx)
+    });
+
+    for source in [
+        r#"Observe <emphasis level="strong"><sub alias="one plus two">\(1+2\) in SQL</sub></emphasis>."#,
+        r#"Observe <sub alias="one plus two"><emphasis level="strong">\(1+2\) in SQL</emphasis></sub>."#,
+    ] {
+        cx.update(|cx| {
+            view_model.update(cx, |view_model, cx| {
+                view_model.set_caption(Some(source.into()), cx);
+            });
+        });
+        cx.update_window(overlay.into(), |_, window, cx| {
+            window.render_frame(cx);
+            let formula = window.find("caption-formulas");
+            assert_eq!(formula.label(), Some(r"Observe \(1+2\) in SQL."));
+        })
+        .unwrap();
+    }
+}
+
+#[gpui_kit::test]
 fn caption_card_fits_precalculated_window(cx: &mut gpui_kit::TestAppContext) {
     use crate::{platform, views::caption::CaptionView};
     use cynapse_client_core::CaptionPosition;
@@ -401,7 +436,7 @@ fn caption_card_fits_precalculated_window(cx: &mut gpui_kit::TestAppContext) {
             (
                 CaptionPosition::Bottom,
                 concat!(
-                    "Rust <c.aqua>类型系统</c>会根据上下文推断类型。",
+                    "Rust <emphasis level=\"strong\">类型系统</emphasis>会根据上下文推断类型。",
                     "这是一条需要换行的长字幕，用来确认窗口高度能容纳完整内容。",
                     "这是一条需要换行的长字幕，用来确认窗口高度能容纳完整内容。",
                     "字幕的红色背景和圆角也应该完整显示。"

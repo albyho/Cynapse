@@ -31,7 +31,6 @@ test('keeps internal documents and assets out of the public tree', () => {
     'AGENTS.md',
     'skills/cynapse-release/SKILL.md',
     'courses/rust/lesson.json',
-    'tools/speech-edits/apply_speech_edits.py',
     '.githooks/pre-commit',
     '.github/workflows/release.yml',
     'README.md',

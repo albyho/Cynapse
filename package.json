@@ -36,8 +36,7 @@
     "verify:voicestudio": "node scripts/python.mjs tools/run_python_tests.py tools/tts/voicestudio-client --require-ffmpeg VoiceStudio",
     "verify:narration-assembler": "node scripts/python.mjs tools/run_python_tests.py tools/narration-assembler --require-ffmpeg narration-assembler",
     "verify:speech-audit": "node scripts/python.mjs tools/run_python_tests.py tools/speech-audit",
-    "verify:speech-edits": "node scripts/python.mjs tools/run_python_tests.py tools/speech-edits",
-    "verify:tools": "pnpm verify:voicestudio && pnpm verify:narration-assembler && pnpm verify:speech-audit && pnpm verify:speech-edits",
+    "verify:tools": "pnpm verify:voicestudio && pnpm verify:narration-assembler && pnpm verify:speech-audit",
     "verify:course-authoring": "node --test scripts/verifyCourseAuthoring.test.mjs && node scripts/verifyCourseAuthoring.mjs",
 
     "verify:content": "cargo run -p cynapse-client-harness --bin cynapse-content-verify",

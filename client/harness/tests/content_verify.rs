@@ -518,7 +518,7 @@ fn rejects_invalid_caption_markup_before_running_scenarios() {
         serde_json::from_slice(&fs::read(&step_path).unwrap()).unwrap();
     step["actions"][0]["narration"] = serde_json::json!({
         "before": {
-            "clips": [{ "caption": "<c.aqua>未闭合", "duration_ms": 900 }]
+            "clips": [{ "caption": "<emphasis level=\"strong\">未闭合", "duration_ms": 900 }]
         }
     });
     fs::write(&step_path, serde_json::to_vec_pretty(&step).unwrap()).unwrap();
@@ -559,7 +559,7 @@ fn reports_all_package_errors_in_one_run() {
         serde_json::from_slice(&fs::read(&step_path).unwrap()).unwrap();
     step["actions"][0]["narration"] = serde_json::json!({
         "before": {
-            "clips": [{ "caption": "<c.aqua>未闭合", "duration_ms": 900 }]
+            "clips": [{ "caption": "<emphasis level=\"strong\">未闭合", "duration_ms": 900 }]
         }
     });
     fs::write(&step_path, serde_json::to_vec_pretty(&step).unwrap()).unwrap();

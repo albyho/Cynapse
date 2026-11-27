@@ -1,46 +1,59 @@
-//! Caption text, emphasis, and inline formulas shared by validation and display.
-
-const OPEN_TAG: &str = "<c.aqua>";
+//! Caption text, emphasis, speech aliases, and inline formulas.
 
 /// A run of Caption text or the complete source of a Caption Formula.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CaptionSegment {
     pub text: String,
-    pub aqua: bool,
+    pub emphasized: bool,
     pub formula: bool,
 }
 
+#[derive(Default)]
 struct Scan {
     segments: Vec<CaptionSegment>,
-    error: Option<String>,
+    spoken: String,
+    uncovered_formula: Option<String>,
 }
 
-/// Splits a Caption into plain and emphasized runs for rendering.
-///
-/// Malformed markup keeps its characters as literal text: a renderer must never
-/// drop learner-visible text, and packaging rejects these Captions before they
-/// reach a Client anyway.
+/// Splits a Caption into display runs. Malformed markup remains visible.
 pub fn caption_segments(caption: &str) -> Vec<CaptionSegment> {
-    scan(caption).segments
+    scan(caption).map_or_else(
+        |_| {
+            vec![CaptionSegment {
+                text: caption.to_owned(),
+                emphasized: false,
+                formula: false,
+            }]
+        },
+        |scan| {
+            let mut display: Vec<CaptionSegment> = Vec::new();
+            for segment in scan.segments {
+                if let Some(previous) = display.last_mut()
+                    && !previous.formula
+                    && !segment.formula
+                    && previous.emphasized == segment.emphasized
+                {
+                    previous.text.push_str(&segment.text);
+                } else {
+                    display.push(segment);
+                }
+            }
+            display
+        },
+    )
 }
 
-/// Checks the Caption emphasis markup that packaging must reject.
-///
-/// Valid: well-formed, non-empty `<c.aqua>` spans with either close form.
-/// Invalid: unclosed or stray tags, nesting, empty spans, and unknown tags in
-/// the `<c.…>` namespace. Any other angle-bracket text, such as `Vec<T>` or
-/// `a < b`, is plain Caption text and passes unchanged.
+/// Validate markup and supported formulas independently of synthesis.
 pub fn validate_caption_markup(caption: &str) -> Result<(), String> {
-    let scanned = scan(caption);
-    if let Some(error) = scanned.error {
-        return Err(error);
-    }
-    for segment in scanned.segments.iter().filter(|segment| segment.formula) {
+    for segment in scan(caption)?
+        .segments
+        .iter()
+        .filter(|segment| segment.formula)
+    {
         caption_formula_layout(&segment.text)?;
     }
     Ok(())
 }
-
 /// Layout is shared with package validation so supported formulas are the same.
 pub fn caption_formula_layout(source: &str) -> Result<ratex_layout::LayoutBox, String> {
     let math = source
@@ -88,209 +101,258 @@ pub fn caption_formula_layout(source: &str) -> Result<ratex_layout::LayoutBox, S
     Ok(layout)
 }
 
-/// Returns the Caption text visible to the learner.
-///
-/// Supported emphasis tags are removed and consecutive whitespace is collapsed
-/// to one space. Speech edit indexes are based on this text, not on the raw JSON
-/// string that still contains display markup.
+/// Returns the visible wording with whitespace normalized outside formulas.
 pub fn visible_caption_text(caption: &str) -> String {
-    speech_source(&scan(caption).segments).0
-}
-
-fn speech_source(segments: &[CaptionSegment]) -> (String, Vec<std::ops::Range<usize>>) {
+    let segments = caption_segments(caption);
     let mut text = String::new();
-    let mut formulas = Vec::new();
     let mut space = false;
     for segment in segments {
         if segment.formula {
             if space {
                 text.push(' ');
             }
-            let start = text.len();
             text.push_str(&segment.text);
-            formulas.push(start..text.len());
             space = false;
-            continue;
-        }
-        for character in segment.text.chars() {
-            if character.is_whitespace() {
-                space = !text.is_empty();
-            } else {
-                if space {
-                    text.push(' ');
+        } else {
+            for character in segment.text.chars() {
+                if character.is_whitespace() {
+                    space = !text.is_empty();
+                } else {
+                    if space {
+                        text.push(' ');
+                    }
+                    text.push(character);
+                    space = false;
                 }
-                text.push(character);
-                space = false;
             }
         }
     }
-    (text, formulas)
+    text
 }
 
-/// Walks the Caption once, producing rendering runs and the first structural
-/// error found. Both outputs share one traversal so the rules cannot drift.
-fn scan(caption: &str) -> Scan {
-    let mut segments = Vec::new();
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum TagKind {
+    Emphasis,
+    Sub,
+}
+
+enum Tag {
+    Open(TagKind, Option<String>),
+    Close(TagKind),
+}
+
+struct Span {
+    kind: TagKind,
+    alias: Option<String>,
+    first_segment: usize,
+}
+
+fn tag_head(source: &str) -> Option<(bool, &str, &str)> {
+    let rest = source.strip_prefix('<')?;
+    let closing = rest.starts_with('/');
+    let name_and_tail = rest.strip_prefix('/').unwrap_or(rest);
+    let name_end = name_and_tail
+        .find(|c: char| !(c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-' | ':')))
+        .unwrap_or(name_and_tail.len());
+    let (name, tail) = name_and_tail.split_at(name_end);
+    let lower = name.to_ascii_lowercase();
+    (matches!(lower.as_str(), "emphasis" | "sub")
+        || (lower == "c" && tail.starts_with('>'))
+        || lower.starts_with("c."))
+    .then_some((closing, name, tail))
+}
+
+fn parse_tag(source: &str) -> Option<Result<(Tag, usize), String>> {
+    const TAG_WHITESPACE: [char; 4] = [' ', '\t', '\r', '\n'];
+    let (closing, name, tail) = tag_head(source)?;
+    Some((|| {
+        let (kind, expected, attribute) = match name.to_ascii_lowercase().as_str() {
+            "emphasis" => (TagKind::Emphasis, "emphasis", "level"),
+            "sub" => (TagKind::Sub, "sub", "alias"),
+            _ => return Err(format!("legacy Caption tag `{name}` is unsupported")),
+        };
+        if name != expected {
+            return Err(format!(
+                "Caption tag `{name}` is case-sensitive; use `{expected}`"
+            ));
+        }
+        let remaining = tail.trim_start_matches(TAG_WHITESPACE);
+        if closing {
+            let after = remaining
+                .strip_prefix('>')
+                .ok_or_else(|| format!("invalid closing Caption tag `{name}`"))?;
+            return Ok((Tag::Close(kind), source.len() - after.len()));
+        }
+        if remaining.len() == tail.len() {
+            return Err(format!(
+                "Caption tag `{name}` requires the `{attribute}` attribute"
+            ));
+        }
+        let value = remaining
+            .strip_prefix(attribute)
+            .and_then(|rest| rest.trim_start_matches(TAG_WHITESPACE).strip_prefix('='))
+            .ok_or_else(|| format!("Caption tag `{name}` requires the `{attribute}` attribute"))?
+            .trim_start_matches(TAG_WHITESPACE)
+            .strip_prefix('"')
+            .ok_or_else(|| format!("Caption attribute `{attribute}` requires double quotes"))?;
+        let (value, remainder) = value
+            .split_once('"')
+            .ok_or_else(|| format!("unclosed Caption attribute `{attribute}`"))?;
+        let after = remainder
+            .trim_start_matches(TAG_WHITESPACE)
+            .strip_prefix('>')
+            .ok_or_else(|| format!("unclosed Caption tag `{name}` or unexpected attribute"))?;
+        let alias = match kind {
+            TagKind::Emphasis if value == "strong" => None,
+            TagKind::Emphasis => return Err("Caption emphasis level must be `strong`".into()),
+            TagKind::Sub => {
+                if value.contains('<') {
+                    return Err("invalid Caption alias; escape `<` as `&lt;`".into());
+                }
+                let value = decode_entities(value);
+                if value.trim().is_empty() {
+                    return Err("empty Caption alias".into());
+                }
+                Some(value)
+            }
+        };
+        Ok((Tag::Open(kind, alias), source.len() - after.len()))
+    })())
+}
+
+fn decode_entities(text: &str) -> String {
+    // Decode ampersands last so text produced by an escape is never reinterpreted.
+    text.replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&quot;", "\"")
+        .replace("&apos;", "'")
+        .replace("&amp;", "&")
+}
+
+fn push_text(scan: &mut Scan, current: &mut String, emphasized: bool, aliased: bool) {
+    if current.is_empty() {
+        return;
+    }
+    let text = decode_entities(current);
+    current.clear();
+    if !aliased {
+        scan.spoken.push_str(&text);
+    }
+    scan.segments.push(CaptionSegment {
+        text,
+        emphasized,
+        formula: false,
+    });
+}
+
+/// Walk the source once for both display and synthesis. Span boundaries affect
+/// the displayed runs and the spoken text independently.
+fn scan(caption: &str) -> Result<Scan, String> {
+    let mut scan = Scan::default();
     let mut current = String::new();
-    let mut aqua = false;
-    let mut open_content_start: Option<usize> = None;
-    let mut error: Option<String> = None;
+    let mut spans: Vec<Span> = Vec::new();
+    let mut emphasized = false;
+    let mut aliased = false;
     let mut offset = 0;
 
-    loop {
-        let Some(relative_start) = caption[offset..].find(['<', '\\']) else {
-            current.push_str(&caption[offset..]);
-            break;
-        };
+    while let Some(relative_start) = caption[offset..].find(['<', '\\']) {
         let start = offset + relative_start;
         current.push_str(&caption[offset..start]);
+        let rest = &caption[start..];
 
-        if caption.as_bytes()[start] == b'\\' {
-            let rest = &caption[start..];
-            let slashes = rest.bytes().take_while(|byte| *byte == b'\\').count();
-            let next = rest.as_bytes().get(slashes).copied();
-            if !matches!(next, Some(b'(' | b')')) {
-                current.push_str(&rest[..slashes]);
-                offset = start + slashes;
-            } else if slashes % 2 == 0 {
-                current.push_str(&rest[1..=slashes]);
-                offset = start + slashes + 1;
-            } else if slashes > 1 {
-                current.push_str(&rest[..slashes - 1]);
-                offset = start + slashes - 1;
-            } else if next == Some(b')') {
-                error.get_or_insert_with(|| {
-                    format!(
-                        "unmatched Caption formula delimiter at character {}",
-                        char_position(caption, start)
-                    )
-                });
-                current.push_str(&rest[..2]);
-                offset = start + 2;
-            } else if let Some(length) = formula_length(rest) {
-                let source = &rest[..length];
-                if source.split('<').skip(1).any(|part| {
-                    let tag = part.to_ascii_lowercase();
-                    tag.starts_with("c.")
-                        || tag.starts_with("/c.")
-                        || tag.starts_with("c>")
-                        || tag.starts_with("/c>")
-                }) {
-                    error.get_or_insert_with(|| {
-                        format!("emphasis markup inside Caption formula `{source}`")
-                    });
-                }
-                push_segment(&mut segments, &mut current, aqua);
-                segments.push(CaptionSegment {
-                    text: source.to_owned(),
-                    aqua,
-                    formula: true,
-                });
-                offset = start + length;
-            } else {
-                error.get_or_insert_with(|| format!("unclosed Caption formula `{rest}`"));
-                current.push_str(rest);
-                break;
-            }
-            continue;
-        }
-
-        let tag_prefix = caption[start..]
-            .get(..3)
-            .unwrap_or_default()
-            .to_ascii_lowercase();
-        let close_prefix = caption[start..]
-            .get(..4)
-            .unwrap_or_default()
-            .to_ascii_lowercase();
-        if tag_prefix != "<c."
-            && tag_prefix != "<c>"
-            && close_prefix != "</c."
-            && close_prefix != "</c>"
-        {
-            current.push('<');
-            offset = start + 1;
-            continue;
-        }
-
-        let Some(relative_end) = caption[start..].find('>') else {
-            let rest = &caption[start..];
-            let normalized = rest.to_ascii_lowercase();
-            if normalized.starts_with("<c.") || normalized.starts_with("</c.") {
-                error.get_or_insert_with(|| {
-                    format!(
-                        "unclosed caption tag at character {}; expected `>`",
-                        char_position(caption, start)
-                    )
-                });
-            }
-            current.push_str(rest);
-            break;
-        };
-        let end = start + relative_end;
-        let token = &caption[start..=end];
-
-        if token[1..].contains('<') {
-            // A stray `<` such as `a < b` must not swallow later markup when
-            // looking for the closing `>`.
-            current.push('<');
-            offset = start + 1;
-            continue;
-        }
-
-        let normalized = token.to_ascii_lowercase();
-        let position = char_position(caption, start);
-        if normalized == OPEN_TAG {
-            if open_content_start.is_some() {
-                error.get_or_insert_with(|| {
-                    format!("nested `{token}` at character {position}; emphasis spans cannot nest")
-                });
-            } else {
-                push_segment(&mut segments, &mut current, aqua);
-                aqua = true;
-                open_content_start = Some(end + 1);
-            }
-        } else if normalized == "</c.aqua>" || normalized == "</c>" {
-            let Some(content_start) = open_content_start else {
-                error.get_or_insert_with(|| {
-                    format!("`{token}` at character {position} has no matching `<c.aqua>`")
-                });
-                current.push_str(token);
-                offset = end + 1;
+        if rest.starts_with('<') {
+            let Some(tag) = parse_tag(rest) else {
+                current.push('<');
+                offset = start + 1;
                 continue;
             };
-            if caption[content_start..start].trim().is_empty() {
-                error.get_or_insert_with(|| {
-                    format!(
-                        "empty emphasis span at character {position}; remove the tags or add text"
-                    )
-                });
-            }
-            push_segment(&mut segments, &mut current, aqua);
-            aqua = false;
-            open_content_start = None;
-        } else if is_caption_tag(&normalized) {
-            error.get_or_insert_with(|| {
+            let (tag, length) = tag.map_err(|error| {
                 format!(
-                    "unknown caption tag `{token}` at character {position}; only `<c.aqua>…</c.aqua>` and `<c.aqua>…</c>` are supported"
+                    "{error} at character {}",
+                    caption[..start].chars().count() + 1
                 )
-            });
-            current.push_str(token);
-        } else {
-            current.push_str(token);
+            })?;
+            push_text(&mut scan, &mut current, emphasized, aliased);
+            match tag {
+                Tag::Open(kind, alias) => {
+                    if spans.iter().any(|span| span.kind == kind) {
+                        return Err("nested Caption tags of the same type are unsupported".into());
+                    }
+                    spans.push(Span {
+                        kind,
+                        alias,
+                        first_segment: scan.segments.len(),
+                    });
+                }
+                Tag::Close(kind) => {
+                    let span = spans
+                        .pop()
+                        .filter(|span| span.kind == kind)
+                        .ok_or("unexpected or crossing closing Caption tag")?;
+                    if scan.segments[span.first_segment..]
+                        .iter()
+                        .all(|segment| segment.text.trim().is_empty())
+                    {
+                        return Err("empty Caption span".into());
+                    }
+                    if let Some(alias) = span.alias {
+                        scan.spoken.push_str(&alias);
+                    }
+                }
+            }
+            emphasized = spans.iter().any(|span| span.kind == TagKind::Emphasis);
+            aliased = spans.iter().any(|span| span.kind == TagKind::Sub);
+            offset = start + length;
+            continue;
         }
 
-        offset = end + 1;
+        let slashes = rest.bytes().take_while(|byte| *byte == b'\\').count();
+        let next = rest.as_bytes().get(slashes).copied();
+        if !matches!(next, Some(b'(' | b')')) {
+            current.push_str(&rest[..slashes]);
+            offset = start + slashes;
+        } else if slashes % 2 == 0 {
+            current.push_str(&rest[1..=slashes]);
+            offset = start + slashes + 1;
+        } else if slashes > 1 {
+            current.push_str(&rest[..slashes - 1]);
+            offset = start + slashes - 1;
+        } else if next == Some(b')') {
+            return Err(format!(
+                "unmatched Caption formula delimiter at character {}",
+                caption[..start].chars().count() + 1
+            ));
+        } else {
+            let length =
+                formula_length(rest).ok_or_else(|| format!("unclosed Caption formula `{rest}`"))?;
+            let source = &rest[..length];
+            if source[2..length - 2].trim().is_empty() {
+                return Err(format!("empty Caption formula `{source}`"));
+            }
+            if source
+                .match_indices('<')
+                .any(|(index, _)| tag_head(&source[index..]).is_some())
+            {
+                return Err(format!("markup inside Caption formula `{source}`"));
+            }
+            push_text(&mut scan, &mut current, emphasized, aliased);
+            if !aliased && scan.uncovered_formula.is_none() {
+                scan.uncovered_formula = Some(source.to_owned());
+            }
+            scan.segments.push(CaptionSegment {
+                text: source.to_owned(),
+                emphasized,
+                formula: true,
+            });
+            offset = start + length;
+        }
     }
-
-    push_segment(&mut segments, &mut current, aqua);
-    if open_content_start.is_some() {
-        error.get_or_insert_with(|| {
-            "unclosed `<c.aqua>`; close it with `</c.aqua>` or `</c>`".to_string()
-        });
+    if !spans.is_empty() {
+        return Err("unclosed Caption tag".into());
     }
-
-    Scan { segments, error }
+    current.push_str(&caption[offset..]);
+    push_text(&mut scan, &mut current, emphasized, aliased);
+    Ok(scan)
 }
 
 fn formula_length(source: &str) -> Option<usize> {
@@ -309,130 +371,25 @@ fn formula_length(source: &str) -> Option<usize> {
     None
 }
 
-fn push_segment(segments: &mut Vec<CaptionSegment>, current: &mut String, aqua: bool) {
-    if current.is_empty() {
-        return;
-    }
-    segments.push(CaptionSegment {
-        text: std::mem::take(current),
-        aqua,
-        formula: false,
-    });
-}
-
-fn char_position(caption: &str, byte_index: usize) -> usize {
-    caption[..byte_index].chars().count() + 1
-}
-
-fn is_caption_tag(normalized: &str) -> bool {
-    normalized.starts_with("<c.")
-        || normalized.starts_with("</c.")
-        || normalized == "<c>"
-        || normalized == "</c>"
-}
-
-/// Speakable text for a narration Clip: emphasis markup removed, whitespace
-/// collapsed, then `speech_edits` applied to the visible text.
-///
-/// `speech_edits` indexes are zero-based Unicode character offsets into the
-/// visible text. Ranges must match exactly and must not overlap.
+/// Prepare plain-text speech for a Clip selected for synthesis.
 pub fn narration_clip_speech_text(clip: &serde_json::Value) -> Result<String, String> {
+    if clip.get("speech_edits").is_some() {
+        return Err("legacy `speech_edits` is unsupported; use an inline Speech Alias".into());
+    }
     let caption = clip
         .get("caption")
         .and_then(serde_json::Value::as_str)
-        .ok_or_else(|| "narration Clip must contain a string `caption`".to_string())?;
-    let scanned = scan(caption);
-    if let Some(error) = scanned.error {
-        return Err(error);
+        .ok_or("narration Clip must contain a string `caption`")?;
+    let scan = scan(caption)?;
+    if let Some(formula) = scan.uncovered_formula {
+        return Err(format!(
+            "Caption formula `{formula}` requires a Speech Alias"
+        ));
     }
-    let (plain, formulas) = speech_source(&scanned.segments);
-    if plain.is_empty() {
-        return Err("narration Clip has no speakable caption text".to_string());
+    let spoken = scan.spoken.split_whitespace().collect::<Vec<_>>().join(" ");
+    if spoken.is_empty() {
+        return Err("narration Clip has no speakable caption text".into());
     }
-    let edits = match clip.get("speech_edits") {
-        None | Some(serde_json::Value::Null) => &[],
-        Some(value) => value
-            .as_array()
-            .ok_or_else(|| "narration Clip `speech_edits` must be an array".to_string())?
-            .as_slice(),
-    };
-
-    let characters = plain.chars().collect::<Vec<_>>();
-    let mut replacements = Vec::new();
-    for (index, edit) in edits.iter().enumerate() {
-        let object = edit
-            .as_object()
-            .ok_or_else(|| format!("speech_edits[{index}] must be an object"))?;
-        if object.len() != 3
-            || !object.contains_key("i")
-            || !object.contains_key("s")
-            || !object.contains_key("p")
-        {
-            return Err(format!(
-                "speech_edits[{index}] must contain exactly i, s, and p"
-            ));
-        }
-        let start = object["i"]
-            .as_u64()
-            .ok_or_else(|| format!("speech_edits[{index}].i must be a non-negative integer"))?
-            as usize;
-        let source = object["s"]
-            .as_str()
-            .filter(|value| !value.is_empty())
-            .ok_or_else(|| format!("speech_edits[{index}].s must be a non-empty string"))?;
-        let replacement = object["p"]
-            .as_str()
-            .filter(|value| !value.is_empty())
-            .ok_or_else(|| format!("speech_edits[{index}].p must be a non-empty string"))?;
-        let end = start
-            .checked_add(source.chars().count())
-            .filter(|end| *end <= characters.len())
-            .ok_or_else(|| format!("speech_edits[{index}] range is outside the visible Caption"))?;
-        let matched = characters[start..end].iter().collect::<String>();
-        if matched != source {
-            return Err(format!(
-                "speech_edits[{index}].s does not match the visible Caption at index {start}"
-            ));
-        }
-        let start_byte = characters[..start]
-            .iter()
-            .map(|character| character.len_utf8())
-            .sum::<usize>();
-        let end_byte = characters[..end]
-            .iter()
-            .map(|character| character.len_utf8())
-            .sum::<usize>();
-        replacements.push((start_byte, end_byte, replacement.to_string()));
-    }
-
-    replacements.sort_by_key(|(start, _, _)| *start);
-    for pair in replacements.windows(2) {
-        if pair[1].0 < pair[0].1 {
-            return Err("speech_edits ranges overlap".to_string());
-        }
-    }
-    for formula in formulas {
-        if replacements
-            .binary_search_by_key(&(formula.start, formula.end), |(start, end, _)| {
-                (*start, *end)
-            })
-            .is_err()
-        {
-            return Err(format!(
-                "Caption formula `{}` requires one complete speech edit",
-                &plain[formula]
-            ));
-        }
-    }
-
-    let mut spoken = String::with_capacity(plain.len());
-    let mut cursor = 0;
-    for (start, end, replacement) in replacements {
-        spoken.push_str(&plain[cursor..start]);
-        spoken.push_str(&replacement);
-        cursor = end;
-    }
-    spoken.push_str(&plain[cursor..]);
     Ok(spoken)
 }
 

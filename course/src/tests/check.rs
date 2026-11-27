@@ -9,7 +9,7 @@ fn check_package_reports_caption_markup_errors() {
         "after": {
             "clips": [{
                 "duration_ms": 1000,
-                "caption": "<c.aqua>unclosed"
+                "caption": "<emphasis level=\"strong\">unclosed"
             }]
         }
     });
@@ -28,7 +28,7 @@ fn check_package_reports_caption_markup_errors() {
 }
 
 #[test]
-fn caption_only_formula_needs_no_speech_edit_and_bad_formula_names_its_clip() {
+fn caption_only_formula_needs_no_speech_alias_and_bad_formula_names_its_clip() {
     let mut step = self_contained_step();
     let path = "steps/write_hello.json";
     for (caption, valid) in [

@@ -27,13 +27,13 @@ fn caption_runs(
         .iter()
         .map(|segment| {
             let mut font = font.clone();
-            if segment.aqua {
+            if segment.emphasized {
                 font.weight = FontWeight::BOLD;
             }
             TextRun {
                 len: segment.text.len(),
                 font,
-                color: if segment.aqua {
+                color: if segment.emphasized {
                     accent_color
                 } else {
                     text_color

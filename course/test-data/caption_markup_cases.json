@@ -1,114 +1,77 @@
 [
   {
-    "caption": "重点：<c.aqua>变量遮蔽</c.aqua>。",
+    "caption": "先判断 a < b，再看 <emphasis level=\"strong\">重点</emphasis>。",
     "valid": true,
-    "visible": "重点：变量遮蔽。"
+    "visible": "先判断 a < b，再看 重点。",
+    "spoken": "先判断 a < b，再看 重点。"
   },
   {
-    "caption": "先判断 a < b，再看 <c.aqua>重点</c.aqua>。",
+    "caption": " <emphasis level=\"strong\"><sub alias=\"sequel\">SQL</sub></emphasis>  用 Vec<T> 存值。",
     "valid": true,
-    "visible": "先判断 a < b，再看 重点。"
+    "visible": "SQL 用 Vec<T> 存值。",
+    "spoken": "sequel 用 Vec<T> 存值。"
   },
   {
-    "caption": "用 a < b 表示小于，强调<c.aqua>重点</c.aqua>。",
+    "caption": "<sub alias=\"structured  query\"><emphasis level=\"strong\">SQL</emphasis> 查询</sub>，仍显示 SQL。",
     "valid": true,
-    "visible": "用 a < b 表示小于，强调重点。"
+    "visible": "SQL 查询，仍显示 SQL。",
+    "spoken": "structured query，仍显示 SQL。"
   },
   {
-    "caption": "用 Vec<T> 存值，判断 a < b。",
+    "caption": "<sub alias = \"&lt;sub&gt; &quot;SQL&quot; &amp;lt;\" >SQL</sub> &lt;emphasis&gt; &apos; &unknown;",
     "valid": true,
-    "visible": "用 Vec<T> 存值，判断 a < b。"
+    "visible": "SQL <emphasis> ' &unknown;",
+    "spoken": "<sub> \"SQL\" &lt; <emphasis> ' &unknown;"
   },
   {
-    "caption": "<C.AQUA>重点</C.AQUA>",
+    "caption": "<sub alias=\"笑脸\">😀</sub> <sub alias=\"两数之和等于丙\"><emphasis level=\"strong\">\\(x  +  y\\)</emphasis> 等于丙</sub>。",
     "valid": true,
-    "visible": "重点"
+    "visible": "😀 \\(x  +  y\\) 等于丙。",
+    "spoken": "笑脸 两数之和等于丙。"
   },
   {
-    "caption": "判断 a < b",
+    "caption": "看 <emphasis level=\"strong\">\\(x + y\\)</emphasis>，金额 $5。",
     "valid": true,
-    "visible": "判断 a < b"
+    "visible": "看 \\(x + y\\)，金额 $5。",
+    "speech_error": "requires a Speech Alias"
   },
   {
-    "caption": "重点：<c.red>遮蔽</c>",
-    "valid": false,
-    "error": "unknown"
-  },
-  {
-    "caption": "<c.aqua >重点</c.aqua>",
-    "valid": false,
-    "error": "unknown"
-  },
-  {
-    "caption": "重点：<c.aqua>遮蔽</c.aqua >",
-    "valid": false,
-    "error": "unknown"
-  },
-  {
-    "caption": "重点：<c.aqua>遮蔽",
-    "valid": false,
-    "error": "unclosed"
-  },
-  {
-    "caption": "先看<c.aqua>重点</c>，再补一个</c>。",
-    "valid": false,
-    "error": "closing"
-  },
-  {
-    "caption": "<c.aqua>外<c.aqua>内</c>外</c>",
-    "valid": false,
-    "error": "nested"
-  },
-  {
-    "caption": "重点：<c.aqua></c>",
-    "valid": false,
-    "error": "empty"
-  },
-  {
-    "caption": "  当  <c.aqua>\\(x  +  y\\)</c>  继续，金额 $5。  ",
+    "caption": "<sub alias=\"比较 a>b\">比较 \\(a\\) 与 \\(b\\)</sub>",
     "valid": true,
-    "visible": "当 \\(x  +  y\\) 继续，金额 $5。"
+    "visible": "比较 \\(a\\) 与 \\(b\\)",
+    "spoken": "比较 a>b"
   },
   {
     "caption": "字面 \\\\(",
     "valid": true,
-    "visible": "字面 \\("
+    "visible": "字面 \\(",
+    "spoken": "字面 \\("
   },
   {
-    "caption": "😀  <c.aqua>\\(x  +  y\\)</c>，再 \\(x  +  y\\)。",
+    "caption": "判断 a<c && b>d，再试 a<c",
     "valid": true,
-    "visible": "😀 \\(x  +  y\\)，再 \\(x  +  y\\)。",
-    "speech_cases": [
-      {
-        "speech_edits": [
-          {"i": 0, "s": "😀", "p": "笑脸"},
-          {"i": 2, "s": "\\(x  +  y\\)", "p": "x 加 y"},
-          {"i": 16, "s": "\\(x  +  y\\)", "p": "两数之和"}
-        ],
-        "spoken": "笑脸 x 加 y，再 两数之和。"
-      },
-      {
-        "speech_edits": [{"i": 2, "s": "\\(x  +  y\\)", "p": "x 加 y"}],
-        "error": "requires one complete speech edit"
-      },
-      {
-        "speech_edits": [{"i": 4, "s": "x", "p": "字母 x"}],
-        "error": "requires one complete speech edit"
-      },
-      {
-        "speech_edits": [{"i": 3, "s": "\\(x  +  y\\)", "p": "x 加 y"}],
-        "error": "does not match"
-      }
-    ]
+    "visible": "判断 a<c && b>d，再试 a<c",
+    "spoken": "判断 a<c && b>d，再试 a<c"
   },
-  {
-    "caption": "\\(x<c.aqua>+y</c>\\)",
-    "valid": false,
-    "error": "emphasis"
-  },
-  {
-    "caption": "\\(x",
-    "valid": false,
-    "error": "unclosed"
-  }
+  {"caption": "<c.aqua>旧</c.aqua>", "valid": false, "error": "legacy"},
+  {"caption": "<C.RED>旧</c>", "valid": false, "error": "legacy"},
+  {"caption": "<Emphasis level=\"strong\">重点</emphasis>", "valid": false, "error": "case"},
+  {"caption": "<emphasis level=\"STRONG\">重点</emphasis>", "valid": false, "error": "strong"},
+  {"caption": "<sub>SQL</sub>", "valid": false, "error": "alias"},
+  {"caption": "<sub=\"sequel\">SQL</sub>", "valid": false, "error": "alias"},
+  {"caption": "<sub alias='sequel'>SQL</sub>", "valid": false, "error": "double"},
+  {"caption": "<sub alias=\"\">SQL</sub>", "valid": false, "error": "empty"},
+  {"caption": "<sub alias=\"a<b\">SQL</sub>", "valid": false, "error": "alias"},
+  {"caption": "<sub alias=\"one\" alias=\"two\">SQL</sub>", "valid": false, "error": "attribute"},
+  {"caption": "<emphasis level=\"strong\" color=\"blue\">SQL</emphasis>", "valid": false, "error": "attribute"},
+  {"caption": "<sub alias=\"sequel\"> \t </sub>", "valid": false, "error": "empty"},
+  {"caption": "<sub alias=\"a>b\"></sub>", "valid": false, "error": "empty"},
+  {"caption": "<sub alias=\"a\">one<sub alias=\"b\">two</sub></sub>", "valid": false, "error": "nested"},
+  {"caption": "<emphasis level=\"strong\"><sub alias=\"sequel\">SQL</emphasis></sub>", "valid": false, "error": "closing"},
+  {"caption": "<emphasis level=\"strong\">未闭合", "valid": false, "error": "unclosed"},
+  {"caption": "SQL</sub>", "valid": false, "error": "closing"},
+  {"caption": "\\(x<sub alias=\"y\">y</sub>\\)", "valid": false, "error": "formula"},
+  {"caption": "<sub alias=\"y\">\\(x</sub>+y\\)", "valid": false, "error": "formula"},
+  {"caption": "\\(x", "valid": false, "error": "unclosed"},
+  {"caption": "<sub alias=\"empty\">\\( \\)</sub>", "valid": false, "error": "empty"}
 ]

@@ -1,4 +1,3 @@
-use super::caption_markup::visible_caption_text;
 use super::{ActionNarrationClip, ActionNarrationPhaseClips, CourseError, UnitAsset};
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -32,16 +31,6 @@ pub(super) struct NarrationClipInput {
     duration_ms: Option<u64>,
     #[serde(default)]
     caption: Option<String>,
-    #[serde(default)]
-    speech_edits: Option<Vec<SpeechEditInput>>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct SpeechEditInput {
-    i: i64,
-    s: String,
-    p: String,
 }
 
 #[derive(Clone)]
@@ -104,12 +93,6 @@ pub(super) fn load_action_narration_phase(
             .into_iter()
             .enumerate()
             .map(|(index, clip)| {
-                validate_speech_edits(
-                    phase,
-                    index,
-                    clip.caption.as_deref(),
-                    clip.speech_edits.as_deref(),
-                )?;
                 if clip.offset_ms.is_some() {
                     return Err(CourseError::Package(format!(
                         "Action {phase} narration clip {index} offset_ms requires audio"
@@ -156,12 +139,6 @@ pub(super) fn load_action_narration_phase(
         .into_iter()
         .enumerate()
         .map(|(index, clip)| {
-            validate_speech_edits(
-                phase,
-                index,
-                clip.caption.as_deref(),
-                clip.speech_edits.as_deref(),
-            )?;
             let caption = clip
                 .caption
                 .filter(|caption| !caption.trim().is_empty())
@@ -214,73 +191,6 @@ pub(super) fn load_action_narration_phase(
         })
         .collect::<Result<Vec<_>, CourseError>>()?;
     Ok(ActionNarrationPhaseClips { clips })
-}
-
-fn validate_speech_edits(
-    phase: &str,
-    clip_index: usize,
-    caption: Option<&str>,
-    edits: Option<&[SpeechEditInput]>,
-) -> Result<(), CourseError> {
-    let Some(edits) = edits else {
-        return Ok(());
-    };
-    if edits.is_empty() {
-        return Ok(());
-    }
-    let Some(caption) = caption.filter(|caption| !caption.trim().is_empty()) else {
-        return Err(CourseError::Package(format!(
-            "Action {phase} narration clip {clip_index} speech_edits require a caption"
-        )));
-    };
-    let visible: Vec<char> = visible_caption_text(caption).chars().collect();
-    let mut ranges = Vec::with_capacity(edits.len());
-    for (edit_index, edit) in edits.iter().enumerate() {
-        let context =
-            format!("Action {phase} narration clip {clip_index} speech_edits[{edit_index}]");
-        if edit.i < 0 {
-            return Err(CourseError::Package(format!(
-                "{context}.i must be a non-negative index"
-            )));
-        }
-        if edit.s.trim().is_empty() {
-            return Err(CourseError::Package(format!(
-                "{context}.s must not be empty"
-            )));
-        }
-        if edit.p.trim().is_empty() {
-            return Err(CourseError::Package(format!(
-                "{context}.p must not be empty"
-            )));
-        }
-        let start = usize::try_from(edit.i)
-            .map_err(|_| CourseError::Package(format!("{context}.i is outside the Caption")))?;
-        let source: Vec<char> = edit.s.chars().collect();
-        let Some(end) = start.checked_add(source.len()) else {
-            return Err(CourseError::Package(format!("{context} range overflows")));
-        };
-        if end > visible.len() {
-            return Err(CourseError::Package(format!(
-                "{context} range is outside the Caption"
-            )));
-        }
-        if visible[start..end] != source {
-            return Err(CourseError::Package(format!(
-                "{context}.s does not match the visible Caption at index {}",
-                edit.i
-            )));
-        }
-        ranges.push((start, end));
-    }
-    ranges.sort_unstable();
-    for pair in ranges.windows(2) {
-        if pair[1].0 < pair[0].1 {
-            return Err(CourseError::Package(format!(
-                "Action {phase} narration clip {clip_index} speech_edits ranges overlap"
-            )));
-        }
-    }
-    Ok(())
 }
 
 pub(super) fn load_unit_audio_assets(

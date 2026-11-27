@@ -107,63 +107,27 @@ fn action_narration_rejects_audio_only_clips() {
 }
 
 #[test]
-fn narration_speech_edits_are_validated_and_ignored_at_runtime() {
+fn narration_speech_aliases_preserve_the_caption_source_at_runtime() {
+    let caption = r#"输出 <emphasis level="strong"><sub alias="一对大括号">{}</sub>。</emphasis>"#;
     let mut step = self_contained_step();
     step["actions"][0]["narration"] = serde_json::json!({
-        "before": {
-            "clips": [{
-                "duration_ms": 900,
-                "caption": "输出 <c.aqua>{}。</c.aqua>",
-                "speech_edits": [{
-                    "i": 3,
-                    "s": "{}",
-                    "p": "一对大括号"
-                }]
-            }, {
-                "duration_ms": 900,
-                "caption": "无替换。",
-                "speech_edits": null
-            }, {
-                "duration_ms": 900,
-                "caption": "空词表。",
-                "speech_edits": []
-            }]
-        }
+        "before": {"clips": [{"duration_ms": 900, "caption": caption}]}
     });
     let package = write_test_package("steps/write_hello.json", step);
 
     let course = load_package(package.path()).unwrap();
-    let caption = course
+    let clip = course
         .action_narration("ch/main", "write_hello", 0, ActionNarrationPhase::Before, 0)
-        .unwrap()
-        .caption
-        .clone();
-
-    assert_eq!(caption.as_deref(), Some("输出 <c.aqua>{}。</c.aqua>"));
+        .unwrap();
+    assert_eq!(clip.caption.as_deref(), Some(caption));
 }
 
 #[test]
-fn narration_speech_edits_reject_invalid_spans() {
-    for (edits, expected) in [
-        (
-            serde_json::json!([{"i": 1, "s": "{}", "p": "大括号"}]),
-            "does not match",
-        ),
-        (
-            serde_json::json!([{"i": 20, "s": "{}", "p": "大括号"}]),
-            "outside the Caption",
-        ),
-        (
-            serde_json::json!([
-                {"i": 0, "s": "abc", "p": "x"},
-                {"i": 1, "s": "bc", "p": "y"}
-            ]),
-            "overlap",
-        ),
-        (
-            serde_json::json!([{"i": 0, "s": "abc", "p": " "}]),
-            "p must not be empty",
-        ),
+fn narration_rejects_legacy_speech_edits_even_when_empty_or_null() {
+    for edits in [
+        serde_json::json!(null),
+        serde_json::json!([]),
+        serde_json::json!([{"i": 0, "s": "abc", "p": "x"}]),
     ] {
         let mut step = self_contained_step();
         step["actions"][0]["narration"] = serde_json::json!({
@@ -176,14 +140,10 @@ fn narration_speech_edits_reject_invalid_spans() {
             }
         });
         let package = write_test_package("steps/write_hello.json", step);
-        let error = load_package(package.path()).expect_err("invalid speech edit");
-        assert!(
-            error.to_string().contains(expected),
-            "expected {expected:?}, got {error}"
-        );
+        let error = load_package(package.path()).expect_err("legacy speech_edits");
+        assert!(error.to_string().contains("speech_edits"), "{error}");
     }
 }
-
 #[test]
 fn unit_audio_assets_reject_duplicate_ids_and_invalid_paths() {
     for (assets, expected) in [
