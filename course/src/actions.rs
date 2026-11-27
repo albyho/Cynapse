@@ -12,6 +12,7 @@ pub enum Action {
     ClosePreview(ClosePreviewAction),
     RevealText(RevealTextAction),
     ClearReveal,
+    SetCursor(SetCursorAction),
     InsertText(InsertTextAction),
     DeleteText(DeleteTextAction),
     ReplaceText(ReplaceTextAction),
@@ -572,6 +573,40 @@ impl<'de> Deserialize<'de> for Anchor {
 }
 
 pub type InsertTextTarget = Anchor;
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(try_from = "SetCursorActionInput")]
+pub struct SetCursorAction {
+    pub path: String,
+    pub target: Anchor,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct SetCursorActionInput {
+    path: String,
+    target: Anchor,
+    #[serde(rename = "source")]
+    _source: Option<serde_json::Value>,
+    #[serde(rename = "confidence")]
+    _confidence: Option<f64>,
+    #[serde(rename = "evidence")]
+    _evidence: Option<Vec<String>>,
+}
+
+impl TryFrom<SetCursorActionInput> for SetCursorAction {
+    type Error = &'static str;
+
+    fn try_from(input: SetCursorActionInput) -> Result<Self, Self::Error> {
+        if input.path.trim().is_empty() {
+            return Err("SetCursor path must not be empty");
+        }
+        Ok(Self {
+            path: input.path,
+            target: input.target,
+        })
+    }
+}
 
 fn take_anchor_field<T>(
     object: &serde_json::Map<String, serde_json::Value>,

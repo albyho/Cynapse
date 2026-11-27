@@ -329,6 +329,9 @@
           "$ref": "#/$defs/clear_reveal"
         },
         {
+          "$ref": "#/$defs/set_cursor"
+        },
+        {
           "$ref": "#/$defs/insert_text"
         },
         {
@@ -524,6 +527,23 @@
       "properties": {
         "type": {
           "const": "ClearReveal"
+        }
+      }
+    },
+    "set_cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "target"],
+      "properties": {
+        "type": {
+          "const": "SetCursor"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/anchor"
         }
       }
     },

@@ -1040,6 +1040,9 @@ fn prepare_unit_action(
             action.path = unit_action_path(unit_path, &action.path, PathPolicy::ReadOnly)?;
         }
         Action::ClearReveal => {}
+        Action::SetCursor(action) => {
+            action.path = unit_action_path(unit_path, &action.path, PathPolicy::ReadOnly)?;
+        }
         Action::InsertText(action) => {
             action.path = unit_action_path(unit_path, &action.path, PathPolicy::UnitWorkspaceOnly)?;
         }

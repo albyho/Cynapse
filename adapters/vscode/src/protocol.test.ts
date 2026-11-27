@@ -304,6 +304,7 @@ test('shared Protocol test data cover every supported Action', () => {
     'Present',
     'ReplaceText',
     'RevealText',
+    'SetCursor',
     'TerminalCommand',
     'TerminalEnsure',
   ])

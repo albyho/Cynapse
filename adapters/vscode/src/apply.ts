@@ -13,6 +13,7 @@ import type {
   PreparedTarget,
   ReplaceTextAction,
   RevealTextAction,
+  SetCursorAction,
 } from './applyModel'
 import { ApplyError } from './applyModel'
 import {
@@ -139,6 +140,24 @@ export async function applyClearReveal(
     return 'cancelled'
   }
   await facade.clearReveal()
+  return signal?.aborted ? 'cancelled' : 'done'
+}
+
+export async function applySetCursor(
+  action: SetCursorAction,
+  facade: EditorFacade,
+  signal?: AbortSignal,
+): Promise<ApplyOutcome> {
+  if (signal?.aborted) {
+    return 'cancelled'
+  }
+  const target = await facade.open(action.path, 'first')
+  const text = await facade.text(target)
+  if (signal?.aborted) {
+    return 'cancelled'
+  }
+  const { position } = resolveInsertPosition(text, action.target)
+  await facade.select(target, position, position)
   return signal?.aborted ? 'cancelled' : 'done'
 }
 

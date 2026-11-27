@@ -17,6 +17,7 @@ pub(super) fn apply_fake_file_system(
         Action::RevealText(_) => {}
         // 清除定位高亮同样是纯展示。
         Action::ClearReveal => {}
+        Action::SetCursor(_) => {}
         Action::InsertText(action) => {
             let path = safe_workspace_path(workspace, &action.path)?;
             let current = fs::read_to_string(&path)?;

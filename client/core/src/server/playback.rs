@@ -563,6 +563,7 @@ fn action_progress_label(action: &PlaybackAction) -> String {
         Action::ClosePreview(action) => t_with("action.close_preview", &[("path", &action.path)]),
         Action::RevealText(action) => t_with("action.reveal_text", &[("path", &action.path)]),
         Action::ClearReveal => t("action.clear_reveal"),
+        Action::SetCursor(action) => t_with("action.set_cursor", &[("path", &action.path)]),
         Action::InsertText(action) => t_with("action.insert_text", &[("path", &action.path)]),
         Action::DeleteText(action) => t_with("action.delete_text", &[("path", &action.path)]),
         Action::ReplaceText(action) => t_with("action.replace_text", &[("path", &action.path)]),

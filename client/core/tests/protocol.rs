@@ -145,6 +145,7 @@ fn terminal_cleanup_keeps_editor_tabs_open() {
 
 #[test]
 fn golden_action_fixtures_cover_every_primitive() {
+    let set_cursor = include_str!("../../../protocol/test-data/action_set_cursor.json");
     let fixtures = [
         include_str!("../../../protocol/test-data/action_present.json"),
         include_str!("../../../protocol/test-data/action_replace_text.json"),
@@ -171,6 +172,7 @@ fn golden_action_fixtures_cover_every_primitive() {
         include_str!("../../../protocol/test-data/action_interrupt_kernel.json"),
         include_str!("../../../protocol/test-data/action_close_file.json"),
         include_str!("../../../protocol/test-data/action_close_preview.json"),
+        set_cursor,
     ];
 
     for fixture in fixtures {
@@ -253,6 +255,21 @@ fn golden_action_fixtures_cover_every_primitive() {
         panic!("expected OpenFile");
     };
     assert_eq!(action.path, "src/main.rs");
+
+    let cursor = Envelope::parse(set_cursor).unwrap();
+    let Action::SetCursor(action) = serde_json::from_value(cursor.payload).unwrap() else {
+        panic!("expected SetCursor");
+    };
+    assert_eq!(action.path, "src/main.rs");
+    assert_eq!(
+        action.target,
+        Anchor {
+            line: Some(8),
+            at: None,
+            placement: Some(Placement::After),
+            eof: false,
+        }
+    );
 
     let insert = Envelope::parse(fixtures[14]).unwrap();
     let Action::InsertText(action) = serde_json::from_value(insert.payload).unwrap() else {

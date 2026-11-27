@@ -9,6 +9,7 @@ import {
   applyReplaceText,
   applyRevealText,
   applyClearReveal,
+  applySetCursor,
   type ClearRevealAction,
   type CloseFileAction,
   type ClosePreviewAction,
@@ -23,6 +24,7 @@ import {
   type RevealTextAction,
   type RevealPosition,
   type ReplaceTextAction,
+  type SetCursorAction,
 } from './apply'
 import {
   applyFileSystemAction,
@@ -45,6 +47,7 @@ export type NonTerminalAction =
   | ClosePreviewAction
   | RevealTextAction
   | ClearRevealAction
+  | SetCursorAction
   | InsertTextAction
   | DeleteTextAction
   | ReplaceTextAction
@@ -163,6 +166,20 @@ export function parseCourseAction(value: unknown): CourseAction | undefined {
       return undefined
     }
     return { type: 'ClearReveal' }
+  }
+
+  if (value.type === 'SetCursor') {
+    if (
+      typeof value.path !== 'string' ||
+      value.path.trim().length === 0 ||
+      !isAnchor(value.target) ||
+      Object.keys(value).some(
+        (key) => !['type', 'path', 'target'].includes(key),
+      )
+    ) {
+      return undefined
+    }
+    return { type: 'SetCursor', path: value.path, target: value.target }
   }
 
   if (value.type === 'InsertText') {
@@ -329,6 +346,9 @@ export async function applyAction(
   }
   if (action.type === 'ClearReveal') {
     return applyClearReveal(action, facades.editor, signal)
+  }
+  if (action.type === 'SetCursor') {
+    return applySetCursor(action, facades.editor, signal)
   }
   if (action.type === 'InsertText') {
     return applyInsertText(action, facades.editor, signal)

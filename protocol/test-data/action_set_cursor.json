@@ -1,0 +1,13 @@
+{
+  "v": 3,
+  "id": "51889eba-d480-47b5-a754-ec9380f95c3e",
+  "type": "action",
+  "payload": {
+    "type": "SetCursor",
+    "path": "src/main.rs",
+    "target": {
+      "line": 8,
+      "placement": "after"
+    }
+  }
+}

@@ -30,6 +30,12 @@ export interface Anchor {
 
 export type InsertTextTarget = Anchor
 
+export interface SetCursorAction {
+  type: 'SetCursor'
+  path: string
+  target: Anchor
+}
+
 export interface EditRange {
   start: Anchor
   end: Anchor
