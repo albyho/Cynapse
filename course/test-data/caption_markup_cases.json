@@ -18,6 +18,12 @@
     "spoken": "structured query，仍显示 SQL。"
   },
   {
+    "caption": "<emphasis level=\"strong\">可运<sub alias=\"XING2\">行</sub>程序</emphasis>",
+    "valid": true,
+    "visible": "可运行程序",
+    "spoken": "可运XING2程序"
+  },
+  {
     "caption": "<sub alias = \"&lt;sub&gt; &quot;SQL&quot; &amp;lt;\" >SQL</sub> &lt;emphasis&gt; &apos; &unknown;",
     "valid": true,
     "visible": "SQL <emphasis> ' &unknown;",
